@@ -1,0 +1,12 @@
+.frameCell {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1 / 1;
+	padding: 0;
+	color: white;
+	box-sizing: content-box;
+
+	&:hover {
+		border: 1px solid rgb(150, 150, 150) !important;
+	}
+}

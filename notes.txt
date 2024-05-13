@@ -1,0 +1,26 @@
+TODO:
+- services: make class properties private from child class
+- error handling
+- advanced filter options for column, string for strings, min max for numbers
+- custom cursor icons
+- table footer: show total frames etc for selected items
+- add back memo() for generic
+- generic types
+- common useDispatch
+- duplicate dialog - form data - disabled state
+- dialog initialize state
+https://stackoverflow.com/questions/7667958/clearing-localstorage-in-javascript
+https://github.com/vkarpov15/mongo-sanitize
+
+
+- mongoClient general try catch
+- mui css baseline
+- add nonce token for auth
+- autocomplete for login window like google passwords
+- google login skeleton while loading
+- debounce password change
+- move useApp to parent component?
+- error flickering animation
+- pattern for first and last name
+- wrap tabs inside DatabaseProvider without header
+- decrease page sizes / remove password strength library or change to request base

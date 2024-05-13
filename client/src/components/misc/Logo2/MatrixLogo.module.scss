@@ -1,0 +1,27 @@
+$border: 2px solid white;
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+}
+
+.cell {
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 1rem;
+	color: white;
+	box-sizing: content-box;
+
+	&:not(:nth-child(3n)) {
+		border-right: $border;
+	}
+
+	&:not(:nth-last-child(-n + 3)) {
+		border-bottom: $border;
+	}
+}

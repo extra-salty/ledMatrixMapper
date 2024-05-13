@@ -1,0 +1,64 @@
+.numberInput {
+	display: flex;
+	// padding: 1px 0px 5px 0px;
+
+	input {
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+		appearance: textfield;
+		-moz-appearance: textfield;
+
+		width: calc(100% - 6px);
+		height: 23px;
+		border: 0;
+		padding: 0px;
+
+		font-size: 16px;
+		background-color: transparent;
+		color: white;
+
+		&::-webkit-inner-spin-button {
+			display: none;
+		}
+
+		&:focus-visible {
+			outline: 0;
+		}
+	}
+
+	.unit {
+		color: #fff;
+		width: max-content;
+		padding-left: 1px;
+		font-size: 14px;
+		text-align: left;
+	}
+
+	.increment {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 18px;
+		opacity: 0;
+
+		.enlarge {
+			&:hover {
+				transform: scale(1.2, 1.2);
+			}
+		}
+
+		&.alwaysVisible {
+			opacity: 1;
+		}
+	}
+
+	&:hover {
+		.increment {
+			opacity: 1;
+		}
+	}
+}

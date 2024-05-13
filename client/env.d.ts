@@ -1,0 +1,18 @@
+namespace NodeJS {
+	interface ProcessEnv {
+		MONGO_URL: string;
+		NEXT_PUBLIC_MONGO_APP_ID: string;
+		NEXT_PUBLIC_MONGO_CLUSTER_NAME: string;
+		NEXT_PUBLIC_MONGO_DB_NAME: string;
+		NEXT_PUBLIC_MONGO_ANIMATIONS_COLLECTION: string;
+		NEXT_PUBLIC_MONGO_IMAGES_COLLECTION: string;
+		//
+		DATA_API_KEY: string;
+		DATA_API_URL: string;
+		MONGODB_URI: string;
+		//
+		NEXT_PUBLIC_BASE_API_URL: string;
+		NEXT_PUBLIC_GOOGLE_ID: string;
+		NEXT_PUBLIC_GITHUB_LINK: string;
+	}
+}
