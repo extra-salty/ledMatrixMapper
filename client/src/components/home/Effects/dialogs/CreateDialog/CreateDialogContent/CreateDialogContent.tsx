@@ -1,5 +1,5 @@
 import { useEffectCollections } from '@/libs/redux/features/effects/data/selector';
-import { getAnimationName } from '@/libs/redux/features/playlist/data/selectors';
+import { useAnimationName } from '@/libs/redux/features/playlist/data/selectors';
 import { ChangeEvent, useState } from 'react';
 import {
 	Box,
@@ -36,7 +36,8 @@ const CreateDialogContent = ({ isInvalidName }: { isInvalidName: boolean }) => {
 					labelId='animation-label'
 				>
 					{Object.keys(animations).map((key) => {
-						const name = getAnimationName(key);
+						// const name = useAnimationName(key);
+						const name = 'name';
 
 						return (
 							<MenuItem key={key} value={key}>

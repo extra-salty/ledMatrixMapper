@@ -4,7 +4,7 @@ import {
 	useActiveEffectIds,
 	useEffectCollections,
 } from '@/libs/redux/features/effects/data/selector';
-import { getAnimationName } from '@/libs/redux/features/playlist/data/selectors';
+import { useAnimationName } from '@/libs/redux/features/playlist/data/selectors';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import {
 	Box,
@@ -51,7 +51,8 @@ const EffectDetails = ({
 				>
 					{Object.entries(animations).map(([animationId, effects]) => [
 						<ListSubheader key={animationId}>
-							{getAnimationName(animationId)}
+							Asd
+							{/* {useAnimationName(animationId)} */}
 						</ListSubheader>,
 						[
 							Object.entries(effects).map(([effectId, { name }]) => (

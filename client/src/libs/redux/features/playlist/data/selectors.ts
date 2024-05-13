@@ -10,5 +10,5 @@ export const usePlaylistData = () =>
 export const usePlaylistDataExist = () =>
 	useSelector((state: RootState) => !!state.playlist.data.length);
 
-export const getAnimationName = (_id: string) =>
+export const useAnimationName = (_id: string) =>
 	useSelector((state: RootState) => state.playlist.data[_id].name);
