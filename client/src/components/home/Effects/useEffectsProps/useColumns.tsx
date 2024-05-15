@@ -92,46 +92,46 @@ const useColumns = (): EffectTableColumnsT[] => {
 				</Tooltip>
 			),
 		},
-		{
-			accessorFn: (row) => dayjs(row.dateModified).toDate(),
-			id: 'dateModified',
-			header: 'Modified',
-			size: 120,
-			grow: true,
-			enableResizing: false,
-			enableSorting: true,
-			sortingFn: 'datetime',
-			enableColumnFilter: true,
-			filterVariant: 'datetime',
-			Cell: ({
-				row: {
-					original: { id, animationId, dateModified },
-				},
-			}) => {
-				if (id !== animationId) return null;
-				return dayjs(dateModified).format(dateTimeFormat);
-			},
-		},
-		{
-			accessorFn: (row) => dayjs(row.dateCreated).toDate(),
-			id: 'dateCreated',
-			header: 'Created',
-			size: 120,
-			grow: true,
-			enableResizing: false,
-			enableSorting: true,
-			sortingFn: 'datetime',
-			enableColumnFilter: true,
-			filterVariant: 'datetime',
-			Cell: ({
-				row: {
-					original: { id, animationId, dateCreated },
-				},
-			}) => {
-				if (id !== animationId) return null;
-				return dayjs(dateCreated).format(dateTimeFormat);
-			},
-		},
+		// {
+		// 	accessorFn: (row) => dayjs(row.dateModified).toDate(),
+		// 	id: 'dateModified',
+		// 	header: 'Modified',
+		// 	size: 120,
+		// 	grow: true,
+		// 	enableResizing: false,
+		// 	enableSorting: true,
+		// 	sortingFn: 'datetime',
+		// 	enableColumnFilter: true,
+		// 	filterVariant: 'datetime',
+		// 	Cell: ({
+		// 		row: {
+		// 			original: { id, animationId, dateModified },
+		// 		},
+		// 	}) => {
+		// 		if (id !== animationId) return null;
+		// 		return dayjs(dateModified).format(dateTimeFormat);
+		// 	},
+		// },
+		// {
+		// 	accessorFn: (row) => dayjs(row.dateCreated).toDate(),
+		// 	id: 'dateCreated',
+		// 	header: 'Created',
+		// 	size: 120,
+		// 	grow: true,
+		// 	enableResizing: false,
+		// 	enableSorting: true,
+		// 	sortingFn: 'datetime',
+		// 	enableColumnFilter: true,
+		// 	filterVariant: 'datetime',
+		// 	Cell: ({
+		// 		row: {
+		// 			original: { id, animationId, dateCreated },
+		// 		},
+		// 	}) => {
+		// 		if (id !== animationId) return null;
+		// 		return dayjs(dateCreated).format(dateTimeFormat);
+		// 	},
+		// },
 		{
 			accessorKey: 'actions',
 			header: 'Actions',
