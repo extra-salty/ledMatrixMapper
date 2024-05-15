@@ -16,7 +16,6 @@ const TextInput = ({
 	const dispatch = useDispatch();
 	const { effects, animationId, id } = row;
 
-	console.log('🚀 ~ row[propertyKey]:', row[propertyKey]);
 	const [value, setValue] = useState<string | undefined>(row[propertyKey]);
 
 	const handleOnChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
@@ -57,6 +56,7 @@ const TextInput = ({
 				// onMouseEnter: () => setDisableUnderline(false),
 				// onMouseLeave: () => setDisableUnderline(true),
 			}}
+			sx={{ maxHeight: '28px' }}
 		/>
 	);
 };

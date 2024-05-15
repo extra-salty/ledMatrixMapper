@@ -1,5 +1,4 @@
-import { ColorT } from '@/types/color/color.types';
-import { Attributes } from '../SelectedColor';
+import { Attributes, ColorT } from '@/types/color/color.types';
 
 export const useBackgroundColor = (color: ColorT, attribute: Attributes) => {
 	const { hue: h, saturation: s, lightness: l } = color;

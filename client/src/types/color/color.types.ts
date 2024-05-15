@@ -15,3 +15,15 @@ export class Color implements ColorT {
 		this.lightness = lightness;
 	}
 }
+
+export enum Attributes {
+	hue = 'hue',
+	saturation = 'saturation',
+	lightness = 'lightness',
+}
+
+export enum Units {
+	degree = '°',
+	percentage = '%',
+	second = 's',
+}

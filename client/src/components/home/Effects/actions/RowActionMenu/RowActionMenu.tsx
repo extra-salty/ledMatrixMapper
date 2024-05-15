@@ -3,10 +3,12 @@ import { MoreVert } from '@mui/icons-material';
 import { IconButton, Menu } from '@mui/material';
 import { EffectsTableRowT } from '@/types/effects/effectTable.types';
 import RowActionMenuItems from './RowActionMenuItems/RowActionMenuItems';
+import CreateDialog from '../../dialogs/CreateDialog/CreateDialog';
+import DuplicateDialog from '../../dialogs/DuplicateDialog/DuplicateDialog';
 
 const RowActionMenu = ({ row }: { row: EffectsTableRowT }) => {
+	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);
 	const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState<boolean>(false);
-	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const isOpen = Boolean(anchorEl);
@@ -18,16 +20,16 @@ const RowActionMenu = ({ row }: { row: EffectsTableRowT }) => {
 
 	return (
 		<>
-			{/* <DuplicateDialog
+			<CreateDialog
+				initialAnimation={row.animationId}
+				open={isCreateDialogOpen}
+				setOpen={setIsCreateDialogOpen}
+			/>
+			<DuplicateDialog
 				row={row}
 				open={isDuplicateDialogOpen}
 				setOpen={setIsDuplicateDialogOpen}
 			/>
-			<DeleteDialog
-				open={isDeleteDialogOpen}
-				setOpen={setIsDeleteDialogOpen}
-				selectedRows={[row]}
-			/> */}
 			<IconButton
 				size='small'
 				id='frame-menu-button'
@@ -51,8 +53,8 @@ const RowActionMenu = ({ row }: { row: EffectsTableRowT }) => {
 			>
 				<RowActionMenuItems
 					row={row}
-					setIsCreateDialogOpen={setIsDuplicateDialogOpen}
-					setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+					setIsDuplicateDialogOpen={setIsDuplicateDialogOpen}
+					setIsCreateDialogOpen={setIsCreateDialogOpen}
 				/>
 			</Menu>
 		</>

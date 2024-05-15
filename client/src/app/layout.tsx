@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Raleway } from 'next/font/google';
+import { Raleway, Roboto } from 'next/font/google';
 import { Paper } from '@mui/material';
 import ThemeProvider from '@/providers/ThemeProvider/ThemeProvider';
 import './_global.scss';
@@ -7,6 +7,11 @@ import './_global.scss';
 export const raleway = Raleway({
 	weight: ['300', '400', '500', '700'],
 	style: ['normal', 'italic'],
+	subsets: ['latin'],
+});
+
+const roboto = Roboto({
+	weight: ['300', '400', '500', '700'],
 	subsets: ['latin'],
 });
 
@@ -18,7 +23,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<html lang='en'>
-			<body className={raleway.className}>
+			<body className={roboto.className}>
 				<ThemeProvider themeMode='dark'>
 					<Paper
 						square

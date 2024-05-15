@@ -1,18 +1,15 @@
-import { AnimationTableRowT } from '@/types/animation/animationTable.types';
-import { DialogContent, TextField } from '@mui/material';
+import { EffectsTableRowT } from '@/types/effects/effectTable.types';
+import { Box, TextField } from '@mui/material';
 
 const DuplicateDialogContent = ({
 	row,
 	isInvalidName,
 }: {
-	row: AnimationTableRowT;
+	row: EffectsTableRowT;
 	isInvalidName: boolean;
 }) => {
 	return (
-		<DialogContent
-			dividers
-			sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
-		>
+		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 			<TextField
 				required
 				fullWidth
@@ -36,7 +33,7 @@ const DuplicateDialogContent = ({
 				type='text'
 				variant='outlined'
 			/>
-		</DialogContent>
+		</Box>
 	);
 };
 

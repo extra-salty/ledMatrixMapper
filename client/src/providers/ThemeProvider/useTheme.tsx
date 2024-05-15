@@ -25,7 +25,7 @@ const useTheme = (themeMode: ThemeModeT): Theme => {
 			},
 		},
 		typography: {
-			fontFamily: 'inherit',
+			// fontFamily: 'inherit',
 			button: {
 				textTransform: 'none',
 			},

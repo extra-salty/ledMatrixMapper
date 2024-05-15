@@ -18,10 +18,11 @@ const ResizeHandle = () => {
 			onDragging={(isDragging) => setIsDragging(isDragging)}
 		>
 			<DragHandle
-				fontSize='small'
+				fontSize='large'
 				sx={(theme) => ({
 					position: 'absolute',
-					height: '14px',
+					height: '18px',
+					width: '22px',
 					rotate: '90deg',
 					left: '-50%',
 					top: '50%',

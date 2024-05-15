@@ -1,10 +1,9 @@
-import { useBackgroundColor } from './useBackgroundColor';
 import { ChangeEvent } from 'react';
-import { ColorT } from '@/types/color/color.types';
-import { Attributes } from '../SelectedColor';
+import { Attributes, ColorT } from '@/types/color/color.types';
+import { useBackgroundColor } from './useBackgroundColor';
 import styles from './AttributeSlider.module.scss';
 
-const AttributeSlider = ({
+const ColorAttributeSlider = ({
 	max,
 	color,
 	id,
@@ -35,4 +34,4 @@ const AttributeSlider = ({
 	);
 };
 
-export default AttributeSlider;
+export default ColorAttributeSlider;

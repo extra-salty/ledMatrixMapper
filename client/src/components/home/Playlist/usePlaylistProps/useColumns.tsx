@@ -76,7 +76,7 @@ const useColumns = (): AnimationsTableColumnsT[] => {
 			accessorKey: 'repeat',
 			header: 'Frames',
 			filterVariant: 'range',
-			size: 48,
+			size: 60,
 			enableResizing: false,
 			Header: () => (
 				<Tooltip title='Repeat'>
@@ -185,8 +185,7 @@ const useColumns = (): AnimationsTableColumnsT[] => {
 			accessorKey: 'actions',
 			header: 'Actions',
 			...staticProps,
-			size: 24,
-			minSize: 24,
+			size: 40,
 			enableEditing: false,
 			Header: () => <div></div>,
 			Cell: ({ row: { original, id } }) => (

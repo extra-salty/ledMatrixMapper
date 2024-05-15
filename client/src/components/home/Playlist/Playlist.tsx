@@ -6,6 +6,8 @@ import useComponentProps from './usePlaylistProps/useComponentProps';
 import useStylingProps from './usePlaylistProps/useStylingProps';
 import useDraggingProps from './usePlaylistProps/useDraggingProps';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
+import { Height } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
 
 const Playlist = () => {
 	const { tableData } = useConvertedData();
@@ -35,20 +37,15 @@ const Playlist = () => {
 		enableFilters: false,
 		enableGlobalFilter: true,
 		enableColumnPinning: true,
+		enableColumnActions: false,
+		enableEditing: true,
 		positionToolbarAlertBanner: 'bottom',
 		columnResizeMode: 'onEnd',
 		layoutMode: 'grid-no-grow',
-		enableEditing: true,
 		editDisplayMode: 'table',
-		//
-		defaultColumn: {
-			minSize: 28,
-			size: 24,
-			maxSize: 200,
-		},
 		displayColumnDefOptions: {
 			'mrt-row-select': {
-				size: 28,
+				size: 40,
 				grow: false,
 				enableResizing: false,
 				enablePinning: false,
@@ -58,9 +55,13 @@ const Playlist = () => {
 				visibleInShowHideMenu: false,
 			},
 			'mrt-row-drag': {
-				header: 'Drag',
+				header: 'Move',
+				Header: () => (
+					<Tooltip title='Move'>
+						<Height />
+					</Tooltip>
+				),
 				size: 40,
-				minSize: 40,
 				grow: false,
 				enableResizing: false,
 				enablePinning: false,

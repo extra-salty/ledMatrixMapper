@@ -15,13 +15,6 @@ const Effects = () => {
 	const componentProps = useComponentProps();
 	const stylingProps = useStylingProps();
 
-	const staticProps: EffectsTableColumnsPartialT = {
-		enablePinning: false,
-		enableResizing: false,
-		grow: false,
-		visibleInShowHideMenu: false,
-	};
-
 	const table = useMaterialReactTable({
 		data,
 		columns,
@@ -43,24 +36,24 @@ const Effects = () => {
 		layoutMode: 'grid-no-grow',
 		editDisplayMode: 'table',
 		positionToolbarAlertBanner: 'bottom',
-		defaultColumn: {
-			minSize: 28,
-			size: 28,
-			maxSize: 200,
-		},
+
 		displayColumnDefOptions: {
 			'mrt-row-select': {
-				size: 28,
-				...staticProps,
+				size: 40,
+				grow: false,
+				enablePinning: false,
+				enableResizing: false,
+				visibleInShowHideMenu: false,
 			},
 			'mrt-row-expand': {
 				visibleInShowHideMenu: false,
 			},
 			'mrt-row-drag': {
 				header: 'Drag',
-				size: 40,
-				minSize: 40,
-				...staticProps,
+				enablePinning: false,
+				enableResizing: false,
+				grow: false,
+				visibleInShowHideMenu: false,
 			},
 		},
 		// getRowId: (row) => row.rowId,

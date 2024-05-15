@@ -174,8 +174,7 @@ const useColumns = (): AnimationsTableColumnsT[] => {
 			enableResizing: false,
 			enableColumnDragging: false,
 			visibleInShowHideMenu: false,
-			size: 24,
-			minSize: 24,
+			size: 40,
 			Header: () => <div></div>,
 			Cell: ({ row }) => {
 				return row.original.type === AnimationChildrenTypesT.animation ? (

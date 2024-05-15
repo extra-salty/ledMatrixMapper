@@ -8,9 +8,11 @@ import { LoadingButton } from '@mui/lab';
 import CreateDialogContent from './CreateDialogContent/CreateDialogContent';
 
 const CreateDialog = ({
+	initialAnimation = '',
 	open,
 	setOpen,
 }: {
+	initialAnimation?: string;
 	open: boolean;
 	setOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -55,7 +57,10 @@ const CreateDialog = ({
 			onClose={handleClose}
 		>
 			<DialogTitle>Create a new effect</DialogTitle>
-			<CreateDialogContent isInvalidName={isInvalidName} />
+			<CreateDialogContent
+				initialAnimation={initialAnimation}
+				isInvalidName={isInvalidName}
+			/>
 			<DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
 				<Button onClick={handleClose} variant='outlined'>
 					Cancel

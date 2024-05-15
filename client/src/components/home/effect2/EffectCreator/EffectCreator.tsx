@@ -6,7 +6,7 @@ import { Panel, PanelGroup } from 'react-resizable-panels';
 import ResizeHandle from '@/components/misc/ResizeHandle/ResizeHandle';
 import EffectPlayerToolbar from '@/components/temp/PlayerComps/EffectPlayerToolbar/EffectPlayerToolbar';
 import EffectPlayer from '@/components/temp/PlayerComps/EffectPlayer/EffectPlayer';
-import SelectedColor from '@/components/home/Color/SelectedColor/SelectedColor';
+import ColorSelector from '@/components/home/Color/SelectedColor/ColorSelector';
 import EffectToolbar from '../../Effect/EffectToolbar/EffectToolbar';
 import FrameGridWrapper from '../../Effect/FrameGridWrapper/FrameGridWrapper';
 import EffectDetails from '../../Effect/Actions/EffectDetails/EffectDetails';
@@ -46,7 +46,6 @@ const EffectCreator = () => {
 							name={activeEffect?.name}
 							description={activeEffect?.description}
 						/>
-						<SelectedColor />
 					</Box>
 				</Box>
 			</Panel>

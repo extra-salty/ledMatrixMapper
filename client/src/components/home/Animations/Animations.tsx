@@ -41,18 +41,17 @@ const Animations = () => {
 		columnResizeMode: 'onEnd',
 		displayColumnDefOptions: {
 			'mrt-row-select': {
-				size: 30,
-				maxSize: 30,
+				size: 40,
 				grow: false,
-				enableResizing: false,
 				enablePinning: false,
+				enableResizing: false,
 				visibleInShowHideMenu: false,
 			},
 			'mrt-row-expand': {
 				visibleInShowHideMenu: false,
 			},
 			'mrt-row-actions': {
-				size: 30,
+				size: 40,
 				visibleInShowHideMenu: false,
 			},
 		},

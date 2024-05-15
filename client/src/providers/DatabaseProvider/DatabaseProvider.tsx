@@ -1,7 +1,7 @@
 import { useUser } from '../UserProvider/useUser';
 import { createContext } from 'react';
 import { AnimationBaseT } from '@/types/animation/animation.types';
-import { AnimationCollection } from '@/libs/mongodb/collections/AnimationsService';
+import { AnimationCollection } from '@/libs/mongodb/collections/AnimationCollection';
 
 export type DocumentT = Realm.Services.MongoDB.Document;
 export type CollectionT<T extends DocumentT> =

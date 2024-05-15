@@ -31,40 +31,38 @@ const GoogleLoginProvider = () => {
 	};
 
 	return (
-		<>
-			<GoogleOAuthProvider
-				clientId={process.env.NEXT_PUBLIC_GOOGLE_ID}
-				onScriptLoadError={() => setGoogleFailure(true)}
+		<GoogleOAuthProvider
+			clientId={process.env.NEXT_PUBLIC_GOOGLE_ID}
+			onScriptLoadError={() => setGoogleFailure(true)}
+		>
+			<Snackbar
+				open={isGoogleLoginFailed}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
 			>
-				<Snackbar
-					open={isGoogleLoginFailed}
-					anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-				>
-					<Alert severity='error'>Google login failed. Please try again.</Alert>
-				</Snackbar>
-				<Box
-					sx={{
-						position: 'relative',
-						border: '1px solid transparent',
+				<Alert severity='error'>Google login failed. Please try again.</Alert>
+			</Snackbar>
+			<Box
+				sx={{
+					position: 'relative',
+					border: '1px solid transparent',
+					borderRadius: 1,
+					transition: 'border-color 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+					'&:hover': {
+						border: '1px solid white',
 						transition: 'border-color 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-						'&:hover': {
-							border: '1px solid white',
-							borderRadius: 1,
-							transition: 'border-color 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-						},
-					}}
-				>
-					<CustomGoogleButton ripple={ripple} />
-					<Box sx={{ opacity: '0', height: '44px' }}>
-						<GoogleLogin
-							useOneTap
-							onSuccess={handleLogin}
-							onError={() => setGoogleLoginFailed(true)}
-						/>
-					</Box>
+					},
+				}}
+			>
+				<CustomGoogleButton ripple={ripple} />
+				<Box sx={{ opacity: '0', height: '44px' }}>
+					<GoogleLogin
+						useOneTap
+						onSuccess={handleLogin}
+						onError={() => setGoogleLoginFailed(true)}
+					/>
 				</Box>
-			</GoogleOAuthProvider>
-		</>
+			</Box>
+		</GoogleOAuthProvider>
 	);
 };
 

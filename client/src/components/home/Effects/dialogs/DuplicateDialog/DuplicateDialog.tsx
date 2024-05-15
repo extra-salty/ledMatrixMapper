@@ -1,84 +1,58 @@
-import useSWRMutation from 'swr/mutation';
-import { useDatabase } from '@/providers/DatabaseProvider/useDatabase';
 import { useDispatch } from 'react-redux';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, FormEvent, SetStateAction } from 'react';
 import { AppDispatch } from '@/libs/redux/store';
-import { getAnimations } from '@/libs/redux/features/animations/thunk';
 import { Alert, Button, Dialog, DialogActions, DialogTitle, Fade } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-import { AnimationTableRowT } from '@/types/animation/animationTable.types';
+import { EffectsTableRowT } from '@/types/effects/effectTable.types';
 import DuplicateDialogContent from './DuplicateDialogContent/DuplicateDialogContent';
+import GenericDialog from '@/components/misc/generics/GenericDialog/GenericDialog';
 
 const DuplicateDialog = ({
 	row,
 	open,
 	setOpen,
 }: {
-	row: AnimationTableRowT;
+	row: EffectsTableRowT;
 	open: boolean;
 	setOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
 	const dispatch = useDispatch<AppDispatch>();
-	const { animations } = useDatabase();
 
-	const handleDuplicate = async (_: string, { arg }: { arg: FormData }) => {
-		const name = arg.get('name') as string;
-
-		await animations.validateName(name);
-		await animations.duplicate(row.id as string, arg);
-
-		handleClose();
-		dispatch(getAnimations());
-	};
-
-	const { isMutating, error, trigger, reset } = useSWRMutation(
-		'/animations/duplicate',
-		handleDuplicate,
-		{
-			onError: (e) => console.error(e),
-		},
-	);
-
-	const isInvalidName = !!error ? error.code === 409 : false;
-	const otherFailure = !!error && !isInvalidName;
-
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
-		const formData = new FormData(event.currentTarget);
-		trigger(formData);
-	};
+	const title = `Duplicate effect: ${row.name}`;
 
 	const handleClose = () => {
 		setOpen(false);
-		reset();
+		// setIsInvalidName(false);
+	};
+
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const formData = new FormData(event.currentTarget);
+
+		const name = formData.get('name') as string;
+		const description = formData.get('description') as string;
+
+		// const exist = Object.values(effects[animationId])
+		// 	.map((effects) => effects.name)
+		// 	.includes(name);
+
+		// if (exist) {
+		// setIsInvalidName(true);
+		// } else {
+		// dispatch(effectsDataActions.addEffect(formData));
+
+		// 	handleClose();
+		// }
 	};
 
 	return (
-		<Dialog
+		<GenericDialog
 			open={open}
-			PaperProps={{
-				component: 'form',
-				sx: { width: '500px' },
-				onSubmit: handleSubmit,
-			}}
+			title={title}
+			onSubmit={handleSubmit}
+			onClose={handleClose}
 		>
-			<DialogTitle>Duplicate animation: {row.name}</DialogTitle>
-			<DuplicateDialogContent row={row} isInvalidName={isInvalidName} />
-			<DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-				<Button variant='outlined' onClick={handleClose}>
-					Cancel
-				</Button>
-				<Fade in={otherFailure}>
-					<Alert severity='error' variant='outlined'>
-						Duplication failed.
-					</Alert>
-				</Fade>
-				<LoadingButton type='submit' variant='outlined' loading={isMutating}>
-					Create
-				</LoadingButton>
-			</DialogActions>
-		</Dialog>
+			<DuplicateDialogContent row={row} isInvalidName={false} />
+		</GenericDialog>
 	);
 };
 

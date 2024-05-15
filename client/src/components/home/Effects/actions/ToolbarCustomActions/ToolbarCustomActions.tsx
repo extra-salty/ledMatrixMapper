@@ -12,7 +12,7 @@ const ToolbarCustomActions = ({ table }: { table: EffectsTableInstanceT }) => {
 
 	const actions: ActionButtonProps[] = [
 		{
-			text: 'Create',
+			text: 'Create Effect',
 			icon: <Add />,
 			onClick: () => setIsCreateDialogOpen(true),
 		},

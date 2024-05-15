@@ -20,7 +20,7 @@ const Window = ({ children }: { children: React.ReactNode }) => {
 					flexDirection: 'column',
 					justifyContent: 'center',
 					alignItems: 'center',
-					width: '350px',
+					width: '450px',
 					padding: '25px 50px 10px 50px',
 				}}
 			>

@@ -18,14 +18,9 @@ const FrameSizeSlider = () => {
 	return (
 		<Box
 			sx={{
-				width: '200px',
-				height: '24px',
 				display: 'flex',
 				alignItems: 'center',
 				gap: '20px',
-				border: '1px solid rgba(255, 255, 255, 0.12)',
-				padding: '7px',
-				borderRadius: '4px',
 			}}
 		>
 			<Tooltip title='Frames Width'>

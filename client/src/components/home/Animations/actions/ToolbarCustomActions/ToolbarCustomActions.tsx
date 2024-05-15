@@ -35,13 +35,13 @@ const ToolbarCustomActions = ({ table }: { table: AnimationsTableInstanceT }) =>
 		{
 			text: 'Select',
 			icon: <PlaylistAdd />,
-			disabled: isSelectionEmpty && true,
+			disabled: true || (isSelectionEmpty && true),
 			onClick: handlePlaylistChange,
 		},
 		{
 			text: 'Merge',
 			icon: <Merge />,
-			disabled: isSelectionEmpty,
+			disabled: true || isSelectionEmpty,
 			onClick: () => {},
 		},
 	];

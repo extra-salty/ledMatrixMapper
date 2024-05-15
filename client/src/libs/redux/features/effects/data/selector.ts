@@ -14,7 +14,13 @@ export const useEffectCollections = () =>
 export const useActiveEffect = (): EffectStateT | undefined =>
 	useSelector((state: RootState) => {
 		const { animationId, effectId } = state.effects.data.activeEffect;
+
+		return state.effects.data.animations[animationId][effectId];
+
+		console.log('🚀 ~ useSelector ~ effectId:', effectId);
+		console.log('🚀 ~ useSelector ~ animationId:', animationId);
 		const animationExist = animationId in state.effects.data.animations;
+		console.log('🚀 ~ useSelector ~ animationExist:', animationExist);
 		const effectExist = animationExist
 			? effectId in state.effects.data.animations[animationId].effects
 			: false;

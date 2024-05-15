@@ -1,5 +1,5 @@
 import { useEffectCollections } from '@/libs/redux/features/effects/data/selector';
-import { useAnimationName } from '@/libs/redux/features/playlist/data/selectors';
+import { useAnimationNames } from '@/libs/redux/features/playlist/data/selectors';
 import { ChangeEvent, useState } from 'react';
 import {
 	Box,
@@ -12,10 +12,17 @@ import {
 	TextField,
 } from '@mui/material';
 
-const CreateDialogContent = ({ isInvalidName }: { isInvalidName: boolean }) => {
+const CreateDialogContent = ({
+	isInvalidName,
+	initialAnimation,
+}: {
+	isInvalidName: boolean;
+	initialAnimation: string;
+}) => {
 	const [frames, setFrames] = useState<number>(1);
 
-	const animations = useEffectCollections();
+	const animationsEffects = useEffectCollections();
+	const animationNames = useAnimationNames();
 
 	const handleFramesChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
 		const value = target.value;
@@ -34,17 +41,13 @@ const CreateDialogContent = ({ isInvalidName }: { isInvalidName: boolean }) => {
 					name='animationId'
 					label='Animation'
 					labelId='animation-label'
+					defaultValue={initialAnimation}
 				>
-					{Object.keys(animations).map((key) => {
-						// const name = useAnimationName(key);
-						const name = 'name';
-
-						return (
-							<MenuItem key={key} value={key}>
-								{name}
-							</MenuItem>
-						);
-					})}
+					{Object.keys(animationsEffects).map((key) => (
+						<MenuItem key={key} value={key}>
+							{animationNames[key]}
+						</MenuItem>
+					))}
 				</Select>
 				<FormHelperText> </FormHelperText>
 			</FormControl>
@@ -85,11 +88,3 @@ const CreateDialogContent = ({ isInvalidName }: { isInvalidName: boolean }) => {
 };
 
 export default CreateDialogContent;
-
-// InputProps={{
-// 	startAdornment: (
-// 		<InputAdornment position='start'>
-// 			<ViewColumn />
-// 		</InputAdornment>
-// 	),
-// }}

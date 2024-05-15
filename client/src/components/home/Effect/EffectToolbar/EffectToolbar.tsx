@@ -1,8 +1,8 @@
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { EffectStateT } from '@/types/effects/effect.types';
 import FrameActions from '../Actions/FrameActions/FrameActions';
-import EffectOptions from '../Actions/Actions';
-import FrameSizeSlider from '../Actions/FrameSizeSlider/FrameSizeSlider';
+import FrameOptions from '../Actions/FrameOptions';
+import ColorSelector from '../../Color/SelectedColor/ColorSelector';
 
 const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefined }) => {
 	return (
@@ -10,14 +10,16 @@ const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefine
 			sx={{
 				display: 'flex',
 				alignItems: 'center',
-				// height: '40',
 				padding: 2,
 				borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+				gap: 1,
 			}}
 		>
 			<FrameActions disabled={!activeEffect} />
-			<EffectOptions />
-			<FrameSizeSlider />
+			<Divider orientation='vertical' flexItem />
+			<FrameOptions />
+			<Divider orientation='vertical' flexItem />
+			<ColorSelector />
 		</Box>
 	);
 };

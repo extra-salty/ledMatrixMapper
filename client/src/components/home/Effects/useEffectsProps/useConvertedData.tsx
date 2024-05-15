@@ -1,6 +1,6 @@
 import { useEffectCollections } from '@/libs/redux/features/effects/data/selector';
 import { EffectsTableRowT } from '@/types/effects/effectTable.types';
-import { useAnimationName } from '@/libs/redux/features/playlist/data/selectors';
+import { useAnimationNames } from '@/libs/redux/features/playlist/data/selectors';
 
 const useConvertedData = (): EffectsTableRowT[] => {
 	const data = useEffectCollections();

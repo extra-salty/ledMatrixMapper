@@ -5,26 +5,34 @@ import { ActionButtonProps } from '@/types/components/components.types';
 import { Add, ContentCopy, Delete, Edit } from '@mui/icons-material';
 import { EffectsTableRowT } from '@/types/effects/effectTable.types';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import GenericMenuItems from '@/components/misc/GenericMenuItems/GenericMenuItems';
 import { appActions } from '@/libs/redux/features/app/slice';
 import { MainTabs } from '@/libs/redux/features/app/appSlice.types';
+import GenericMenuItems from '@/components/misc/GenericMenuItems/GenericMenuItems';
 
 const RowActionMenuItems = ({
 	row,
 	setIsCreateDialogOpen,
-	setIsDeleteDialogOpen,
+	setIsDuplicateDialogOpen,
 }: {
 	row: EffectsTableRowT;
 	setIsCreateDialogOpen: Dispatch<SetStateAction<boolean>>;
-	setIsDeleteDialogOpen: Dispatch<SetStateAction<boolean>>;
+	setIsDuplicateDialogOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
 	const dispatch = useDispatch<AppDispatch>();
 
+	const isAnimation = !!row.effects;
+
 	const items: ActionButtonProps[] = [
+		{
+			text: 'Create Effect',
+			icon: <Add />,
+			hidden: !isAnimation,
+			onClick: () => setIsCreateDialogOpen(true),
+		},
 		{
 			text: 'Edit',
 			icon: <Edit />,
-			hidden: !!row.effects,
+			hidden: isAnimation,
 			onClick: () => {
 				dispatch(
 					effectsDataActions.setActiveEffect({
@@ -38,22 +46,14 @@ const RowActionMenuItems = ({
 		{
 			text: 'Delete',
 			icon: <Delete />,
-			hidden: !!row.effects,
+			hidden: isAnimation,
 			onClick: () => dispatch(effectsDataActions.deleteEffect(row)),
-		},
-		{
-			text: 'Create Effect',
-			icon: <Add />,
-			hidden: !row.effects,
-			onClick: () => {
-				// dispatch(effectsDataActions.addEffect(row));
-			},
 		},
 		{
 			text: 'Duplicate',
 			icon: <ContentCopy />,
-			hidden: !!row.effects,
-			onClick: () => setIsCreateDialogOpen(true),
+			hidden: isAnimation,
+			onClick: () => setIsDuplicateDialogOpen(true),
 		},
 	];
 

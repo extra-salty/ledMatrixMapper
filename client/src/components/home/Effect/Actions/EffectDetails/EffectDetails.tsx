@@ -4,7 +4,7 @@ import {
 	useActiveEffectIds,
 	useEffectCollections,
 } from '@/libs/redux/features/effects/data/selector';
-import { useAnimationName } from '@/libs/redux/features/playlist/data/selectors';
+import { useAnimationNames } from '@/libs/redux/features/playlist/data/selectors';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import {
 	Box,
