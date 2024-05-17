@@ -15,6 +15,8 @@ import {
 	PlaylistRemove,
 } from '@mui/icons-material';
 import GenericMenuItems from '@/components/misc/GenericMenuItems/GenericMenuItems';
+import { appActions } from '@/libs/redux/features/app/slice';
+import { MainTabs } from '@/libs/redux/features/app/appSlice.types';
 
 const RowActionMenuItems = ({
 	rowId,
@@ -27,13 +29,6 @@ const RowActionMenuItems = ({
 
 	const items: ActionButtonProps[] = [
 		{
-			text: 'Console',
-			icon: <Edit />,
-			onClick: () => {
-				console.log(originalRow);
-			},
-		},
-		{
 			text: 'Edit',
 			icon: <Edit />,
 			hidden: originalRow.type !== AnimationChildrenTypesT.effect,
@@ -44,6 +39,7 @@ const RowActionMenuItems = ({
 						animationId: originalRow.animationId,
 					}),
 				);
+				dispatch(appActions.setMainTab(MainTabs.effectCreator));
 			},
 		},
 		{

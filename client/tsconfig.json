@@ -21,7 +21,8 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@styles/": ["./src/styles/*"],
-			"@types/": ["./src/types/*", "./node_modules/realm-web/types/realm"]
+			"@types/": ["./src/types/*", "./node_modules/realm-web/types/realm"],
+			"@public/*": ["./public/*"]
 		},
 		"allowSyntheticDefaultImports": true,
 		"checkJs": true,

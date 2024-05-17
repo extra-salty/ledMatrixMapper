@@ -7,11 +7,12 @@ import { DEFAULT_COLOR } from '@/libs/redux/features/color/slice';
 const NUMBER_OF_COLUMNS = 24;
 const NUMBER_OF_ROWS = 12;
 
-export const newFrameData: ColorT[][] = Array(24).fill(Array(12).fill(DEFAULT_COLOR));
+export const newFrameData = (color: ColorT): ColorT[][] =>
+	Array(24).fill(Array(12).fill(color));
 
 export const createNewFrame = (): FrameStateT => ({
 	id: nanoid(12),
-	data: newFrameData,
+	data: newFrameData(DEFAULT_COLOR),
 	duration: 1000,
 	redo: [],
 	undo: [],

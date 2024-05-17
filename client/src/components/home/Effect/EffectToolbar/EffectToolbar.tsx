@@ -1,8 +1,10 @@
-import { Box, Divider } from '@mui/material';
 import { EffectStateT } from '@/types/effects/effect.types';
+import { Box, Divider } from '@mui/material';
+import ColorActionsGroup from '../ColorActions/ColorActions';
 import FrameActions from '../Actions/FrameActions/FrameActions';
 import FrameOptions from '../Actions/FrameOptions';
 import ColorSelector from '../../Color/SelectedColor/ColorSelector';
+import BrushSizeSlider from '../BrushSizeSlider/BrushSizeSlider';
 
 const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefined }) => {
 	return (
@@ -15,9 +17,13 @@ const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefine
 				gap: 1,
 			}}
 		>
+			<FrameOptions />
+			<Divider orientation='vertical' flexItem />
 			<FrameActions disabled={!activeEffect} />
 			<Divider orientation='vertical' flexItem />
-			<FrameOptions />
+			<ColorActionsGroup />
+			<Divider orientation='vertical' flexItem />
+			<BrushSizeSlider />
 			<Divider orientation='vertical' flexItem />
 			<ColorSelector />
 		</Box>

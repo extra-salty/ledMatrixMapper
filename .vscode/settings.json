@@ -1,4 +1,4 @@
 {
 	"cmake.configureOnOpen": false,
-	"svg.preview.background": "black"
+	"svg.preview.background": "dark-transparent"
 }

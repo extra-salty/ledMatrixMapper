@@ -5,7 +5,7 @@ import {
 	AnimationChildrenTypesT,
 } from '@/types/animation/animation.types';
 import { AnimationTableRowT } from '@/types/animation/animationTable.types';
-import { FocusEvent } from 'react';
+import { ChangeEvent, FocusEvent, useState } from 'react';
 import { TextField } from '@mui/material';
 
 const PlaylistTextInput = ({
@@ -17,6 +17,11 @@ const PlaylistTextInput = ({
 }) => {
 	const dispatch = useDispatch();
 	const { type, animationId, id } = row;
+
+	const [value, setValue] = useState<string | undefined>(row[propertyKey]);
+
+	const handleOnChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
+		setValue(value);
 
 	const handleOnBlur = ({ target: { value } }: FocusEvent<HTMLInputElement>) => {
 		if (type === AnimationChildrenTypesT.animation) {
@@ -43,7 +48,9 @@ const PlaylistTextInput = ({
 		<TextField
 			variant='standard'
 			size='small'
-			defaultValue={row[propertyKey]}
+			// defaultValue={row[propertyKey]}
+			value={value}
+			onChange={handleOnChange}
 			onBlur={handleOnBlur}
 			InputProps={{ disableUnderline: true }}
 			sx={{ maxHeight: '28px' }}

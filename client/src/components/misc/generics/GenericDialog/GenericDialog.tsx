@@ -4,12 +4,16 @@ const GenericDialog = ({
 	open,
 	title,
 	children,
+	submitText,
+	isSubmitDisabled,
 	onClose,
 	onSubmit,
 }: {
 	open: boolean;
 	title: string;
 	children: React.ReactNode;
+	submitText: string;
+	isSubmitDisabled?: boolean;
 	onClose: () => void;
 	onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }) => {
@@ -19,7 +23,7 @@ const GenericDialog = ({
 			onClose={onClose}
 			PaperProps={{
 				component: 'form',
-				sx: { width: '500px' },
+				sx: { minWidth: '500px', maxWidth: 'none' },
 				onSubmit: onSubmit,
 			}}
 		>
@@ -29,8 +33,8 @@ const GenericDialog = ({
 				<Button variant='outlined' onClick={onClose}>
 					Cancel
 				</Button>
-				<Button type='submit' variant='outlined'>
-					Create
+				<Button type='submit' variant='outlined' disabled={isSubmitDisabled}>
+					{submitText}
 				</Button>
 			</DialogActions>
 		</Dialog>

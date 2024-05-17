@@ -12,14 +12,12 @@ const EmptyRowsFallback = () => {
 				color: theme.palette.text.disabled,
 			})}
 		>
+			<Typography variant='body1'>{`Select an animation from the 'Animations' tab`}</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center' }}>
-				<Typography variant='body1'>{`Create an animation with '`}</Typography>
+				<Typography variant='body1'>{`and click on '`}</Typography>
 				<Add fontSize='small' />
-				<Typography variant='body1'>{`' to get started`}</Typography>
+				<Typography variant='body1'>{`' to add a new effect to it.`}</Typography>
 			</Box>
-			<Typography variant='body1'>
-				{'or load the demo data from above (to be added)'}
-			</Typography>
 		</Box>
 	);
 };

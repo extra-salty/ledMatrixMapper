@@ -1,7 +1,7 @@
+import { useSelectedColor } from '@/libs/redux/features/effects/data/selector';
 import { memo, useState } from 'react';
-import { useSelectedColor } from '@/libs/redux/features/color/selectors';
-import { FormatPaint } from '@mui/icons-material';
-import { IconButton, Popover } from '@mui/material';
+import { Square } from '@mui/icons-material';
+import { IconButton, Popover, Tooltip } from '@mui/material';
 import ColorSelectorPopover from './ColorSelectorPopover/ColorSelectorPopover';
 
 const ColorSelector = () => {
@@ -19,7 +19,9 @@ const ColorSelector = () => {
 	return (
 		<>
 			<IconButton onClick={handleClick}>
-				<FormatPaint sx={{ color, stroke: 'rgba(255,255,255,0.6)' }} />
+				<Tooltip title='Selected Color'>
+					<Square sx={{ color, stroke: 'rgba(255,255,255,0.6)' }} />
+				</Tooltip>
 			</IconButton>
 			<Popover
 				id='color-selector-popover'

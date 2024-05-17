@@ -1,9 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { colorActions } from '@/libs/redux/features/color/slice';
+import { DEFAULT_COLOR, colorActions } from '@/libs/redux/features/color/slice';
 import { Attributes } from '@/types/color/color.types';
 import { RestartAlt } from '@mui/icons-material';
 import { Box, IconButton, InputLabel } from '@mui/material';
 import ColorAttributes from '../ColorAttributes/ColorAttributes';
+import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 
 export type AttributeType = {
 	value: number;
@@ -18,7 +19,7 @@ export type AttributeType = {
 const ColorSelectorPopover = () => {
 	const dispatch = useDispatch();
 
-	const handleColorReset = () => dispatch(colorActions.resetColor());
+	const handleColorReset = () => dispatch(effectsDataActions.resetSelectedColor());
 
 	return (
 		<Box

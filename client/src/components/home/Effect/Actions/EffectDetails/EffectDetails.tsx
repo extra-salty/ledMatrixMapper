@@ -1,10 +1,10 @@
 import { memo } from 'react';
+import { useAnimationNames } from '@/libs/redux/features/playlist/data/selectors';
 import { useDispatch } from 'react-redux';
 import {
 	useActiveEffectIds,
 	useEffectCollections,
 } from '@/libs/redux/features/effects/data/selector';
-import { useAnimationNames } from '@/libs/redux/features/playlist/data/selectors';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import {
 	Box,
@@ -27,7 +27,12 @@ const EffectDetails = ({
 	const dispatch = useDispatch();
 
 	const animations = useEffectCollections();
-	const { animationId, effectId } = useActiveEffectIds();
+	const animationNames = useAnimationNames();
+	const activeEffect = useActiveEffectIds();
+
+	const value = activeEffect
+		? `${activeEffect.animationId}/${activeEffect.effectId}`
+		: '';
 
 	const handleEffectChange = (event: SelectChangeEvent) => {
 		const [animationId, effectId] = event.target.value.split('/');
@@ -46,13 +51,12 @@ const EffectDetails = ({
 					variant='standard'
 					label='Selected Effect'
 					labelId='effect-select-label'
-					value={`${animationId}/${effectId}`}
+					value={value}
 					onChange={handleEffectChange}
 				>
 					{Object.entries(animations).map(([animationId, effects]) => [
 						<ListSubheader key={animationId}>
-							Asd
-							{/* {useAnimationName(animationId)} */}
+							{animationNames[animationId]}
 						</ListSubheader>,
 						[
 							Object.entries(effects).map(([effectId, { name }]) => (
@@ -69,13 +73,13 @@ const EffectDetails = ({
 				margin='none'
 				variant='standard'
 				label='Name'
-				disabled={!animationId}
+				disabled={!activeEffect}
 				defaultValue={name}
 				onBlur={(e) => {
 					dispatch(
 						effectsDataActions.updateEffect({
-							animationId,
-							id: effectId,
+							animationId: activeEffect!.animationId,
+							id: activeEffect!.effectId,
 							key: 'name',
 							value: e.target.value,
 						}),
@@ -87,12 +91,12 @@ const EffectDetails = ({
 				variant='standard'
 				label='Description'
 				defaultValue={description}
-				disabled={!effectId}
+				disabled={!activeEffect}
 				onBlur={(e) => {
 					dispatch(
 						effectsDataActions.updateEffect({
-							animationId,
-							id: effectId,
+							animationId: activeEffect!.animationId,
+							id: activeEffect!.effectId,
 							key: 'description',
 							value: e.target.value,
 						}),

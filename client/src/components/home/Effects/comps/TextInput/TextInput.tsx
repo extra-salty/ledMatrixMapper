@@ -44,10 +44,10 @@ const TextInput = ({
 
 	return (
 		<TextField
-			key={row[propertyKey]}
 			fullWidth
 			variant='standard'
 			size='small'
+			// defaultValue={row[propertyKey]}
 			value={value}
 			onChange={handleOnChange}
 			onBlur={handleOnBlur}

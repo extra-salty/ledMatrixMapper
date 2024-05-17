@@ -3,9 +3,8 @@ import { useEffectCollections } from '@/libs/redux/features/effects/data/selecto
 import { AppDispatch } from '@/libs/redux/store';
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
 import CreateDialogContent from './CreateDialogContent/CreateDialogContent';
+import GenericDialog from '@/components/misc/generics/GenericDialog/GenericDialog';
 
 const CreateDialog = ({
 	initialAnimation = '',
@@ -47,29 +46,18 @@ const CreateDialog = ({
 	};
 
 	return (
-		<Dialog
+		<GenericDialog
+			title='Create a new effect'
+			submitText='Create'
 			open={open}
-			PaperProps={{
-				component: 'form',
-				sx: { width: '500px' },
-				onSubmit: handleSubmit,
-			}}
+			onSubmit={handleSubmit}
 			onClose={handleClose}
 		>
-			<DialogTitle>Create a new effect</DialogTitle>
 			<CreateDialogContent
 				initialAnimation={initialAnimation}
 				isInvalidName={isInvalidName}
 			/>
-			<DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-				<Button onClick={handleClose} variant='outlined'>
-					Cancel
-				</Button>
-				<LoadingButton type='submit' variant='outlined'>
-					Create
-				</LoadingButton>
-			</DialogActions>
-		</Dialog>
+		</GenericDialog>
 	);
 };
 

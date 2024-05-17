@@ -1,15 +1,15 @@
+import { ColorT } from '@/types/color/color.types';
 import {
 	ActiveEffectT,
 	EffectStateT,
 	EffectListStateT,
 	EffectCollectionStateT,
 	EffectsSliceT,
-	FrameCellColorPayloadT,
 	FrameStateT,
 	UpdateEffectPayloadT,
 	UpdateFramePayloadT,
-	FrameColumnColorPayloadT,
-	FrameRowColorPayloadT,
+	ColorActions,
+	FrameColorPayloadT,
 } from '@/types/effects/effect.types';
 import {
 	createNewEffect,
@@ -20,17 +20,135 @@ import { EffectsTableRowT } from '@/types/effects/effectTable.types';
 import { CoordinateT } from '@/types/misc/misc.types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
+import { DEFAULT_COLOR } from '../../color/slice';
 
 export const initialState: EffectsSliceT = {
-	activeEffect: { animationId: '', effectId: '' },
+	activeEffect: undefined,
 	animations: {},
 	frameCellStartingCoordinate: { x: 0, y: 0 },
+	brushSize: 1,
+	cellSize: 10,
+	activeColorAction: ColorActions.brush,
+	selectedColor: { hue: 0, saturation: 100, lightness: 50 },
 };
 
 export const effectsDataSlice = createSlice({
 	name: 'effects',
 	initialState,
 	reducers: {
+		//
+		// Color
+		updateColor: (state, action: PayloadAction<{ key: keyof ColorT; value: number }>) => {
+			const { key, value } = action.payload;
+
+			state.selectedColor[key] = value;
+		},
+		resetColor: (state) => {
+			state.selectedColor = DEFAULT_COLOR;
+		},
+		//
+		// Frame Color
+		updateFrameCell: (state, action: PayloadAction<FrameColorPayloadT>) => {
+			const { frameId, coordinate } = action.payload;
+			const { x: xOrig, y: yOrig } = coordinate;
+			const { animationId, effectId } = state.activeEffect!;
+			const brushSize = state.brushSize;
+			console.log('🚀 ~ brushSize:', brushSize);
+			const color = state.selectedColor;
+
+			const frameData = state.animations[animationId][effectId].frames[frameId].data;
+			const frameWidth = frameData.length;
+			const frameHeight = frameData[0].length;
+
+			const startX = Math.max(xOrig - brushSize, 0);
+			const endX = Math.min(xOrig + brushSize, frameWidth - 1);
+			const startY = Math.max(yOrig - brushSize, 0);
+			const endY = Math.min(yOrig + brushSize, frameHeight - 1);
+
+			for (let x = startX; x <= endX; x++) {
+				for (let y = startY; y <= endY; y++) {
+					frameData[x][y] = color;
+				}
+			}
+		},
+		updateFrameRow: (state, action: PayloadAction<FrameColorPayloadT>) => {
+			const {
+				frameId,
+				coordinate: { y },
+			} = action.payload;
+			const { animationId, effectId } = state.activeEffect!;
+			const color = state.selectedColor;
+			const rowsLength =
+				state.animations[animationId][effectId].frames[frameId].data.length;
+
+			Array.from(Array(rowsLength)).forEach((_, i) => {
+				state.animations[animationId][effectId].frames[frameId].data[i][y] = color;
+			});
+		},
+		updateFrameColumn: (state, action: PayloadAction<FrameColorPayloadT>) => {
+			const { animationId, effectId } = state.activeEffect!;
+			const {
+				frameId,
+				coordinate: { x },
+			} = action.payload;
+			const color = state.selectedColor;
+			const columnLength =
+				state.animations[animationId][effectId].frames[frameId].data[0].length;
+
+			Array.from(Array(columnLength)).forEach((_, i) => {
+				state.animations[animationId][effectId].frames[frameId].data[x][i] = color;
+			});
+		},
+		updateFrameDiagonal: (state, action: PayloadAction<FrameColorPayloadT>) => {
+			const { animationId, effectId } = state.activeEffect!;
+			const { x: xStart, y: yStart } = state.frameCellStartingCoordinate;
+			const { frameId, coordinate } = action.payload;
+			const { x: xEnd, y: yEnd } = coordinate;
+			const color = state.selectedColor;
+
+			for (let x = xStart; x <= xEnd; x++) {
+				for (let y = yStart; y <= yEnd; y++) {
+					state.animations[animationId][effectId].frames[frameId].data[x][y] = color;
+				}
+			}
+		},
+		fillFrame: (state, action: PayloadAction<string>) => {
+			const { animationId, effectId } = state.activeEffect!;
+			const color = state.selectedColor;
+			const frameId = action.payload;
+			const data = newFrameData(color);
+
+			state.animations[animationId][effectId].frames[frameId].data = data;
+		},
+		resetFrame: (state, action: PayloadAction<string>) => {
+			const { animationId, effectId } = state.activeEffect!;
+			const frameId = action.payload;
+
+			state.animations[animationId][effectId].frames[frameId].data =
+				newFrameData(DEFAULT_COLOR);
+		},
+		updateSelectedColor: (state, action: PayloadAction<FrameColorPayloadT>) => {
+			const { animationId, effectId } = state.activeEffect!;
+			const {
+				frameId,
+				coordinate: { x, y },
+			} = action.payload;
+
+			const newColor = state.animations[animationId][effectId].frames[frameId].data[x][y];
+			state.selectedColor = newColor;
+		},
+		resetSelectedColor: (state) => {
+			state.selectedColor = DEFAULT_COLOR;
+		},
+		//
+		// Color Options
+		setBrushSize: (state, action: PayloadAction<number>) => {
+			state.brushSize = action.payload;
+		},
+		setActiveColorAction: (state, action: PayloadAction<ColorActions>) => {
+			state.activeColorAction = action.payload;
+		},
+		//
 		///////////// Animation //////////////
 		addAnimation: (
 			state,
@@ -82,51 +200,12 @@ export const effectsDataSlice = createSlice({
 		setFrameCellStartingCoordinate: (state, action: PayloadAction<CoordinateT>) => {
 			state.frameCellStartingCoordinate = action.payload;
 		},
-		updateFrameCell: (state, action: PayloadAction<FrameCellColorPayloadT>) => {
-			const { animationId, effectId } = state.activeEffect;
-			const { frameId, coordinate, color } = action.payload;
-			const { x, y } = coordinate;
-
-			state.animations[animationId][effectId].frames[frameId].data[x][y] = color;
-		},
-		updateFrameColumn: (state, action: PayloadAction<FrameColumnColorPayloadT>) => {
-			const { animationId, effectId } = state.activeEffect;
-			const { frameId, xIndex, color } = action.payload;
-			const columnLength =
-				state.animations[animationId][effectId].frames[frameId].data[0].length;
-
-			Array.from(Array(columnLength)).forEach((_, i) => {
-				state.animations[animationId][effectId].frames[frameId].data[xIndex][i] = color;
-			});
-		},
-		updateFrameRow: (state, action: PayloadAction<FrameRowColorPayloadT>) => {
-			const { animationId, effectId } = state.activeEffect;
-			const { frameId, yIndex, color } = action.payload;
-			const rowsLength =
-				state.animations[animationId][effectId].frames[frameId].data.length;
-
-			Array.from(Array(rowsLength)).forEach((_, i) => {
-				state.animations[animationId][effectId].frames[frameId].data[i][yIndex] = color;
-			});
-		},
-		updateFrameDiagonal: (state, action: PayloadAction<FrameCellColorPayloadT>) => {
-			const { animationId, effectId } = state.activeEffect;
-			const { x: xStart, y: yStart } = state.frameCellStartingCoordinate;
-			const { frameId, coordinate, color } = action.payload;
-			const { x: xEnd, y: yEnd } = coordinate;
-
-			for (let x = xStart; x <= xEnd; x++) {
-				for (let y = yStart; y <= yEnd; y++) {
-					state.animations[animationId][effectId].frames[frameId].data[x][y] = color;
-				}
-			}
-		},
 		//////////////// Frame /////////////////
 		updateFrame: <K extends keyof FrameStateT>(
 			state: EffectsSliceT,
 			action: PayloadAction<UpdateFramePayloadT<K>>,
 		) => {
-			const { animationId, effectId } = state.activeEffect;
+			const { animationId, effectId } = state.activeEffect!;
 			const { frameId, key, value } = action.payload;
 
 			state.animations[animationId][effectId].frames[frameId][key] = value;
@@ -148,7 +227,7 @@ export const effectsDataSlice = createSlice({
 			state,
 			action: PayloadAction<{ activeIndex: number; overIndex: number }>,
 		) => {
-			const { animationId, effectId } = state.activeEffect;
+			const { animationId, effectId } = state.activeEffect!;
 			const { activeIndex, overIndex } = action.payload;
 
 			const frame = state.animations[animationId][effectId].order.splice(
@@ -159,7 +238,7 @@ export const effectsDataSlice = createSlice({
 			state.animations[animationId][effectId].order.splice(overIndex, 0, frame);
 		},
 		addFrame: (state, action: PayloadAction<number | undefined>) => {
-			const { animationId, effectId } = state.activeEffect;
+			const { animationId, effectId } = state.activeEffect!;
 			const index = action.payload;
 			const newFrame = createNewFrame();
 			const newFrameId = newFrame.id;
@@ -175,7 +254,7 @@ export const effectsDataSlice = createSlice({
 			state.animations[animationId][effectId].frames[newFrameId] = newFrame;
 		},
 		duplicateFrame: (state, action: PayloadAction<string>) => {
-			const { animationId, effectId } = state.activeEffect;
+			const { animationId, effectId } = state.activeEffect!;
 			const frameId = action.payload;
 			const newFrameId = nanoid(12);
 			const { id, ...rest } = state.animations[animationId][effectId].frames[frameId];
@@ -188,7 +267,7 @@ export const effectsDataSlice = createSlice({
 			state.animations[animationId][effectId].order.splice(newFrameIndex, 0, newFrameId);
 		},
 		deleteFrame: (state, action: PayloadAction<string>) => {
-			const { animationId, effectId } = state.activeEffect;
+			const { animationId, effectId } = state.activeEffect!;
 			const frameId = action.payload;
 			const deleteIndex = state.animations[animationId][effectId].order.indexOf(frameId);
 
@@ -196,7 +275,7 @@ export const effectsDataSlice = createSlice({
 			delete state.animations[animationId][effectId].frames[frameId];
 		},
 		deleteFrames: (state, action: PayloadAction<string>) => {
-			const { animationId, effectId } = state.activeEffect;
+			const { animationId, effectId } = state.activeEffect!;
 
 			// Object.values(state.animations[animationId][effectId].frames).forEach(({id, disabled}) => {
 			//   if()
@@ -213,15 +292,8 @@ export const effectsDataSlice = createSlice({
 			// state.animations[animationId][effectId].order.splice(deleteIndex, 1);
 			// delete state.animations[animationId][effectId].frames[frameId];
 		},
-		resetFrame: (state, action: PayloadAction<string>) => {
-			const { animationId, effectId } = state.activeEffect;
-			const frameId = action.payload;
-
-			state.animations[animationId][effectId].frames[frameId].data = newFrameData;
-		},
-
 		importFrame: (state, action: PayloadAction<FrameStateT['data']>) => {
-			const { animationId, effectId } = state.activeEffect;
+			const { animationId, effectId } = state.activeEffect!;
 			const data = action.payload;
 			const newFrame = createNewFrame();
 			const modifiedNewFrame = { ...newFrame, data };

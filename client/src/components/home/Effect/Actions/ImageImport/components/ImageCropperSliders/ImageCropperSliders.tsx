@@ -30,7 +30,7 @@ const ImageCropperSliders = ({
 			value: zoom,
 			text: 'Zoom',
 			icon: <ZoomIn />,
-			min: 1,
+			min: 0,
 			max: 3,
 			step: 0.1,
 			onChange: (event, value) => setZoom(value as number),

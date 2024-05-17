@@ -48,6 +48,7 @@ const DuplicateDialog = ({
 		<GenericDialog
 			open={open}
 			title={title}
+			submitText='Duplicate'
 			onSubmit={handleSubmit}
 			onClose={handleClose}
 		>

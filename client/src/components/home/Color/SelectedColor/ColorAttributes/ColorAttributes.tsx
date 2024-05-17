@@ -1,6 +1,6 @@
-import { useSelectedColor } from '@/libs/redux/features/color/selectors';
+import { useSelectedColor } from '@/libs/redux/features/effects/data/selector';
 import { useDispatch } from 'react-redux';
-import { colorActions } from '@/libs/redux/features/color/slice';
+import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import { Attributes, Units } from '@/types/color/color.types';
 import { AttributeType } from '../ColorSelectorPopover/ColorSelectorPopover';
 import { Brightness6, Gradient, Palette } from '@mui/icons-material';
@@ -19,7 +19,7 @@ const ColorAttributes = () => {
 			value: hue,
 			max: 360,
 			onChange: (value: number) =>
-				dispatch(colorActions.updateColor({ key: 'hue', value })),
+				dispatch(effectsDataActions.updateColor({ key: 'hue', value })),
 			id: Attributes.hue,
 			icon: <Palette />,
 			unit: Units.degree,
@@ -28,7 +28,7 @@ const ColorAttributes = () => {
 			value: saturation,
 			max: 100,
 			onChange: (value: number) =>
-				dispatch(colorActions.updateColor({ key: 'saturation', value })),
+				dispatch(effectsDataActions.updateColor({ key: 'saturation', value })),
 			id: Attributes.saturation,
 			icon: <Gradient />,
 			unit: Units.percentage,
@@ -37,7 +37,7 @@ const ColorAttributes = () => {
 			value: lightness,
 			max: 100,
 			onChange: (value: number) =>
-				dispatch(colorActions.updateColor({ key: 'lightness', value })),
+				dispatch(effectsDataActions.updateColor({ key: 'lightness', value })),
 			id: Attributes.lightness,
 			icon: <Brightness6 />,
 			unit: Units.percentage,

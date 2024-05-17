@@ -13,52 +13,44 @@ export const useEffectCollections = () =>
 
 export const useActiveEffect = (): EffectStateT | undefined =>
 	useSelector((state: RootState) => {
-		const { animationId, effectId } = state.effects.data.activeEffect;
-
-		return state.effects.data.animations[animationId][effectId];
-
-		console.log('🚀 ~ useSelector ~ effectId:', effectId);
-		console.log('🚀 ~ useSelector ~ animationId:', animationId);
-		const animationExist = animationId in state.effects.data.animations;
-		console.log('🚀 ~ useSelector ~ animationExist:', animationExist);
-		const effectExist = animationExist
-			? effectId in state.effects.data.animations[animationId].effects
-			: false;
-
-		if (animationExist && effectExist)
+		if (state.effects.data.activeEffect) {
+			const { animationId, effectId } = state.effects.data.activeEffect;
 			return state.effects.data.animations[animationId][effectId];
-		else return undefined;
+		}
 	});
 
 export const useActiveEffectFrames = () =>
 	useSelector((state: RootState) => {
-		const { animationId, effectId } = state.effects.data.activeEffect;
-		const animationExist = animationId in state.effects.data.animations;
-		const effectExist = animationExist
-			? effectId in state.effects.data.animations[animationId].effects
-			: false;
+		if (state.effects.data.activeEffect) {
+			const { animationId, effectId } = state.effects.data.activeEffect;
+			return state.effects.data.animations[animationId][effectId].frames;
+		}
+	});
 
-		// if (animationExist && effectExist)
-		return state.effects.data.animations[animationId][effectId].frames;
-		// else return undefined;
+export const useActiveEffectFrames2 = () =>
+	useSelector((state: RootState) => {
+		if (state.effects.data.activeEffect) {
+			const { animationId, effectId } = state.effects.data.activeEffect;
+
+			const { frames, order } = state.effects.data.animations[animationId][effectId];
+
+			return order.map((frameId) => frames[frameId]);
+		}
 	});
 
 export const useActiveDragFrame = (frameId: string): FrameStateT | undefined =>
 	useSelector((state: RootState) => {
-		const { animationId, effectId } = state.effects.data.activeEffect;
-		if (!animationId || !effectId) return undefined;
-
-		const exist = frameId in state.effects.data.animations[animationId][effectId].frames;
-
-		if (exist)
+		if (state.effects.data.activeEffect) {
+			const { animationId, effectId } = state.effects.data.activeEffect;
 			return state.effects.data.animations[animationId][effectId].frames[frameId];
-		else return undefined;
+		}
 	});
 
-export const useEffectNames = (): string[] =>
-	useSelector((state: RootState) => {
-		const effects = state.effects.data.animations;
+export const useBrushSize = () =>
+	useSelector((state: RootState) => state.effects.data.brushSize);
 
-		return [];
-		// return Object.values(effects).map((effect) => effect.animationName);
-	});
+export const useActiveColorAction = () =>
+	useSelector((state: RootState) => state.effects.data.activeColorAction);
+
+export const useSelectedColor = () =>
+	useSelector((state: RootState) => state.effects.data.selectedColor);

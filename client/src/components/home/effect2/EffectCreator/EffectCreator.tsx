@@ -10,6 +10,7 @@ import ColorSelector from '@/components/home/Color/SelectedColor/ColorSelector';
 import EffectToolbar from '../../Effect/EffectToolbar/EffectToolbar';
 import FrameGridWrapper from '../../Effect/FrameGridWrapper/FrameGridWrapper';
 import EffectDetails from '../../Effect/Actions/EffectDetails/EffectDetails';
+import FramesTable from '../../Effect/FramesTable/FramesTable';
 
 const EffectCreator = () => {
 	const activeEffect = useActiveEffect();
@@ -47,6 +48,7 @@ const EffectCreator = () => {
 							description={activeEffect?.description}
 						/>
 					</Box>
+					{/* <FramesTable /> */}
 				</Box>
 			</Panel>
 			<ResizeHandle />

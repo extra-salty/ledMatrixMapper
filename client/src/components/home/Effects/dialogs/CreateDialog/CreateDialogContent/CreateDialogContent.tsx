@@ -27,13 +27,13 @@ const CreateDialogContent = ({
 	const handleFramesChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
 		const value = target.value;
 		const numericValue = Number(value.replace(/[^0-9]/g, ''));
-		const limitedValue = Math.max(1, Math.min(50, numericValue));
+		const limitedValue = Math.max(1, Math.min(99, numericValue));
 
 		setFrames(limitedValue);
 	};
 
 	return (
-		<DialogContent dividers sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+		<Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
 			<FormControl required fullWidth>
 				<InputLabel id='animation-label'>Animation</InputLabel>
 				<Select
@@ -67,12 +67,11 @@ const CreateDialogContent = ({
 					type='number'
 					id='frames'
 					name='frames'
-					label='Number of frames'
+					label='Frames'
 					variant='outlined'
-					helperText='Between 1 and 50'
 					value={frames}
 					onChange={handleFramesChange}
-					sx={{ width: '200px' }}
+					sx={{ width: '100px' }}
 				/>
 			</Box>
 			<TextField
@@ -83,7 +82,7 @@ const CreateDialogContent = ({
 				type='text'
 				variant='outlined'
 			/>
-		</DialogContent>
+		</Box>
 	);
 };
 

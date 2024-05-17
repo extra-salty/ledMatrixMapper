@@ -2,10 +2,21 @@ import { ColorT } from '../color/color.types';
 import { CoordinateT, RecordT } from '../misc/misc.types';
 
 export type EffectsSliceT = {
-	activeEffect: ActiveEffectT;
+	activeEffect: ActiveEffectT | undefined;
 	animations: EffectCollectionStateT;
 	frameCellStartingCoordinate: CoordinateT;
+	brushSize: number;
+	cellSize: number;
+	activeColorAction: ColorActions;
+	selectedColor: ColorT;
 };
+
+export enum ColorActions {
+	brush = 'brush',
+	pipette = 'pipette',
+	fill = 'fill',
+	clear = 'clear',
+}
 
 export type EffectCollectionStateT = RecordT<EffectListStateT>;
 
@@ -39,6 +50,8 @@ export type FrameCellHistoryT = {
 	redo?: FrameCellT[];
 };
 
+export type FrameDataT = ColorT[][];
+
 export type FrameCellT = {
 	coordinate: CoordinateT;
 	value: ColorT;
@@ -62,19 +75,7 @@ export type ActiveEffectT = {
 
 export type FrameColorPayloadT = {
 	frameId: string;
-	color: ColorT;
-};
-
-export type FrameCellColorPayloadT = FrameColorPayloadT & {
 	coordinate: CoordinateT;
-};
-
-export type FrameColumnColorPayloadT = FrameColorPayloadT & {
-	xIndex: number;
-};
-
-export type FrameRowColorPayloadT = FrameColorPayloadT & {
-	yIndex: number;
 };
 
 export type UpdateFramePayloadT<K extends keyof FrameStateT> = {
