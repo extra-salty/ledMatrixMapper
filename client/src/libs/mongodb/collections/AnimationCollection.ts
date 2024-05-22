@@ -143,7 +143,7 @@ export class AnimationCollection {
 				{
 					...rest,
 					frames: Object.fromEntries(
-						Object.entries(frames).map(([key, { undo, redo, ...rest }]) => [
+						Object.entries(frames).map(([key, { history, ...rest }]) => [
 							key,
 							{
 								...rest,

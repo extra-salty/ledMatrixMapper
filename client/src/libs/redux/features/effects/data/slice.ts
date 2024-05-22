@@ -1,15 +1,9 @@
 import { ColorT } from '@/types/color/color.types';
 import {
-	ActiveEffectT,
 	EffectStateT,
 	EffectListStateT,
 	EffectCollectionStateT,
-	EffectsSliceT,
 	FrameStateT,
-	UpdateEffectPayloadT,
-	UpdateFramePayloadT,
-	ColorActions,
-	FrameColorPayloadT,
 } from '@/types/effects/effect.types';
 import {
 	createNewEffect,
@@ -21,6 +15,14 @@ import { CoordinateT } from '@/types/misc/misc.types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { DEFAULT_COLOR } from '../../color/slice';
+import {
+	ActiveEffectT,
+	ColorActions,
+	EffectsSliceT,
+	FrameColorPayloadT,
+	UpdateEffectPayloadT,
+	UpdateFramePayloadT,
+} from '@/types/effects/effectPayload.types';
 
 export const initialState: EffectsSliceT = {
 	activeEffect: undefined,
@@ -53,7 +55,6 @@ export const effectsDataSlice = createSlice({
 			const { x: xOrig, y: yOrig } = coordinate;
 			const { animationId, effectId } = state.activeEffect!;
 			const brushSize = state.brushSize;
-			console.log('🚀 ~ brushSize:', brushSize);
 			const color = state.selectedColor;
 
 			const frameData = state.animations[animationId][effectId].frames[frameId].data;
@@ -68,6 +69,32 @@ export const effectsDataSlice = createSlice({
 			for (let x = startX; x <= endX; x++) {
 				for (let y = startY; y <= endY; y++) {
 					frameData[x][y] = color;
+				}
+			}
+		},
+		updateEveryFrameCell: (state, action: PayloadAction<CoordinateT>) => {
+			const { x: xOrig, y: yOrig } = action.payload;
+			const { animationId, effectId } = state.activeEffect!;
+			const brushSize = state.brushSize;
+			const color = state.selectedColor;
+
+			const firstFrameId = state.animations[animationId][effectId].order[0];
+			const frameData = state.animations[animationId][effectId].frames[firstFrameId].data;
+			const frameWidth = frameData.length;
+			const frameHeight = frameData[0].length;
+
+			const startX = Math.max(xOrig - brushSize, 0);
+			const endX = Math.min(xOrig + brushSize, frameWidth - 1);
+			const startY = Math.max(yOrig - brushSize, 0);
+			const endY = Math.min(yOrig + brushSize, frameHeight - 1);
+
+			for (let frameId in state.animations[animationId][effectId].frames) {
+				const frameData = state.animations[animationId][effectId].frames[frameId].data;
+
+				for (let x = startX; x <= endX; x++) {
+					for (let y = startY; y <= endY; y++) {
+						frameData[x][y] = color;
+					}
 				}
 			}
 		},

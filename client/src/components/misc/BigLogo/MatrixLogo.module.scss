@@ -1,11 +1,5 @@
 $border: 2px solid white;
 
-.grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(3, 1fr);
-}
-
 .cell {
 	width: 36px;
 	height: 36px;

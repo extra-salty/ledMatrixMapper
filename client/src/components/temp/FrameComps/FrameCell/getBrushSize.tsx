@@ -1,4 +1,4 @@
-import { ColorActions } from '@/types/effects/effect.types';
+import { ColorActions } from '@/types/effects/effectPayload.types';
 
 const useCursor = ({
 	colorAction,

@@ -1,7 +1,6 @@
 'use client';
 import { AppBar, Box } from '@mui/material';
 import AppToolbar from './AppToolbar/AppToolbar';
-import Logo from '../../misc/Logo/Logo';
 import DeviceToolbar from './DeviceToolbar/DeviceToolbar';
 
 const Header = () => {
@@ -24,9 +23,7 @@ const Header = () => {
 					top: '50%',
 					transform: 'translate(-50%, -50%)',
 				}}
-			>
-				<Logo />
-			</Box>
+			></Box>
 			<AppToolbar />
 		</AppBar>
 	);

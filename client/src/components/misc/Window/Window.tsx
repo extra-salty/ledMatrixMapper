@@ -1,6 +1,6 @@
 'use client';
 import { Box, Paper } from '@mui/material';
-import MatrixLogo from '../Logo2/MatrixLogo';
+import BigLogo from '../BigLogo/MatrixLogo';
 
 const Window = ({ children }: { children: React.ReactNode }) => {
 	return (
@@ -24,7 +24,7 @@ const Window = ({ children }: { children: React.ReactNode }) => {
 					padding: '25px 50px 10px 50px',
 				}}
 			>
-				<MatrixLogo />
+				<BigLogo />
 				<Box
 					component='main'
 					sx={{

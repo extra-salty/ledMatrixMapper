@@ -1,11 +1,11 @@
 'use client';
 import { useEffect } from 'react';
 import { initializeBackground } from '@/misc/background/initializeBackground';
+import { Box, Paper, useMediaQuery, useTheme } from '@mui/material';
 import AppProvider from '@/providers/AppProvider/AppProvider';
 import Script from 'next/script';
-import { Box, Paper, useMediaQuery, useTheme } from '@mui/material';
+import BigLogo from '@/components/misc/BigLogo/MatrixLogo';
 import UserLayoutFooter from '@/components/user/UserLayoutFooter/UserLayoutFooter';
-import MatrixLogo from '@/components/misc/Logo2/MatrixLogo';
 
 declare global {
 	interface Window {
@@ -72,7 +72,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 							},
 						}}
 					>
-						<MatrixLogo />
+						<BigLogo />
 						<Box
 							component='main'
 							sx={{

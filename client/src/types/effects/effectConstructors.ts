@@ -14,8 +14,10 @@ export const createNewFrame = (): FrameStateT => ({
 	id: nanoid(12),
 	data: newFrameData(DEFAULT_COLOR),
 	duration: 1000,
-	redo: [],
-	undo: [],
+	history: {
+		redo: [],
+		undo: [],
+	},
 });
 
 export const mockFrame = { ...createNewFrame(), duration: 0 };

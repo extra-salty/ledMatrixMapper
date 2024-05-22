@@ -1,23 +1,6 @@
 import { ColorT } from '../color/color.types';
 import { CoordinateT, RecordT } from '../misc/misc.types';
 
-export type EffectsSliceT = {
-	activeEffect: ActiveEffectT | undefined;
-	animations: EffectCollectionStateT;
-	frameCellStartingCoordinate: CoordinateT;
-	brushSize: number;
-	cellSize: number;
-	activeColorAction: ColorActions;
-	selectedColor: ColorT;
-};
-
-export enum ColorActions {
-	brush = 'brush',
-	pipette = 'pipette',
-	fill = 'fill',
-	clear = 'clear',
-}
-
 export type EffectCollectionStateT = RecordT<EffectListStateT>;
 
 export type EffectListBaseT = RecordT<EffectBaseT>;
@@ -43,16 +26,21 @@ export type FrameBaseT = {
 	disabled?: boolean;
 };
 
-export type FrameStateT = FrameBaseT & FrameCellHistoryT;
+export type FrameStateT = FrameBaseT & { history?: FrameCellHistoryT };
+
+export type FrameCellT = {
+	isLocked: boolean;
+	color: ColorT;
+};
 
 export type FrameCellHistoryT = {
-	undo?: FrameCellT[];
-	redo?: FrameCellT[];
+	undo?: FrameCellHistoryItemT[];
+	redo?: FrameCellHistoryItemT[];
 };
 
 export type FrameDataT = ColorT[][];
 
-export type FrameCellT = {
+export type FrameCellHistoryItemT = {
 	coordinate: CoordinateT;
 	value: ColorT;
 };
@@ -67,26 +55,3 @@ export enum FrameHistoryTypes {
 	added = 'added',
 	deleted = 'deleted',
 }
-
-export type ActiveEffectT = {
-	animationId: string;
-	effectId: string;
-};
-
-export type FrameColorPayloadT = {
-	frameId: string;
-	coordinate: CoordinateT;
-};
-
-export type UpdateFramePayloadT<K extends keyof FrameStateT> = {
-	frameId: string;
-	key: K;
-	value: FrameStateT[K];
-};
-
-export type UpdateEffectPayloadT<K extends keyof EffectStateT> = {
-	animationId: string;
-	id: string;
-	key: K;
-	value: EffectStateT[K];
-};

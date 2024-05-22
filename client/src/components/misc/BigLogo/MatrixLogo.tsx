@@ -1,10 +1,11 @@
 import { useApp_temp } from '@/providers/useApp_temp/useApp_temp';
 import { Box, Link, Typography, useMediaQuery } from '@mui/material';
-import styles from './MatrixLogo.module.scss';
 import { Routes } from '@/misc/hooks/useRoutes/useRoutes';
+import styles from './MatrixLogo.module.scss';
 
-const MatrixLogo = () => {
+const BigLogo = () => {
 	const logoLetters: string[] = ['L', 'E', 'D', 'M', 'A', 'T', 'R', 'I', 'X'];
+	const mapperLetters: string[] = ['M', 'A', 'P', 'P', 'E', 'R'];
 
 	const minHeight700 = useMediaQuery('(min-height:700px)', { noSsr: false });
 
@@ -22,19 +23,33 @@ const MatrixLogo = () => {
 					justifyContent: 'center',
 				}}
 			>
-				<div className={styles.grid}>
+				<Box
+					sx={{
+						display: 'grid',
+						gridTemplateColumns: 'repeat(3, 1fr)',
+						gridTemplateRows: 'repeat(3, 1fr)',
+					}}
+				>
 					{logoLetters.map((letter, i) => (
 						<div key={i} className={styles.cell}>
 							{letter}
 						</div>
 					))}
-				</div>
-				<Typography fontWeight={600} letterSpacing={'5px'} sx={{ color: 'white' }}>
-					MAPPER
-				</Typography>
+				</Box>
+				<Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+					{mapperLetters.map((letter) => (
+						<Typography key={letter} fontWeight={600} sx={{ color: 'white' }}>
+							{letter}
+						</Typography>
+					))}
+				</Box>
 			</Box>
 		</Link>
 	);
 };
 
-export default MatrixLogo;
+export default BigLogo;
+
+{
+	/* <a href={user ? Routes.Home : Routes.Login}> */
+}

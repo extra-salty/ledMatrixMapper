@@ -61,6 +61,10 @@ const FrameMenu = ({
 			id='frame-menu'
 			open={isOpen}
 			anchorEl={anchorEl}
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'right',
+			}}
 			onClose={handleClose}
 			onClick={handleClose}
 			MenuListProps={{

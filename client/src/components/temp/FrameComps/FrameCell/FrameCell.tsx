@@ -9,8 +9,8 @@ import { AppDispatch } from '@/libs/redux/store';
 import { ColorT } from '@/types/color/color.types';
 import { CoordinateT } from '@/types/misc/misc.types';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import { ColorActions, FrameColorPayloadT } from '@/types/effects/effect.types';
 import styles from './FrameCell.module.scss';
+import { ColorActions, FrameColorPayloadT } from '@/types/effects/effectPayload.types';
 
 const FrameCell = ({
 	frameId,
@@ -61,6 +61,10 @@ const FrameCell = ({
 						dispatch(effectsDataActions.setFrameCellStartingCoordinate(coordinate));
 						dispatch(effectsDataActions.updateFrameCell(payload));
 					}
+					break;
+				}
+				case ColorActions.brushAll: {
+					dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
 					break;
 				}
 				default: {

@@ -16,7 +16,7 @@ const DeviceDrawer = ({
 			onClose={() => setOpen(false)}
 			PaperProps={{
 				sx: {
-					width: '350px',
+					width: '450px',
 					padding: '50px',
 				},
 			}}

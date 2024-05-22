@@ -22,9 +22,8 @@ const AccountDrawer = ({
 				onClose={() => setOpen(false)}
 				PaperProps={{
 					sx: {
-						width: '350px',
+						width: '450px',
 						padding: '50px',
-						height: 'calc(100% - 100px)',
 					},
 				}}
 				sx={{

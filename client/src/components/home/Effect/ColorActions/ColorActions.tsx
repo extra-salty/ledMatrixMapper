@@ -2,9 +2,15 @@ import { useActiveColorAction } from '@/libs/redux/features/effects/data/selecto
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/libs/redux/store';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import { ColorActions } from '@/types/effects/effect.types';
 import { ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import { Brush, FormatColorReset, FormatColorFill, Colorize } from '@mui/icons-material';
+import {
+	Brush,
+	FormatColorReset,
+	FormatColorFill,
+	Colorize,
+	FormatPaint,
+} from '@mui/icons-material';
+import { ColorActions } from '@/types/effects/effectPayload.types';
 
 const ColorActionsGroup = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -26,6 +32,11 @@ const ColorActionsGroup = () => {
 			<ToggleButton value={ColorActions.brush} aria-label='brush'>
 				<Tooltip title='Brush'>
 					<Brush />
+				</Tooltip>
+			</ToggleButton>
+			<ToggleButton value={ColorActions.brushAll} aria-label='brush-'>
+				<Tooltip title='Brush All'>
+					<FormatPaint />
 				</Tooltip>
 			</ToggleButton>
 			<ToggleButton value={ColorActions.fill} aria-label='fill'>

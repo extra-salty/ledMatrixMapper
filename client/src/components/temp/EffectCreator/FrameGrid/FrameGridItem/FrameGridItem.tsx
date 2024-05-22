@@ -7,6 +7,7 @@ import FrameSelector from './FrameSelector/FrameSelector';
 import FrameActions from './FrameActions/FrameActions';
 import Frame from '../../../FrameComps/Frame/Frame';
 import FrameDuration from './FrameDuration/FrameDuration';
+import FrameColorCoverage from './FrameColorCoverage/FrameColorCoverage';
 
 const FrameGridItem = ({
 	frameIndex,

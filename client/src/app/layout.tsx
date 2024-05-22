@@ -16,7 +16,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-	title: 'Vibe',
+	title: 'LED Matrix Mapper',
 	description: '',
 };
 
