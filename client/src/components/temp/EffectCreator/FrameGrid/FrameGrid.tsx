@@ -15,9 +15,9 @@ const FrameGrid = ({ frames }: { frames: FrameStateT[] }) => {
 				sx={{
 					display: 'grid',
 					gap: '15px',
-					gridTemplateColumns: `repeat(auto-fit, minmax(${
-						frameWidth * 100 + 200
-					}px, 1fr))`,
+					// gridTemplateColumns: `repeat(auto-fit, minmax(${
+					// 	frameWidth * 100 + 200
+					// }px, 1fr))`,
 				}}
 			>
 				{frames.map((frame, i) => (

@@ -25,7 +25,11 @@ const useTheme = (themeMode: ThemeModeT): Theme => {
 			},
 		},
 		typography: {
-			// fontFamily: 'inherit',
+			fontFamily: 'inherit',
+			// fontWeightLight: 300,
+			// fontWeightRegular: 300,
+			// fontWeightMedium: 400,
+			// fontWeightBold: 500,
 			button: {
 				textTransform: 'none',
 			},

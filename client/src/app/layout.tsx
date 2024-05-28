@@ -1,17 +1,18 @@
 import type { Metadata } from 'next';
-import { Raleway, Roboto } from 'next/font/google';
+import { Jura, Comfortaa } from 'next/font/google';
 import { Paper } from '@mui/material';
 import ThemeProvider from '@/providers/ThemeProvider/ThemeProvider';
 import './_global.scss';
 
-export const raleway = Raleway({
-	weight: ['300', '400', '500', '700'],
-	style: ['normal', 'italic'],
+export const comfortaa = Comfortaa({
+	weight: ['300', '400', '500', '600', '700'],
+	style: ['normal'],
 	subsets: ['latin'],
 });
 
-const roboto = Roboto({
-	weight: ['300', '400', '500', '700'],
+export const jura = Jura({
+	weight: ['300', '400', '500', '600', '700'],
+	style: ['normal'],
 	subsets: ['latin'],
 });
 
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<html lang='en'>
-			<body className={roboto.className}>
+			<body className={jura.className}>
 				<ThemeProvider themeMode='dark'>
 					<Paper
 						square

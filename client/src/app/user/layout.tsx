@@ -30,7 +30,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 			<Script
 				src='/finisher-header.es5.min.js'
 				strategy='afterInteractive'
-				onReady={() => initializeBackground()}
+				// onReady={() => initializeBackground()}
 			/>
 			<div
 				style={{

@@ -54,3 +54,6 @@ export const useActiveColorAction = () =>
 
 export const useSelectedColor = () =>
 	useSelector((state: RootState) => state.effects.data.selectedColor);
+
+export const useFrameCellSelection = () =>
+	useSelector((state: RootState) => state.effects.data.frameCellSelection);

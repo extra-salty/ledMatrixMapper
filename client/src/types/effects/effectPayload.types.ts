@@ -5,11 +5,17 @@ import { EffectCollectionStateT, EffectStateT, FrameStateT } from './effect.type
 export type EffectsSliceT = {
 	activeEffect: ActiveEffectT | undefined;
 	animations: EffectCollectionStateT;
-	frameCellStartingCoordinate: CoordinateT;
 	brushSize: number;
 	cellSize: number;
 	activeColorAction: ColorActions;
 	selectedColor: ColorT;
+	frameCellSelection: FrameCellSelectionT | undefined;
+};
+
+export type FrameCellSelectionT = {
+	frameId: string;
+	startCoordinate: CoordinateT;
+	endCoordinate: CoordinateT;
 };
 
 export type ActiveEffectT = {
@@ -23,14 +29,10 @@ export enum ColorActions {
 	pipette = 'pipette',
 	fill = 'fill',
 	clear = 'clear',
+	select = 'select',
 }
 
-export type FrameColorPayloadT = {
-	frameId: string;
-	coordinate: CoordinateT;
-};
-
-export type FramesColorPayloadT = {
+export type FrameColorActionPayloadT = {
 	frameId: string;
 	coordinate: CoordinateT;
 };

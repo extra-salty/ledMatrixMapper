@@ -9,6 +9,8 @@ import {
 	FormatColorFill,
 	Colorize,
 	FormatPaint,
+	SelectAll,
+	HighlightAlt,
 } from '@mui/icons-material';
 import { ColorActions } from '@/types/effects/effectPayload.types';
 
@@ -52,6 +54,11 @@ const ColorActionsGroup = () => {
 			<ToggleButton value={ColorActions.clear} aria-label='pipette'>
 				<Tooltip title='Clear'>
 					<FormatColorReset />
+				</Tooltip>
+			</ToggleButton>
+			<ToggleButton value={ColorActions.select} aria-label='select'>
+				<Tooltip title='Select'>
+					<HighlightAlt />
 				</Tooltip>
 			</ToggleButton>
 		</ToggleButtonGroup>

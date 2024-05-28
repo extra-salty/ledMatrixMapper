@@ -1,6 +1,7 @@
-import { ColorActions } from '@/types/effects/effectPayload.types';
+import { ColorActions, FrameCellSelectionT } from '@/types/effects/effectPayload.types';
+import { CoordinateT } from '@/types/misc/misc.types';
 
-const useCursor = ({
+export const useCursor = ({
 	colorAction,
 	brushSize,
 }: {
@@ -26,4 +27,17 @@ const useCursor = ({
 	}
 };
 
-export default useCursor;
+export const checkIfSelected = (
+	cellCoordinate: CoordinateT,
+	selection: FrameCellSelectionT,
+): boolean => {
+	return (
+		cellCoordinate.x >=
+			Math.min(selection.startCoordinate.x, selection.endCoordinate.x) &&
+		cellCoordinate.x <=
+			Math.max(selection.startCoordinate.x, selection.endCoordinate.x) &&
+		cellCoordinate.y >=
+			Math.min(selection.startCoordinate.y, selection.endCoordinate.y) &&
+		cellCoordinate.y <= Math.max(selection.startCoordinate.y, selection.endCoordinate.y)
+	);
+};

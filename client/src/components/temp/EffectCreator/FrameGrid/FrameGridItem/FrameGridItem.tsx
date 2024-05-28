@@ -8,6 +8,7 @@ import FrameActions from './FrameActions/FrameActions';
 import Frame from '../../../FrameComps/Frame/Frame';
 import FrameDuration from './FrameDuration/FrameDuration';
 import FrameColorCoverage from './FrameColorCoverage/FrameColorCoverage';
+import { useEffectPlayerOptions } from '@/libs/redux/features/effectEditor/selectors';
 
 const FrameGridItem = ({
 	frameIndex,
@@ -21,6 +22,9 @@ const FrameGridItem = ({
 	disabledExternally?: boolean;
 }) => {
 	const { id, data, duration, disabled } = frame;
+
+	const { borderEnabled, blur } = useEffectPlayerOptions();
+	console.log('🚀 ~ blur:', blur);
 
 	const {
 		setNodeRef,
@@ -79,7 +83,13 @@ const FrameGridItem = ({
 				</Tooltip>
 				<FrameActions frameIndex={frameIndex} frame={frame} />
 			</Box>
-			<Frame frameId={id} frameData={data} isDisabled={isDisabled} showBorder={true} />
+			<Frame
+				frameId={id}
+				frameData={data}
+				isDisabled={isDisabled}
+				showBorder={true}
+				blur={blur}
+			/>
 			<FrameDuration frameId={id} duration={duration} />
 		</Paper>
 	);

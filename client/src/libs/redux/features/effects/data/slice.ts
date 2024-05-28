@@ -19,7 +19,7 @@ import {
 	ActiveEffectT,
 	ColorActions,
 	EffectsSliceT,
-	FrameColorPayloadT,
+	FrameColorActionPayloadT,
 	UpdateEffectPayloadT,
 	UpdateFramePayloadT,
 } from '@/types/effects/effectPayload.types';
@@ -27,11 +27,11 @@ import {
 export const initialState: EffectsSliceT = {
 	activeEffect: undefined,
 	animations: {},
-	frameCellStartingCoordinate: { x: 0, y: 0 },
 	brushSize: 1,
 	cellSize: 10,
 	activeColorAction: ColorActions.brush,
 	selectedColor: { hue: 0, saturation: 100, lightness: 50 },
+	frameCellSelection: undefined,
 };
 
 export const effectsDataSlice = createSlice({
@@ -50,7 +50,7 @@ export const effectsDataSlice = createSlice({
 		},
 		//
 		// Frame Color
-		updateFrameCell: (state, action: PayloadAction<FrameColorPayloadT>) => {
+		updateFrameCell: (state, action: PayloadAction<FrameColorActionPayloadT>) => {
 			const { frameId, coordinate } = action.payload;
 			const { x: xOrig, y: yOrig } = coordinate;
 			const { animationId, effectId } = state.activeEffect!;
@@ -98,7 +98,7 @@ export const effectsDataSlice = createSlice({
 				}
 			}
 		},
-		updateFrameRow: (state, action: PayloadAction<FrameColorPayloadT>) => {
+		updateFrameRow: (state, action: PayloadAction<FrameColorActionPayloadT>) => {
 			const {
 				frameId,
 				coordinate: { y },
@@ -112,7 +112,7 @@ export const effectsDataSlice = createSlice({
 				state.animations[animationId][effectId].frames[frameId].data[i][y] = color;
 			});
 		},
-		updateFrameColumn: (state, action: PayloadAction<FrameColorPayloadT>) => {
+		updateFrameColumn: (state, action: PayloadAction<FrameColorActionPayloadT>) => {
 			const { animationId, effectId } = state.activeEffect!;
 			const {
 				frameId,
@@ -126,18 +126,17 @@ export const effectsDataSlice = createSlice({
 				state.animations[animationId][effectId].frames[frameId].data[x][i] = color;
 			});
 		},
-		updateFrameDiagonal: (state, action: PayloadAction<FrameColorPayloadT>) => {
-			const { animationId, effectId } = state.activeEffect!;
-			const { x: xStart, y: yStart } = state.frameCellStartingCoordinate;
-			const { frameId, coordinate } = action.payload;
-			const { x: xEnd, y: yEnd } = coordinate;
-			const color = state.selectedColor;
-
-			for (let x = xStart; x <= xEnd; x++) {
-				for (let y = yStart; y <= yEnd; y++) {
-					state.animations[animationId][effectId].frames[frameId].data[x][y] = color;
-				}
-			}
+		updateFrameDiagonal: (state, action: PayloadAction<FrameColorActionPayloadT>) => {
+			// const { animationId, effectId } = state.activeEffect!;
+			// const { x: xStart, y: yStart } = state.frameCellStartingCoordinate;
+			// const { frameId, coordinate } = action.payload;
+			// const { x: xEnd, y: yEnd } = coordinate;
+			// const color = state.selectedColor;
+			// for (let x = xStart; x <= xEnd; x++) {
+			// 	for (let y = yStart; y <= yEnd; y++) {
+			// 		state.animations[animationId][effectId].frames[frameId].data[x][y] = color;
+			// 	}
+			// }
 		},
 		fillFrame: (state, action: PayloadAction<string>) => {
 			const { animationId, effectId } = state.activeEffect!;
@@ -154,7 +153,7 @@ export const effectsDataSlice = createSlice({
 			state.animations[animationId][effectId].frames[frameId].data =
 				newFrameData(DEFAULT_COLOR);
 		},
-		updateSelectedColor: (state, action: PayloadAction<FrameColorPayloadT>) => {
+		updateSelectedColor: (state, action: PayloadAction<FrameColorActionPayloadT>) => {
 			const { animationId, effectId } = state.activeEffect!;
 			const {
 				frameId,
@@ -163,6 +162,21 @@ export const effectsDataSlice = createSlice({
 
 			const newColor = state.animations[animationId][effectId].frames[frameId].data[x][y];
 			state.selectedColor = newColor;
+		},
+		setFrameCellSelectionStart: (
+			state,
+			action: PayloadAction<FrameColorActionPayloadT>,
+		) => {
+			const { frameId, coordinate } = action.payload;
+
+			state.frameCellSelection = {
+				frameId,
+				startCoordinate: coordinate,
+				endCoordinate: coordinate,
+			};
+		},
+		setFrameCellSelectionEnd: (state, action: PayloadAction<CoordinateT>) => {
+			state.frameCellSelection!.endCoordinate = action.payload;
 		},
 		resetSelectedColor: (state) => {
 			state.selectedColor = DEFAULT_COLOR;
@@ -222,10 +236,6 @@ export const effectsDataSlice = createSlice({
 			const { animationId, id, key, value } = action.payload;
 
 			state.animations[animationId][id][key] = value;
-		},
-		//////////////// Cell /////////////////
-		setFrameCellStartingCoordinate: (state, action: PayloadAction<CoordinateT>) => {
-			state.frameCellStartingCoordinate = action.payload;
 		},
 		//////////////// Frame /////////////////
 		updateFrame: <K extends keyof FrameStateT>(
