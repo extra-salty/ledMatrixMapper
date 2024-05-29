@@ -44,9 +44,7 @@ const FrameSelector = ({
 				{...dragListeners}
 				{...dragAttributes}
 			>
-				<Tooltip title='Drag Handle'>
-					<OpenWith fontSize='small' />
-				</Tooltip>
+				<OpenWith fontSize='small' />
 			</IconButton>
 			<Tooltip title={disabled ? 'Enable Frame' : 'Disable Frame'}>
 				<Checkbox

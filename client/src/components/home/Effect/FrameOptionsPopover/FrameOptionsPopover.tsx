@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { BorderStyle, Filter1 } from '@mui/icons-material';
 import { Box, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import FrameSizeSlider from '../Actions/FrameSizeSlider/FrameSizeSlider';
+import FrameCellSizeSlider from '../Actions/FrameCellSizeSlider/FrameCellSizeSlider';
 
 const FrameOptionsPopover = () => {
 	const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const FrameOptionsPopover = () => {
 					</Tooltip>
 				</ToggleButton>
 			</ToggleButtonGroup>
-			<FrameSizeSlider />
+			<FrameCellSizeSlider />
 		</Box>
 	);
 };

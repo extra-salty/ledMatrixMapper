@@ -51,7 +51,7 @@ const EffectProgress = ({
 			}}
 		>
 			<Tooltip title='Elapsed Effect Time'>
-				<Typography>{finalTime}</Typography>
+				<Typography sx={{ minWidth: '80px' }}>{finalTime}</Typography>
 			</Tooltip>
 			<Slider
 				size='small'

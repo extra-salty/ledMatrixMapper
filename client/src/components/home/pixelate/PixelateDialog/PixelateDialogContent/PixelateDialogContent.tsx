@@ -4,7 +4,7 @@ import { readFile } from '@/components/home/Effect/Actions/ImageImport/helpers/u
 import { FrameDataT } from '@/types/effects/effect.types';
 import { FileOpen, RestartAlt } from '@mui/icons-material';
 import { Box, Button, TextField } from '@mui/material';
-import Frame from '@/components/temp/FrameComps/Frame/Frame';
+import FrameDynamic from '@/components/temp/FrameComps/FrameDynamic/FrameDynamic';
 import ImageCropper from '@/components/home/Effect/Actions/ImageImport/components/ImageCropper/ImageCropper';
 
 const PixelateDialogContent = ({
@@ -61,7 +61,7 @@ const PixelateDialogContent = ({
 			</Box>
 			{frameData ? (
 				<Box>
-					<Frame isDisabled frameData={frameData} frameId='pixelate' />
+					<FrameDynamic isDisabled frameData={frameData} frameId='pixelate' />
 					<Button variant='outlined' onClick={handleReset} startIcon={<RestartAlt />}>
 						Reset
 					</Button>

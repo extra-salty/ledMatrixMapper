@@ -1,14 +1,12 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { memo } from 'react';
 import { CSS } from '@dnd-kit/utilities';
-import { Box, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { FrameStateT } from '@/types/effects/effect.types';
 import FrameSelector from './FrameSelector/FrameSelector';
 import FrameActions from './FrameActions/FrameActions';
-import Frame from '../../../FrameComps/Frame/Frame';
+import FrameDynamic from '../../../FrameComps/FrameDynamic/FrameDynamic';
 import FrameDuration from './FrameDuration/FrameDuration';
-import FrameColorCoverage from './FrameColorCoverage/FrameColorCoverage';
-import { useEffectPlayerOptions } from '@/libs/redux/features/effectEditor/selectors';
 
 const FrameGridItem = ({
 	frameIndex,
@@ -22,9 +20,6 @@ const FrameGridItem = ({
 	disabledExternally?: boolean;
 }) => {
 	const { id, data, duration, disabled } = frame;
-
-	const { borderEnabled, blur } = useEffectPlayerOptions();
-	console.log('🚀 ~ blur:', blur);
 
 	const {
 		setNodeRef,
@@ -48,8 +43,8 @@ const FrameGridItem = ({
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				transform: CSS.Transform.toString(transform),
 				transition,
+				transform: CSS.Transform.toString(transform),
 				opacity: isDragging ? 0 : 1,
 			}}
 		>
@@ -58,7 +53,6 @@ const FrameGridItem = ({
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'space-between',
-					position: 'relative',
 				}}
 			>
 				<FrameSelector
@@ -68,7 +62,23 @@ const FrameGridItem = ({
 					dragAttributes={attributes}
 					dragListeners={listeners}
 				/>
-				<Tooltip
+				<FrameActions frameIndex={frameIndex} frame={frame} />
+			</Box>
+			<FrameDynamic
+				frameId={id}
+				frameData={data}
+				isDisabled={isDisabled}
+				showBorder={true}
+			/>
+			<FrameDuration frameId={id} duration={duration} />
+		</Paper>
+	);
+};
+
+export default memo(FrameGridItem);
+
+{
+	/* <Tooltip
 					title='Frame Index'
 					sx={{
 						position: 'absolute',
@@ -80,19 +90,5 @@ const FrameGridItem = ({
 					<Typography fontWeight={500} letterSpacing={3}>{`${
 						frameIndex + 1
 					}/${framesLength}`}</Typography>
-				</Tooltip>
-				<FrameActions frameIndex={frameIndex} frame={frame} />
-			</Box>
-			<Frame
-				frameId={id}
-				frameData={data}
-				isDisabled={isDisabled}
-				showBorder={true}
-				blur={blur}
-			/>
-			<FrameDuration frameId={id} duration={duration} />
-		</Paper>
-	);
-};
-
-export default memo(FrameGridItem);
+				</Tooltip> */
+}

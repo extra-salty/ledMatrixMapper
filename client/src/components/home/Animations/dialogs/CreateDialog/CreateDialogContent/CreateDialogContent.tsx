@@ -71,9 +71,9 @@ const CreateDialogContent = ({ isInvalidName }: { isInvalidName: boolean }) => {
 					<TextField
 						required
 						type='number'
-						id='columns'
-						name='columns'
-						label='Matrix columns'
+						id='width'
+						name='width'
+						label='Matrix width'
 						variant='outlined'
 						size='small'
 						value={columns}
@@ -90,9 +90,9 @@ const CreateDialogContent = ({ isInvalidName }: { isInvalidName: boolean }) => {
 					<TextField
 						required
 						type='number'
-						id='rows'
-						name='rows'
-						label='Matrix rows'
+						id='height'
+						name='height'
+						label='Matrix height'
 						variant='outlined'
 						size='small'
 						value={rows}

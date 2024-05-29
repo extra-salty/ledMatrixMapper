@@ -5,30 +5,44 @@ import { playlistDataActions } from './slice';
 import { playlistStateActions } from '../state/slice';
 import { getAnimations } from '../../animations/thunk';
 import { enqueueSnackbar } from 'notistack';
-import { CoordinateT } from '@/types/misc/misc.types';
 
 export const getAnimation = createAsyncThunk<void, string, ThunkApiT>(
 	'animations/get',
-	async (_id: string, { extra: db, dispatch }) => {
+	async (_id: string, { extra: db, dispatch, getState }) => {
 		try {
 			const animation = await db.animations.getAnimation(_id);
 
 			if (animation) {
 				const { effects, details } = animation;
+				const { matrixSize } = details;
+				const { height, width } = matrixSize;
+				const activeMatrixSize = getState().effects.data.activeMatrixSize;
 
-				dispatch(playlistDataActions.addAnimation(details));
-				dispatch(playlistStateActions.addAnimation({ _id: details._id }));
-				dispatch(
-					effectsDataActions.addAnimation({
-						animationId: details._id,
-						animationName: details.name,
-						effects,
-					}),
-				);
+				if (
+					activeMatrixSize === undefined ||
+					(activeMatrixSize?.height === height && activeMatrixSize?.width === width)
+				) {
+					dispatch(playlistDataActions.addAnimation(details));
+					dispatch(playlistStateActions.addAnimation({ _id: details._id }));
+
+					dispatch(effectsDataActions.setActiveMatrixSize(matrixSize));
+					dispatch(
+						effectsDataActions.addAnimation({
+							animationId: details._id,
+							animationName: details.name,
+							effects,
+						}),
+					);
+
+					enqueueSnackbar('Animation loaded succesfully', { variant: 'success' });
+				} else {
+					enqueueSnackbar('Unable to load animation. Matrix sizes are incompatible.', {
+						variant: 'error',
+					});
+				}
 			}
-
-			enqueueSnackbar('Animation loaded succesfully', { variant: 'success' });
-		} catch {
+		} catch (e) {
+			console.log(e);
 			enqueueSnackbar('Failed to load animation', { variant: 'error' });
 		}
 	},

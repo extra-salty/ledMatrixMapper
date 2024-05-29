@@ -8,8 +8,7 @@ export type AnimationBaseT = {
 	description?: string;
 	dateCreated: Date;
 	dateModified: Date;
-	columns: number;
-	rows: number;
+	matrixSize: MatrixSizeT;
 	childrenIds: string[];
 	// children: Record<string, AnimationGroupT | AnimationEffectT>;
 	children: Record<string, AnimationChildrenBaseT>;
@@ -22,8 +21,7 @@ export type AnimationStateT = {
 	description?: string;
 	dateCreated: string;
 	dateModified: string;
-	columns: number;
-	rows: number;
+	matrixSize: MatrixSizeT;
 	disabled: boolean;
 	childrenIds: string[];
 	children: Record<string, AnimationChildrenBaseT>;
@@ -57,3 +55,8 @@ export enum AnimationChildrenTypesT {
 	group = 'group',
 	effect = 'effect',
 }
+
+export type MatrixSizeT = {
+	width: number;
+	height: number;
+};

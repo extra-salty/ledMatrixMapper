@@ -96,8 +96,8 @@ const useColumns = (): AnimationsTableColumnsT[] => {
 			columnFilterModeOptions: ['equalsString', 'contains', 'startsWith', 'endsWith'],
 		},
 		{
-			accessorKey: 'columns',
-			header: 'Number of columns',
+			accessorKey: 'width',
+			header: 'Width',
 			size: 50,
 			grow: true,
 			enableResizing: false,
@@ -111,8 +111,8 @@ const useColumns = (): AnimationsTableColumnsT[] => {
 			),
 		},
 		{
-			accessorKey: 'rows',
-			header: 'Number of rows',
+			accessorKey: 'height',
+			header: 'Height',
 			size: 50,
 			grow: true,
 			enableResizing: false,

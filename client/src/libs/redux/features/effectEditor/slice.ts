@@ -11,7 +11,7 @@ const initialState: EffectSliceT = {
 	selectedFrames: [],
 	frameHistory: [],
 	gridOptions: {
-		frameWidth: 1,
+		cellSize: 100,
 		borderEnabled: false,
 		indexEnabled: false,
 		blur: 0,
@@ -35,7 +35,7 @@ export const effectEditorSlice = createSlice({
 		) => {
 			const { key, value } = action.payload;
 
-			state.gridOptions[key];
+			state.gridOptions[key] = value;
 		},
 		updatePlayerOptions: <K extends keyof EffectPlayerOptionsT>(
 			state: EffectSliceT,

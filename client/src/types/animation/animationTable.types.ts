@@ -28,8 +28,8 @@ export type AnimationTableRowT = {
 export type TableAnimationT = {
 	dateCreated?: string;
 	dateModified?: string;
-	rows?: number;
-	columns?: number;
+	width?: number;
+	height?: number;
 };
 
 export type TableEffectT = {

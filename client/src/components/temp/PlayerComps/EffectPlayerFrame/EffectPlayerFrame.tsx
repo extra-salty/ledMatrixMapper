@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { useEffectPlayerOptions } from '@/libs/redux/features/effectEditor/selectors';
 import { ColorT } from '@/types/color/color.types';
 import { Box, Skeleton } from '@mui/material';
-import Frame from '../../FrameComps/Frame/Frame';
+import FrameStatic from '../../FrameComps/FrameStatic/FrameStatic';
 
 const EffectPlayerFrame = ({ data }: { data: ColorT[][] }) => {
 	const { borderEnabled, blur } = useEffectPlayerOptions();
@@ -16,10 +16,9 @@ const EffectPlayerFrame = ({ data }: { data: ColorT[][] }) => {
 			})}
 		>
 			{data ? (
-				<Frame
+				<FrameStatic
 					frameData={data}
 					frameId='effectPlayerFrame'
-					isDisabled
 					showCoordinate={true}
 					showBorder={borderEnabled}
 					blur={blur}

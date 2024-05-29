@@ -56,17 +56,17 @@ export const playlistDataSlice = createSlice({
 		},
 		removeChildfromParent: (state, action: PayloadAction<AnimationTableRowT>) => {
 			const { animationId, id: childId, parentId } = action.payload;
+			const childrenIds = state[animationId].childrenIds;
 
 			if (parentId === animationId) {
-				const deleteIndex = state[animationId].childrenIds.indexOf(childId);
+				const deleteIndex = childrenIds.indexOf(childId);
 
-				state[animationId].childrenIds.splice(deleteIndex, 1);
+				childrenIds.splice(deleteIndex, 1);
 			} else {
-				const deleteIndex =
-					state[animationId].children[parentId].childrenIds?.indexOf(childId);
+				const childrenIds = state[animationId].children[parentId].childrenIds;
+				const deleteIndex = childrenIds?.indexOf(childId);
 
-				if (deleteIndex !== undefined)
-					state[animationId].children[parentId].childrenIds?.splice(deleteIndex, 1);
+				if (deleteIndex !== undefined) childrenIds?.splice(deleteIndex, 1);
 			}
 		},
 		removeChildren: (state, action: PayloadAction<AnimationTableRowT>) => {
@@ -75,15 +75,11 @@ export const playlistDataSlice = createSlice({
 			if (children) {
 				const childrenIds = getChildrenIds(children);
 
-				childrenIds.forEach((childId) => {
-					delete state[animationId].children[childId];
-				});
+				childrenIds.forEach((childId) => delete state[animationId].children[childId]);
 
-				if (animationId === id) {
-					state[animationId].childrenIds = [];
-				} else {
-					state[animationId].children[id].childrenIds = [];
-				}
+				animationId === id
+					? (state[animationId].childrenIds = [])
+					: (state[animationId].children[id].childrenIds = []);
 			}
 		},
 		removeChild: (state, action: PayloadAction<AnimationTableRowT>) => {

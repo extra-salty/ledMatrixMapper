@@ -1,36 +1,34 @@
-import { checkIfSelected, useCursor } from './getBrushSize';
-import {
-	useActiveColorAction,
-	useBrushSize,
-	useFrameCellSelection,
-} from '@/libs/redux/features/effects/data/selector';
+import { useFrameCellSize } from '@/libs/redux/features/effectEditor/selectors';
 import { useDispatch } from 'react-redux';
 import { useCallback, MouseEvent, memo, useMemo, useState, useRef } from 'react';
+import {
+	useActiveColorAction,
+	useFrameCellSelection,
+} from '@/libs/redux/features/effects/data/selector';
+import { checkIfSelected, useCursor } from './getBrushSize';
 import { AppDispatch } from '@/libs/redux/store';
+import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import { ColorT } from '@/types/color/color.types';
 import { CoordinateT } from '@/types/misc/misc.types';
-import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import styles from './FrameCell.module.scss';
 import {
 	ColorActions,
 	FrameColorActionPayloadT,
 } from '@/types/effects/effectPayload.types';
-import FrameCellMenu from '../FrameCellMenu/FrameCellMenu';
+import FrameCellSelectionMenu from '../../../FrameCellSelectionMenu/FrameCellSelectionMenu';
+import styles from './FrameCellDynamic.module.scss';
 
-const FrameCell = ({
+const FrameCellDynamic = ({
 	frameId,
 	xIndex,
 	yIndex,
 	color: { hue: h, saturation: s, lightness: l },
 	showCoordinate,
-	showBorder,
 }: {
 	frameId: string;
 	xIndex: number;
 	yIndex: number;
 	color: ColorT;
 	showCoordinate?: boolean;
-	showBorder?: boolean;
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const ref = useRef<HTMLButtonElement>(null);
@@ -38,9 +36,9 @@ const FrameCell = ({
 	const dispatch = useDispatch<AppDispatch>();
 
 	const colorAction = useActiveColorAction();
-	const brushSize = useBrushSize();
-	const cursor = useCursor({ colorAction, brushSize });
 	const selection = useFrameCellSelection();
+	const cursor = useCursor();
+	const width = useFrameCellSize();
 
 	const coordinate: CoordinateT = useMemo(
 		() => ({ x: xIndex, y: yIndex }),
@@ -93,11 +91,6 @@ const FrameCell = ({
 					}
 				}
 			}
-			// else if (e.buttons === 2) {
-			// 	e.preventDefault();
-
-			// 	setIsOpen(true);
-			// }
 		},
 		[colorAction, coordinate, dispatch, frameId, payload],
 	);
@@ -142,29 +135,12 @@ const FrameCell = ({
 		<>
 			<button
 				ref={ref}
-				className={styles.frameCell}
+				className={styles.cell}
 				style={{
 					cursor,
+					width: `${width}px`,
+					height: `${width}px`,
 					backgroundColor: convertedColor,
-					// border: showBorder
-					// 	? '1px solid rgba(150, 150, 150, 0.5)'
-					// 	: `1px solid ${convertedColor}`,
-					// border: isSelected ? '2px dashed white' : '1px solid rgba(150, 150, 150, 0.5)',
-					// borderTop: isSelected
-					// 	? '1px dashed white'
-					// 	: '1px solid rgba(150, 150, 150, 0.5)',
-					// borderRight: isSelected
-					// 	? '1px dashed white'
-					// 	: '1px solid rgba(150, 150, 150, 0.5)',
-					// borderBottom: isSelected
-					// 	? '1px dashed white'
-					// 	: '1px solid rgba(150, 150, 150, 0.5)',
-					// borderLeft: isSelected
-					// 	? '1px dashed white'
-					// 	: '1px solid rgba(150, 150, 150, 0.5)',
-					border: '0',
-					// margin: isSelected ? '-1px' : '0',
-					// boxShadow: isSelected ? '2px 2px 2px white' : 'none',
 				}}
 				onContextMenu={(e) => {
 					e.preventDefault();
@@ -174,10 +150,14 @@ const FrameCell = ({
 				onMouseOver={handleMouseOver}
 			></button>
 			{isOpen && (
-				<FrameCellMenu anchorEl={ref.current} isOpen={isOpen} setIsOpen={setIsOpen} />
+				<FrameCellSelectionMenu
+					anchorEl={ref.current}
+					isOpen={isOpen}
+					setIsOpen={setIsOpen}
+				/>
 			)}
 		</>
 	);
 };
 
-export default memo(FrameCell);
+export default memo(FrameCellDynamic);

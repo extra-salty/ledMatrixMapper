@@ -1,0 +1,9 @@
+.cell {
+	box-sizing: border-box;
+	padding: 0;
+	border: 0;
+
+	&:hover {
+		border: 2px solid rgb(200, 200, 200) !important;
+	}
+}

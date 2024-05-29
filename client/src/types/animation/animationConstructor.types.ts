@@ -1,5 +1,5 @@
 import { EffectListBaseT } from '../effects/effect.types';
-import { AnimationBaseT, AnimationChildrenBaseT } from './animation.types';
+import { AnimationBaseT, AnimationChildrenBaseT, MatrixSizeT } from './animation.types';
 
 export class Animation implements Omit<AnimationBaseT, '_id'> {
 	userId: string;
@@ -7,22 +7,20 @@ export class Animation implements Omit<AnimationBaseT, '_id'> {
 	description: string;
 	dateCreated: Date = new Date();
 	dateModified: Date = new Date();
-	columns: number;
-	rows: number;
 	childrenIds: string[] = [];
 	children: Record<string, AnimationChildrenBaseT> = {};
 	effects: EffectListBaseT = {};
+	matrixSize: MatrixSizeT;
 
 	constructor(userId: string, formData: FormData) {
 		const name = formData.get('name') as string;
 		const description = formData.get('description') as string;
-		const columns = formData.get('columns') as unknown as number;
-		const rows = formData.get('rows') as unknown as number;
+		const width = formData.get('width') as unknown as number;
+		const height = formData.get('height') as unknown as number;
 
 		this.userId = userId;
 		this.name = name;
 		this.description = description;
-		this.columns = columns;
-		this.rows = rows;
+		this.matrixSize = { width, height };
 	}
 }

@@ -1,7 +1,7 @@
 import { SyntheticEvent, memo, useMemo } from 'react';
 import { formatDuration } from '@/misc/helpers/helpers';
 import { Photo } from '@mui/icons-material';
-import { Slider, Tooltip } from '@mui/material';
+import { Slider, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/material';
 
 const FrameProgress = ({
@@ -36,7 +36,7 @@ const FrameProgress = ({
 			}}
 		>
 			<Tooltip title='Elapsed Frame Time'>
-				<Box>{finalTime}</Box>
+				<Typography sx={{ minWidth: '80px' }}>{finalTime}</Typography>
 			</Tooltip>
 			<Slider
 				size='small'

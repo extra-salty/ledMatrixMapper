@@ -8,7 +8,7 @@ export type EffectSliceT = {
 };
 
 export type EffectGridOptionsT = {
-	frameWidth: number;
+	cellSize: number;
 	borderEnabled: boolean;
 	indexEnabled: boolean;
 	blur: number;

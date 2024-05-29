@@ -1,11 +1,12 @@
-import GenericMenuItems from '@/components/misc/GenericMenuItems/GenericMenuItems';
+import { useDispatch } from 'react-redux';
 import { ActionButtonProps } from '@/types/components/components.types';
-import { CopyAll, Delete } from '@mui/icons-material';
+import { ContentCopy, FormatColorFill, FormatColorReset } from '@mui/icons-material';
 import { Menu } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
-import { useDispatch } from 'react-redux';
+import GenericMenuItems from '@/components/misc/GenericMenuItems/GenericMenuItems';
+import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 
-const FrameCellMenu = ({
+const FrameCellSelectionMenu = ({
 	anchorEl,
 	isOpen,
 	setIsOpen,
@@ -20,9 +21,19 @@ const FrameCellMenu = ({
 
 	const items: ActionButtonProps[] = [
 		{
-			icon: <Delete />,
-			text: 'Delete',
+			icon: <FormatColorReset />,
+			text: 'Clear',
 			onClick: () => {},
+		},
+		{
+			icon: <FormatColorFill />,
+			text: 'Fill',
+			onClick: () => dispatch(effectsDataActions.fillFrameCellSelection()),
+		},
+		{
+			icon: <ContentCopy />,
+			text: 'Copy',
+			onClick: () => dispatch(effectsDataActions.fillFrameCellSelection()),
 		},
 	];
 
@@ -43,4 +54,4 @@ const FrameCellMenu = ({
 	);
 };
 
-export default FrameCellMenu;
+export default FrameCellSelectionMenu;

@@ -45,7 +45,12 @@ const useConvertedData = (): AnimationTableRowT[] => {
 			return getChildren(animation, animationId, childId);
 		});
 
-		const { childrenIds, children, ...rest } = animation;
+		const {
+			childrenIds,
+			children,
+			matrixSize: { width, height },
+			...rest
+		} = animation;
 
 		return {
 			...rest,
@@ -60,6 +65,8 @@ const useConvertedData = (): AnimationTableRowT[] => {
 			timestamps: [],
 			framesLength: 0,
 			startTime: 0,
+			width,
+			height,
 		};
 	});
 };

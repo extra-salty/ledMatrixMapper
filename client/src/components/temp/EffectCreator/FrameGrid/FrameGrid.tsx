@@ -1,23 +1,19 @@
-import { useFrameWidth } from '@/libs/redux/features/effectEditor/selectors';
+import { useFrameCellSize } from '@/libs/redux/features/effectEditor/selectors';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import { FrameStateT } from '@/types/effects/effect.types';
 import { Box } from '@mui/material';
 import FrameGridItem from './FrameGridItem/FrameGridItem';
-import FrameGridItemWrapper from './FrameGridItemWrapper/FrameGridItemWrapper';
 
 const FrameGrid = ({ frames }: { frames: FrameStateT[] }) => {
-	const frameWidth = useFrameWidth();
 	const frameIds = frames.map((frame) => frame.id);
 
 	return (
 		<SortableContext items={frameIds} strategy={rectSortingStrategy}>
 			<Box
 				sx={{
-					display: 'grid',
+					display: 'flex',
+					flexWrap: 'wrap',
 					gap: '15px',
-					// gridTemplateColumns: `repeat(auto-fit, minmax(${
-					// 	frameWidth * 100 + 200
-					// }px, 1fr))`,
 				}}
 			>
 				{frames.map((frame, i) => (
@@ -34,3 +30,9 @@ const FrameGrid = ({ frames }: { frames: FrameStateT[] }) => {
 };
 
 export default FrameGrid;
+
+// sx={{
+// 	display: 'grid',
+// 	gap: '15px',
+// 	gridTemplateColumns: `repeat(auto-fit, minmax(${frameWidth}px, 1fr))`,
+// }}

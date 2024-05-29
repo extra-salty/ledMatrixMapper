@@ -7,15 +7,12 @@ import { Brush } from '@mui/icons-material';
 
 const BrushSizeSlider = () => {
 	const dispatch = useDispatch();
-
 	const brushSize = useBrushSize();
 
 	const handleSliderChange = (
 		_: Event | SyntheticEvent<Element, Event>,
 		newValue: number | number[],
-	) => {
-		dispatch(effectsDataActions.setBrushSize(newValue as number));
-	};
+	) => dispatch(effectsDataActions.setBrushSize(newValue as number));
 
 	return (
 		<Box sx={{ width: '200px', display: 'flex', gap: 2 }}>

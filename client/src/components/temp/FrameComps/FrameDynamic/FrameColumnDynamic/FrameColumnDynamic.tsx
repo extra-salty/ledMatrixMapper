@@ -1,19 +1,17 @@
 import { memo } from 'react';
 import { ColorT } from '@/types/color/color.types';
-import FrameCell from '../FrameCell/FrameCell';
+import FrameCellDynamic from './FrameCellDynamic/FrameCellDynamic';
 
-const FrameColumn = ({
+const FrameColumnDynamic = ({
 	frameId,
 	frameColumn,
 	xIndex,
 	showCoordinate,
-	showBorder,
 }: {
 	frameId: string;
 	frameColumn: ColorT[];
 	xIndex: number;
 	showCoordinate?: boolean;
-	showBorder?: boolean;
 }) => {
 	return (
 		<div
@@ -24,18 +22,17 @@ const FrameColumn = ({
 			}}
 		>
 			{frameColumn.map((color, y) => (
-				<FrameCell
+				<FrameCellDynamic
 					key={`${xIndex}/${y}`}
 					color={color}
 					xIndex={xIndex}
 					yIndex={y}
 					frameId={frameId}
 					showCoordinate={showCoordinate}
-					showBorder={showBorder}
 				/>
 			))}
 		</div>
 	);
 };
 
-export default memo(FrameColumn);
+export default memo(FrameColumnDynamic);
