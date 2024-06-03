@@ -31,7 +31,8 @@ const FrameGridWrapper = ({ effect }: { effect?: EffectStateT }) => {
 	return (
 		<Box
 			sx={{
-				height: 'calc(100% - 85px)',
+				height: 'calc(100% - 60px)',
+				width: '100%',
 				overflow: 'scroll',
 				overflowX: 'hidden',
 				padding: 4,

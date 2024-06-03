@@ -1,11 +1,24 @@
 import { memo } from 'react';
-import { useEffectPlayerOptions } from '@/libs/redux/features/effectEditor/selectors';
-import { ColorT } from '@/types/color/color.types';
+import { FrameDataT } from '@/types/effects/effect.types';
 import { Box, Skeleton } from '@mui/material';
 import FrameStatic from '../../FrameComps/FrameStatic/FrameStatic';
 
-const EffectPlayerFrame = ({ data }: { data: ColorT[][] }) => {
-	const { borderEnabled, blur } = useEffectPlayerOptions();
+const EffectPlayerFrame = ({
+	data,
+	elapsedFrameTime,
+	frameTime,
+}: {
+	data: FrameDataT;
+	elapsedFrameTime: number;
+	frameTime: number;
+}) => {
+	// const ratio = (elapsedFrameTime / frameTime) * 100 || 0;
+
+	// const newData = data.map((column) => {
+	// 	return column.map((cell) => {
+	// 		return { ...cell, lightness: ratio };
+	// 	});
+	// });
 
 	return (
 		<Box
@@ -16,13 +29,7 @@ const EffectPlayerFrame = ({ data }: { data: ColorT[][] }) => {
 			})}
 		>
 			{data ? (
-				<FrameStatic
-					frameData={data}
-					frameId='effectPlayerFrame'
-					showCoordinate={true}
-					showBorder={borderEnabled}
-					blur={blur}
-				/>
+				<FrameStatic frameData={data} frameId='effectPlayerFrame' />
 			) : (
 				<Skeleton
 					sx={{

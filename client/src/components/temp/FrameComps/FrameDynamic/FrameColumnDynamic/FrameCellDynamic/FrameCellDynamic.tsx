@@ -1,11 +1,8 @@
 import { useFrameCellSize } from '@/libs/redux/features/effectEditor/selectors';
 import { useDispatch } from 'react-redux';
 import { useCallback, MouseEvent, memo, useMemo, useState, useRef } from 'react';
-import {
-	useActiveColorAction,
-	useFrameCellSelection,
-} from '@/libs/redux/features/effects/data/selector';
-import { checkIfSelected, useCursor } from './getBrushSize';
+import { useActiveColorAction } from '@/libs/redux/features/effects/data/selector';
+import { useCursor } from './frameCellDynamicHelpers';
 import { AppDispatch } from '@/libs/redux/store';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import { ColorT } from '@/types/color/color.types';
@@ -16,29 +13,29 @@ import {
 } from '@/types/effects/effectPayload.types';
 import FrameCellSelectionMenu from '../../../FrameCellSelectionMenu/FrameCellSelectionMenu';
 import styles from './FrameCellDynamic.module.scss';
+import { FrameCellT } from '@/types/effects/effect.types';
 
 const FrameCellDynamic = ({
 	frameId,
 	xIndex,
 	yIndex,
-	color: { hue: h, saturation: s, lightness: l },
+	color,
 	showCoordinate,
 }: {
 	frameId: string;
 	xIndex: number;
 	yIndex: number;
-	color: ColorT;
+	color: FrameCellT;
 	showCoordinate?: boolean;
 }) => {
+	const dispatch = useDispatch<AppDispatch>();
+
 	const [isOpen, setIsOpen] = useState(false);
 	const ref = useRef<HTMLButtonElement>(null);
 
-	const dispatch = useDispatch<AppDispatch>();
-
 	const colorAction = useActiveColorAction();
-	const selection = useFrameCellSelection();
 	const cursor = useCursor();
-	const width = useFrameCellSize();
+	const cellSize = useFrameCellSize();
 
 	const coordinate: CoordinateT = useMemo(
 		() => ({ x: xIndex, y: yIndex }),
@@ -49,11 +46,11 @@ const FrameCellDynamic = ({
 		[frameId, coordinate],
 	);
 
-	const convertedColor = `hsl(${h} ${s}% ${l}% / ${(l / 100) * 2} `;
-	const isSelected =
-		colorAction === ColorActions.select &&
-		selection?.frameId === frameId &&
-		checkIfSelected(coordinate, selection);
+	const convertedColor = color
+		? `hsl(${color.hue} ${color.saturation}% ${color.lightness}% / ${
+				(color.lightness / 100) * 2
+		  } `
+		: 'transparent';
 
 	const handleMouseDown = useCallback(
 		(e: MouseEvent<HTMLButtonElement>) => {
@@ -67,7 +64,8 @@ const FrameCellDynamic = ({
 						dispatch(effectsDataActions.updateSelectedColor(payload));
 						break;
 					}
-					case ColorActions.brush: {
+					case ColorActions.brush:
+					case ColorActions.clear: {
 						if (e.shiftKey) {
 							// dispatch(effectsDataActions.updateFrameDiagonal(payload));
 						} else if (e.ctrlKey) {
@@ -138,9 +136,10 @@ const FrameCellDynamic = ({
 				className={styles.cell}
 				style={{
 					cursor,
-					width: `${width}px`,
-					height: `${width}px`,
+					width: `${cellSize}px`,
+					height: `${cellSize}px`,
 					backgroundColor: convertedColor,
+					// border: showCoordinate ? '1px solid black' : 'none',
 				}}
 				onContextMenu={(e) => {
 					e.preventDefault();
@@ -151,6 +150,8 @@ const FrameCellDynamic = ({
 			></button>
 			{isOpen && (
 				<FrameCellSelectionMenu
+					frameId={frameId}
+					coordinate={coordinate}
 					anchorEl={ref.current}
 					isOpen={isOpen}
 					setIsOpen={setIsOpen}

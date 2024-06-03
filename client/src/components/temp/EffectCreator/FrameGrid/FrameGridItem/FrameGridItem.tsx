@@ -7,6 +7,7 @@ import FrameSelector from './FrameSelector/FrameSelector';
 import FrameActions from './FrameActions/FrameActions';
 import FrameDynamic from '../../../FrameComps/FrameDynamic/FrameDynamic';
 import FrameDuration from './FrameDuration/FrameDuration';
+import FrameTransition from './FrameTransition/FrameTransition';
 
 const FrameGridItem = ({
 	frameIndex,
@@ -64,13 +65,11 @@ const FrameGridItem = ({
 				/>
 				<FrameActions frameIndex={frameIndex} frame={frame} />
 			</Box>
-			<FrameDynamic
-				frameId={id}
-				frameData={data}
-				isDisabled={isDisabled}
-				showBorder={true}
-			/>
-			<FrameDuration frameId={id} duration={duration} />
+			<FrameDynamic frameId={id} frameData={data} isDisabled={isDisabled} />
+			<Box sx={{ display: 'flex' }}>
+				<FrameTransition frameId={id} transition={frame.transition} />
+				<FrameDuration frameId={id} duration={duration} />
+			</Box>
 		</Paper>
 	);
 };

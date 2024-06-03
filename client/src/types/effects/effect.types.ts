@@ -21,24 +21,28 @@ export type FrameListStateT = RecordT<FrameStateT>;
 
 export type FrameBaseT = {
 	id: string;
-	data: ColorT[][];
+	data: FrameDataT;
 	duration: number;
+	transition: FrameTransitionT;
 	disabled?: boolean;
 };
+export type FrameCellT = ColorT | undefined;
+
+export type FrameDataT = FrameCellT[][];
 
 export type FrameStateT = FrameBaseT & { history?: FrameCellHistoryT };
 
-export type FrameCellT = {
-	isLocked: boolean;
-	color: ColorT;
-};
+export enum FrameTransitionT {
+	linear = 'linear',
+	easeIn = 'easeIn',
+	easeOut = 'easeOut',
+	easeInOut = 'easeInOut',
+}
 
 export type FrameCellHistoryT = {
 	undo?: FrameCellHistoryItemT[];
 	redo?: FrameCellHistoryItemT[];
 };
-
-export type FrameDataT = ColorT[][];
 
 export type FrameCellHistoryItemT = {
 	coordinate: CoordinateT;

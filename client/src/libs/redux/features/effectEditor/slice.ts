@@ -11,7 +11,7 @@ const initialState: EffectSliceT = {
 	selectedFrames: [],
 	frameHistory: [],
 	gridOptions: {
-		cellSize: 100,
+		cellSize: 20,
 		borderEnabled: false,
 		indexEnabled: false,
 		blur: 0,

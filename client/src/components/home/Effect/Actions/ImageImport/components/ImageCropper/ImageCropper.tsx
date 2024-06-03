@@ -2,10 +2,10 @@ import useSWRMutation from 'swr/mutation';
 import pixelateImage from '../../helpers/useImagePixelate';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { getCroppedImg } from '../../helpers/useImageImport';
-import { ColorT } from '@/types/color/color.types';
 import { LoadingButton } from '@mui/lab';
 import { Box, Skeleton } from '@mui/material';
 import { Deblur } from '@mui/icons-material';
+import { FrameDataT } from '@/types/effects/effect.types';
 import Cropper, { Area } from 'react-easy-crop';
 import ImageCropperOptions from '../ImageCropperOptions/ImageCropperOptions';
 import ImageCropperSliders from '../ImageCropperSliders/ImageCropperSliders';
@@ -16,7 +16,7 @@ const ImageCropper = ({
 	setFrameData,
 }: {
 	imageSrc: string | undefined;
-	setFrameData: Dispatch<SetStateAction<ColorT[][] | null>>;
+	setFrameData: Dispatch<SetStateAction<FrameDataT | null>>;
 }) => {
 	const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 

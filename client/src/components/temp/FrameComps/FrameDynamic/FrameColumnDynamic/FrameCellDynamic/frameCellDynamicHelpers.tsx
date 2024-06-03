@@ -2,9 +2,12 @@ import { useFrameCellSize } from '@/libs/redux/features/effectEditor/selectors';
 import {
 	useActiveColorAction,
 	useBrushSize,
+	useFrameCellSelection,
 } from '@/libs/redux/features/effects/data/selector';
 import { ColorActions, FrameCellSelectionT } from '@/types/effects/effectPayload.types';
 import { CoordinateT } from '@/types/misc/misc.types';
+import { keyframes } from '@mui/material';
+import { CSSProperties } from 'react';
 
 export const useCursor = () => {
 	const cellSize = useFrameCellSize();
@@ -19,6 +22,7 @@ export const useCursor = () => {
 		case ColorActions.pipette:
 			return `${defaultUrl} %3E%3Cpath d='m20.71 5.63-2.34-2.34a.9959.9959 0 0 0-1.41 0l-3.12 3.12-1.93-1.91-1.41 1.41 1.42 1.42L3 16.25V21h4.75l8.92-8.92 1.42 1.42 1.41-1.41-1.92-1.92 3.12-3.12c.4-.4.4-1.03.01-1.42M6.92 19 5 17.08l8.06-8.06 1.92 1.92z'/%3E%3C/svg%3E%0A") 0 24, auto`;
 		case ColorActions.brush:
+		case ColorActions.clear:
 			const cursorSize = Math.min((brushSize * 2 + 1) * cellSize, 128);
 			const cursorMiddle = cursorSize / 2;
 			const cursorProps = `width='${cursorSize}' height='${cursorSize}'`;
@@ -34,17 +38,57 @@ export const useCursor = () => {
 	}
 };
 
-export const checkIfSelected = (
+export const isCellSelected = (
 	cellCoordinate: CoordinateT,
 	selection: FrameCellSelectionT,
 ): boolean => {
+	const { startCoordinate, endCoordinate } = selection;
+
 	return (
-		cellCoordinate.x >=
-			Math.min(selection.startCoordinate.x, selection.endCoordinate.x) &&
-		cellCoordinate.x <=
-			Math.max(selection.startCoordinate.x, selection.endCoordinate.x) &&
-		cellCoordinate.y >=
-			Math.min(selection.startCoordinate.y, selection.endCoordinate.y) &&
-		cellCoordinate.y <= Math.max(selection.startCoordinate.y, selection.endCoordinate.y)
+		cellCoordinate.x >= Math.min(startCoordinate.x, endCoordinate.x) &&
+		cellCoordinate.x <= Math.max(startCoordinate.x, endCoordinate.x) &&
+		cellCoordinate.y >= Math.min(startCoordinate.y, endCoordinate.y) &&
+		cellCoordinate.y <= Math.max(startCoordinate.y, endCoordinate.y)
 	);
+};
+
+export const useSelectionOverlay = (frameId: string): CSSProperties => {
+	const colorAction = useActiveColorAction();
+	const cellSize = useFrameCellSize();
+	const selection = useFrameCellSelection();
+
+	const selectionActive =
+		(colorAction === ColorActions.select || colorAction === ColorActions.copy) &&
+		selection &&
+		selection.frameId === frameId;
+
+	const blink = keyframes`
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }`;
+
+	return selectionActive
+		? {
+				position: 'absolute',
+				content: '""',
+				border: '2px dashed white',
+				pointerEvents: 'none',
+				bottom: `${
+					Math.min(selection.startCoordinate.y, selection.endCoordinate.y) * cellSize
+				}px`,
+				left: `${
+					Math.min(selection.startCoordinate.x, selection.endCoordinate.x) * cellSize
+				}px`,
+				width: `${
+					(Math.abs(selection.startCoordinate.x - selection.endCoordinate.x) + 1) *
+					cellSize
+				}px`,
+				height: `${
+					(Math.abs(selection.startCoordinate.y - selection.endCoordinate.y) + 1) *
+					cellSize
+				}px`,
+				animation:
+					colorAction === ColorActions.select ? `${blink} 2s linear infinite` : 'none',
+		  }
+		: {};
 };

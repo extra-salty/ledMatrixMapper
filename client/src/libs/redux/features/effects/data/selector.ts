@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/libs/redux/store';
 import { EffectStateT, FrameStateT } from '@/types/effects/effect.types';
 
+// Effects
+
 export const useActiveEffectIds = () =>
 	useSelector((state: RootState) => state.effects.data.activeEffect);
 
@@ -46,8 +48,18 @@ export const useActiveDragFrame = (frameId: string): FrameStateT | undefined =>
 		}
 	});
 
+// Misc
+
 export const useBrushSize = () =>
 	useSelector((state: RootState) => state.effects.data.brushSize);
+
+export const useFrameCellSelection = () =>
+	useSelector((state: RootState) => state.effects.data.frameCellSelection);
+
+export const useActiveMatrixSize = () =>
+	useSelector((state: RootState) => state.effects.data.activeMatrixSize);
+
+// Color
 
 export const useActiveColorAction = () =>
 	useSelector((state: RootState) => state.effects.data.activeColorAction);
@@ -55,5 +67,5 @@ export const useActiveColorAction = () =>
 export const useSelectedColor = () =>
 	useSelector((state: RootState) => state.effects.data.selectedColor);
 
-export const useFrameCellSelection = () =>
-	useSelector((state: RootState) => state.effects.data.frameCellSelection);
+export const useColorHistory = () =>
+	useSelector((state: RootState) => state.effects.data.colorHistory);

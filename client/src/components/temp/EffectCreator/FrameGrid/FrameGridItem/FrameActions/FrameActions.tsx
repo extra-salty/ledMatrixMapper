@@ -56,12 +56,12 @@ const FrameActions = ({
 
 	return (
 		<>
-			<FrameColorCoverage
+			{/* <FrameColorCoverage
 				open={isColorCoverageOpen}
 				setOpen={setIsColorCoverageOpen}
 				anchorEl={buttonGroupRef.current}
 				frameData={data}
-			/>
+			/> */}
 			<FrameMenu
 				frameId={id}
 				frameIndex={frameIndex}

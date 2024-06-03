@@ -60,7 +60,11 @@ const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 				flexDirection: 'column',
 			}}
 		>
-			<EffectPlayerFrame data={activeFrame.data} />
+			<EffectPlayerFrame
+				data={activeFrame.data}
+				elapsedFrameTime={elapsedFrameTime}
+				frameTime={frames[activeFrameIndex]?.duration || 0}
+			/>
 			<EffectProgress
 				effectTimer={effectTimer}
 				overallTime={overallTime}

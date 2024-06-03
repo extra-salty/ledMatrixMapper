@@ -72,7 +72,7 @@ const AnimationPlayer = ({ timestamps }: { timestamps: TimestampsT[] }) => {
 				flexDirection: 'column',
 			}}
 		>
-			<EffectPlayerFrame data={activeFrame.data} />
+			{/* <EffectPlayerFrame data={activeFrame.data} /> */}
 			<AnimationProgress
 				animationTimer={animationTimer}
 				overallTime={overallTime}

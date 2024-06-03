@@ -7,19 +7,22 @@ export type EffectsSliceT = {
 	activeEffect: ActiveEffectT | undefined;
 	animations: EffectCollectionStateT;
 	brushSize: number;
-	cellSize: number;
+	frameCellSelection: FrameCellSelectionT | undefined;
+	colorActionCoordinate: ColorActionCoordinateT | undefined;
+	activeMatrixSize: MatrixSizeT | undefined;
 	activeColorAction: ColorActions;
 	selectedColor: ColorT;
 	colorHistory: ColorT[];
-	frameCellSelection: FrameCellSelectionT | undefined;
-	activeMatrixSize: MatrixSizeT | undefined;
 };
 
 export type FrameCellSelectionT = {
 	frameId: string;
 	startCoordinate: CoordinateT;
 	endCoordinate: CoordinateT;
+	selectCoordinate: CoordinateT | undefined;
 };
+
+export type ColorActionCoordinateT = { frameId: string; coordinate: CoordinateT };
 
 export type ActiveEffectT = {
 	animationId: string;
@@ -34,6 +37,8 @@ export enum ColorActions {
 	clear = 'clear',
 	select = 'select',
 	copy = 'copy',
+	cut = 'cut',
+	paste = 'paste',
 }
 
 export type FrameColorActionPayloadT = {

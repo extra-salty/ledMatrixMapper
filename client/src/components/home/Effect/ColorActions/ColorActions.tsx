@@ -12,6 +12,7 @@ import {
 	SelectAll,
 	HighlightAlt,
 	ContentCopy,
+	ContentCut,
 } from '@mui/icons-material';
 import { ColorActions } from '@/types/effects/effectPayload.types';
 
@@ -65,6 +66,11 @@ const ColorActionsGroup = () => {
 			<ToggleButton value={ColorActions.copy} aria-label='copy'>
 				<Tooltip title='Copy'>
 					<ContentCopy />
+				</Tooltip>
+			</ToggleButton>
+			<ToggleButton value={ColorActions.cut} aria-label='cut'>
+				<Tooltip title='Cut'>
+					<ContentCut />
 				</Tooltip>
 			</ToggleButton>
 		</ToggleButtonGroup>

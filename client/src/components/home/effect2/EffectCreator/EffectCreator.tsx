@@ -11,6 +11,7 @@ import EffectToolbar from '../../Effect/EffectToolbar/EffectToolbar';
 import FrameGridWrapper from '../../Effect/FrameGridWrapper/FrameGridWrapper';
 import EffectDetails from '../../Effect/Actions/EffectDetails/EffectDetails';
 import FramesTable from '../../Effect/FramesTable/FramesTable';
+import ColorHistory from '../../Effect/EffectToolbar/ColorHistory/ColorHistory';
 
 const EffectCreator = () => {
 	const activeEffect = useActiveEffect();
@@ -54,7 +55,10 @@ const EffectCreator = () => {
 			<ResizeHandle />
 			<Panel defaultSize={70} minSize={50}>
 				<EffectToolbar activeEffect={activeEffect} />
-				<FrameGridWrapper effect={activeEffect} />
+				<Box sx={{ height: '100%', display: 'flex' }}>
+					<FrameGridWrapper effect={activeEffect} />
+					<ColorHistory />
+				</Box>
 			</Panel>
 		</PanelGroup>
 	);

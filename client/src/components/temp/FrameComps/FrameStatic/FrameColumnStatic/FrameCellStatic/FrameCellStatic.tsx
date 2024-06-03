@@ -1,20 +1,24 @@
 import { memo } from 'react';
-import { ColorT } from '@/types/color/color.types';
+import { FrameCellT } from '@/types/effects/effect.types';
 
 const FrameCellDynamic = ({
 	xIndex,
 	yIndex,
-	color: { hue: h, saturation: s, lightness: l },
+	color,
 	showCoordinate,
 	showBorder,
 }: {
 	xIndex: number;
 	yIndex: number;
-	color: ColorT;
+	color: FrameCellT;
 	showCoordinate?: boolean;
 	showBorder?: boolean;
 }) => {
-	const convertedColor = `hsl(${h} ${s}% ${l}% / ${(l / 100) * 2} `;
+	const convertedColor = color
+		? `hsl(${color.hue} ${color.saturation}% ${color.lightness}% / ${
+				(color.lightness / 100) * 2
+		  }`
+		: 'transparent';
 
 	return (
 		<button

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { ColorT } from '@/types/color/color.types';
+import { FrameCellT } from '@/types/effects/effect.types';
 import FrameCellStatic from './FrameCellStatic/FrameCellStatic';
 
 const FrameColumnStatic = ({
@@ -10,7 +10,7 @@ const FrameColumnStatic = ({
 	showBorder,
 }: {
 	frameId: string;
-	frameColumn: ColorT[];
+	frameColumn: FrameCellT[];
 	xIndex: number;
 	showCoordinate?: boolean;
 	showBorder?: boolean;

@@ -5,6 +5,7 @@ import FrameActions from '../Actions/FrameActions/FrameActions';
 import FrameOptions from '../Actions/FrameOptions';
 import ColorSelector from '../../Color/SelectedColor/ColorSelector';
 import BrushSizeSlider from '../BrushSizeSlider/BrushSizeSlider';
+import ColorHistory from './ColorHistory/ColorHistory';
 
 const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefined }) => {
 	return (
@@ -26,6 +27,12 @@ const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefine
 			<BrushSizeSlider />
 			<Divider orientation='vertical' flexItem />
 			<ColorSelector />
+			<Divider orientation='vertical' flexItem />
+			{/* <IconButton onClick={handleReset}>
+				<Tooltip title='Clear Color History'>
+					<Clear />
+				</Tooltip>
+			</IconButton> */}
 		</Box>
 	);
 };

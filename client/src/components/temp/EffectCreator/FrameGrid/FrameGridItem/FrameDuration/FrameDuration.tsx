@@ -33,7 +33,13 @@ const FrameDuration = ({ frameId, duration }: { frameId: string; duration: numbe
 
 	return (
 		<Box
-			sx={{ display: 'flex', alignItems: 'center', gap: '10px', paddingInline: '8px' }}
+			sx={{
+				width: '100%',
+				display: 'flex',
+				alignItems: 'center',
+				gap: '10px',
+				paddingInline: '8px',
+			}}
 		>
 			<Tooltip title='Duration' placement='top'>
 				<Timelapse fontSize='small' />
