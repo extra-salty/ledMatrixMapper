@@ -4,7 +4,7 @@ import {
 	EffectSliceT,
 	UpdateGridOptionsT,
 	UpdatePlayerOptionsT,
-} from '@/types/effect/effect.types';
+} from '@/types/effectEditor/effectEditor.types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: EffectSliceT = {
@@ -22,6 +22,7 @@ const initialState: EffectSliceT = {
 		borderEnabled: false,
 		indexEnabled: false,
 		blur: 0,
+		refreshRate: 10,
 	},
 };
 

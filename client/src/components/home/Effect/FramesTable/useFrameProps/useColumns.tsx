@@ -1,7 +1,7 @@
 import {
 	EffectTableColumnsT,
 	EffectsTableColumnsPartialT,
-} from '@/types/effects/effectTable.types';
+} from '@/types/effect/effectTable.types';
 
 const useColumns = (): EffectTableColumnsT[] => {
 	const staticProps: EffectsTableColumnsPartialT = {

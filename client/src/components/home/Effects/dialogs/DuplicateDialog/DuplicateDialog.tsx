@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch, FormEvent, SetStateAction } from 'react';
 import { AppDispatch } from '@/libs/redux/store';
 import { Alert, Button, Dialog, DialogActions, DialogTitle, Fade } from '@mui/material';
-import { EffectsTableRowT } from '@/types/effects/effectTable.types';
+import { EffectsTableRowT } from '@/types/effect/effectTable.types';
 import DuplicateDialogContent from './DuplicateDialogContent/DuplicateDialogContent';
 import GenericDialog from '@/components/misc/generics/GenericDialog/GenericDialog';
 

@@ -1,7 +1,7 @@
 import useSWRMutation from 'swr/mutation';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { readFile } from '@/components/home/Effect/Actions/ImageImport/helpers/useImageImport';
-import { FrameDataT } from '@/types/effects/effect.types';
+import { FrameDataT } from '@/types/effect/effect.types';
 import { FileOpen, RestartAlt } from '@mui/icons-material';
 import { Box, Button, TextField } from '@mui/material';
 import FrameDynamic from '@/components/temp/FrameComps/FrameDynamic/FrameDynamic';

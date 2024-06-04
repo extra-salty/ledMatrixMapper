@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { FrameDataT } from '@/types/effects/effect.types';
-import { Box, Skeleton } from '@mui/material';
+import { FrameDataT } from '@/types/effect/effect.types';
+import { Box } from '@mui/material';
 import FrameStatic from '../../FrameComps/FrameStatic/FrameStatic';
 
 const EffectPlayerFrame = ({
@@ -12,13 +12,19 @@ const EffectPlayerFrame = ({
 	elapsedFrameTime: number;
 	frameTime: number;
 }) => {
-	// const ratio = (elapsedFrameTime / frameTime) * 100 || 0;
+	const ratio = Math.min((elapsedFrameTime / frameTime) * 100 || 0, 50);
 
-	// const newData = data.map((column) => {
-	// 	return column.map((cell) => {
-	// 		return { ...cell, lightness: ratio };
-	// 	});
-	// });
+	const newData = data.map((column, x) =>
+		column.map((cell, y) => {
+			if (cell && cell?.color) {
+				const lightness = cell.color.lightness;
+
+				return { ...cell.color, lightness: ratio };
+			} else {
+				return undefined;
+			}
+		}),
+	);
 
 	return (
 		<Box
@@ -28,17 +34,7 @@ const EffectPlayerFrame = ({
 				borderRadius: '4px 4px 0px 0px ',
 			})}
 		>
-			{data ? (
-				<FrameStatic frameData={data} frameId='effectPlayerFrame' />
-			) : (
-				<Skeleton
-					sx={{
-						width: '100%',
-						height: 'auto',
-						aspectRatio: '1.80',
-					}}
-				/>
-			)}
+			<FrameStatic frameData={newData} />
 		</Box>
 	);
 };

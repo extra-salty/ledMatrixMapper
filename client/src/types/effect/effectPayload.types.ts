@@ -1,18 +1,30 @@
 import { MatrixSizeT } from '../animation/animation.types';
 import { ColorT } from '../color/color.types';
 import { CoordinateT } from '../misc/misc.types';
-import { EffectCollectionStateT, EffectStateT, FrameStateT } from './effect.types';
+import {
+	EffectCollectionStateT,
+	EffectStateT,
+	FrameStateT,
+	TransitionT,
+} from './effect.types';
 
 export type EffectsSliceT = {
 	activeEffect: ActiveEffectT | undefined;
 	animations: EffectCollectionStateT;
-	brushSize: number;
-	frameCellSelection: FrameCellSelectionT | undefined;
-	colorActionCoordinate: ColorActionCoordinateT | undefined;
-	activeMatrixSize: MatrixSizeT | undefined;
-	activeColorAction: ColorActions;
-	selectedColor: ColorT;
-	colorHistory: ColorT[];
+	color: {
+		selectedColor: ColorT;
+		colorHistory: ColorT[];
+	};
+	options: {
+		activeMatrixSize: MatrixSizeT | undefined;
+		activeColorAction: ColorActions;
+		activeTransition: TransitionT;
+		brushSize: number;
+	};
+	selection: {
+		frameCellSelection: FrameCellSelectionT | undefined;
+		colorActionCoordinate: ColorActionCoordinateT | undefined;
+	};
 };
 
 export type FrameCellSelectionT = {
@@ -39,6 +51,7 @@ export enum ColorActions {
 	copy = 'copy',
 	cut = 'cut',
 	paste = 'paste',
+	transition = 'transition',
 }
 
 export type FrameColorActionPayloadT = {

@@ -1,6 +1,6 @@
 import { useFrameCellSize } from '@/libs/redux/features/effectEditor/selectors';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
-import { FrameStateT } from '@/types/effects/effect.types';
+import { FrameStateT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
 import FrameGridItem from './FrameGridItem/FrameGridItem';
 

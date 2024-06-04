@@ -3,7 +3,7 @@ import {
 	EffectTableT,
 	EffectsTableStateT,
 	InternalStatePayloadT,
-} from '@/types/effects/effectTable.types';
+} from '@/types/effect/effectTable.types';
 
 export const initialState: EffectTableT = {
 	internal: {

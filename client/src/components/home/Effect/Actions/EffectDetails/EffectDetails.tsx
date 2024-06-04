@@ -73,8 +73,8 @@ const EffectDetails = ({
 				margin='none'
 				variant='standard'
 				label='Name'
-				disabled={!activeEffect}
 				defaultValue={name}
+				disabled={!activeEffect}
 				onBlur={(e) => {
 					dispatch(
 						effectsDataActions.updateEffect({
@@ -88,6 +88,7 @@ const EffectDetails = ({
 			/>
 			<TextField
 				size='small'
+				margin='none'
 				variant='standard'
 				label='Description'
 				defaultValue={description}

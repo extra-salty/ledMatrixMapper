@@ -1,5 +1,5 @@
 import { BSON } from 'realm-web';
-import { EffectListBaseT } from '../effects/effect.types';
+import { EffectListBaseT } from '../effect/effect.types';
 
 export type AnimationBaseT = {
 	_id: BSON.ObjectID;

@@ -5,27 +5,27 @@ import { useActiveColorAction } from '@/libs/redux/features/effects/data/selecto
 import { useCursor } from './frameCellDynamicHelpers';
 import { AppDispatch } from '@/libs/redux/store';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import { ColorT } from '@/types/color/color.types';
 import { CoordinateT } from '@/types/misc/misc.types';
 import {
 	ColorActions,
 	FrameColorActionPayloadT,
-} from '@/types/effects/effectPayload.types';
+} from '@/types/effect/effectPayload.types';
+import { FrameCellT } from '@/types/effect/effect.types';
 import FrameCellSelectionMenu from '../../../FrameCellSelectionMenu/FrameCellSelectionMenu';
 import styles from './FrameCellDynamic.module.scss';
-import { FrameCellT } from '@/types/effects/effect.types';
+import Image from 'next/image';
 
 const FrameCellDynamic = ({
 	frameId,
 	xIndex,
 	yIndex,
-	color,
+	cell,
 	showCoordinate,
 }: {
 	frameId: string;
 	xIndex: number;
 	yIndex: number;
-	color: FrameCellT;
+	cell: FrameCellT;
 	showCoordinate?: boolean;
 }) => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -46,6 +46,7 @@ const FrameCellDynamic = ({
 		[frameId, coordinate],
 	);
 
+	const color = cell ? cell.color : undefined;
 	const convertedColor = color
 		? `hsl(${color.hue} ${color.saturation}% ${color.lightness}% / ${
 				(color.lightness / 100) * 2
@@ -65,17 +66,18 @@ const FrameCellDynamic = ({
 						break;
 					}
 					case ColorActions.brush:
+					case ColorActions.transition:
 					case ColorActions.clear: {
-						if (e.shiftKey) {
-							// dispatch(effectsDataActions.updateFrameDiagonal(payload));
-						} else if (e.ctrlKey) {
-							dispatch(effectsDataActions.updateFrameRow(payload));
-						} else if (e.altKey) {
-							dispatch(effectsDataActions.updateFrameColumn(payload));
-						} else {
-							dispatch(effectsDataActions.updateFrameCell(payload));
-						}
+						dispatch(effectsDataActions.updateFrameCell(payload));
 						break;
+						// if (e.shiftKey) {
+						// 	// dispatch(effectsDataActions.updateFrameDiagonal(payload));
+						// } else if (e.ctrlKey) {
+						// 	dispatch(effectsDataActions.updateFrameRow(payload));
+						// } else if (e.altKey) {
+						// 	dispatch(effectsDataActions.updateFrameColumn(payload));
+						// } else {
+						// }
 					}
 					case ColorActions.brushAll: {
 						dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
@@ -101,17 +103,19 @@ const FrameCellDynamic = ({
 					case ColorActions.fill: {
 						break;
 					}
+					case ColorActions.clear:
+					case ColorActions.transition:
 					case ColorActions.brush: {
-						if (e.shiftKey) {
-							// dispatch(effectsDataActions.updateFrameDiagonal(payload));
-						} else if (e.ctrlKey) {
-							dispatch(effectsDataActions.updateFrameRow(payload));
-						} else if (e.altKey) {
-							dispatch(effectsDataActions.updateFrameColumn(payload));
-						} else {
-							dispatch(effectsDataActions.updateFrameCell(payload));
-						}
+						dispatch(effectsDataActions.updateFrameCell(payload));
 						break;
+						// if (e.shiftKey) {
+						// 	// dispatch(effectsDataActions.updateFrameDiagonal(payload));
+						// } else if (e.ctrlKey) {
+						// 	dispatch(effectsDataActions.updateFrameRow(payload));
+						// } else if (e.altKey) {
+						// 	dispatch(effectsDataActions.updateFrameColumn(payload));
+						// } else {
+						// }
 					}
 					case ColorActions.brushAll: {
 						dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
@@ -131,6 +135,7 @@ const FrameCellDynamic = ({
 
 	return (
 		<>
+			{/* <div style={{ width: `${cellSize}px`, height: `${cellSize}px` }}> */}
 			<button
 				ref={ref}
 				className={styles.cell}
@@ -140,6 +145,9 @@ const FrameCellDynamic = ({
 					height: `${cellSize}px`,
 					backgroundColor: convertedColor,
 					// border: showCoordinate ? '1px solid black' : 'none',
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
 				}}
 				onContextMenu={(e) => {
 					e.preventDefault();
@@ -147,7 +155,17 @@ const FrameCellDynamic = ({
 				}}
 				onMouseDown={handleMouseDown}
 				onMouseOver={handleMouseOver}
-			></button>
+			>
+				{cell && cell.transition && (
+					<Image
+						src={`/${cell.transition}.svg`}
+						alt='image'
+						width={cellSize - 5}
+						height={cellSize - 5}
+					/>
+				)}
+			</button>
+			{/* </div> */}
 			{isOpen && (
 				<FrameCellSelectionMenu
 					frameId={frameId}

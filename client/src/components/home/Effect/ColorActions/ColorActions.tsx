@@ -2,19 +2,20 @@ import { useActiveColorAction } from '@/libs/redux/features/effects/data/selecto
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/libs/redux/store';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import { ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
+import { SvgIconProps, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import {
 	Brush,
 	FormatColorReset,
 	FormatColorFill,
 	Colorize,
 	FormatPaint,
-	SelectAll,
 	HighlightAlt,
 	ContentCopy,
 	ContentCut,
+	AutoGraph,
 } from '@mui/icons-material';
-import { ColorActions } from '@/types/effects/effectPayload.types';
+import { ColorActions } from '@/types/effect/effectPayload.types';
+import { ReactElement } from 'react';
 
 const ColorActionsGroup = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -25,6 +26,22 @@ const ColorActionsGroup = () => {
 		if (value !== null) dispatch(effectsDataActions.setActiveColorAction(value));
 	};
 
+	const colorActions: {
+		value: ColorActions;
+		title: string;
+		icon: ReactElement<SvgIconProps>;
+	}[] = [
+		{ value: ColorActions.brush, title: 'Brush', icon: <Brush /> },
+		{ value: ColorActions.brushAll, title: 'Brush All', icon: <FormatPaint /> },
+		{ value: ColorActions.fill, title: 'Fill', icon: <FormatColorFill /> },
+		{ value: ColorActions.pipette, title: 'Pipette', icon: <Colorize /> },
+		{ value: ColorActions.clear, title: 'Clear', icon: <FormatColorReset /> },
+		{ value: ColorActions.select, title: 'Select', icon: <HighlightAlt /> },
+		{ value: ColorActions.copy, title: 'Copy', icon: <ContentCopy /> },
+		{ value: ColorActions.cut, title: 'Cut', icon: <ContentCut /> },
+		{ value: ColorActions.transition, title: 'Add Transition', icon: <AutoGraph /> },
+	];
+
 	return (
 		<ToggleButtonGroup
 			size='small'
@@ -33,46 +50,11 @@ const ColorActionsGroup = () => {
 			exclusive
 			onChange={handleChange}
 		>
-			<ToggleButton value={ColorActions.brush} aria-label='brush'>
-				<Tooltip title='Brush'>
-					<Brush />
-				</Tooltip>
-			</ToggleButton>
-			<ToggleButton value={ColorActions.brushAll} aria-label='brush-'>
-				<Tooltip title='Brush All'>
-					<FormatPaint />
-				</Tooltip>
-			</ToggleButton>
-			<ToggleButton value={ColorActions.fill} aria-label='fill'>
-				<Tooltip title='Fill'>
-					<FormatColorFill />
-				</Tooltip>
-			</ToggleButton>
-			<ToggleButton value={ColorActions.pipette} aria-label='pipette'>
-				<Tooltip title='Pipette'>
-					<Colorize />
-				</Tooltip>
-			</ToggleButton>
-			<ToggleButton value={ColorActions.clear} aria-label='pipette'>
-				<Tooltip title='Clear'>
-					<FormatColorReset />
-				</Tooltip>
-			</ToggleButton>
-			<ToggleButton value={ColorActions.select} aria-label='select'>
-				<Tooltip title='Select'>
-					<HighlightAlt />
-				</Tooltip>
-			</ToggleButton>
-			<ToggleButton value={ColorActions.copy} aria-label='copy'>
-				<Tooltip title='Copy'>
-					<ContentCopy />
-				</Tooltip>
-			</ToggleButton>
-			<ToggleButton value={ColorActions.cut} aria-label='cut'>
-				<Tooltip title='Cut'>
-					<ContentCut />
-				</Tooltip>
-			</ToggleButton>
+			{colorActions.map(({ value, title, icon }) => (
+				<ToggleButton key={value} value={value} aria-label={title}>
+					<Tooltip title={title}>{icon}</Tooltip>
+				</ToggleButton>
+			))}
 		</ToggleButtonGroup>
 	);
 };

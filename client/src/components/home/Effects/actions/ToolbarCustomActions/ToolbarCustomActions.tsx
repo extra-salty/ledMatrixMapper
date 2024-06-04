@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ActionButtonProps } from '@/types/components/components.types';
 import { Box } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import { EffectsTableInstanceT } from '@/types/effects/effectTable.types';
+import { EffectsTableInstanceT } from '@/types/effect/effectTable.types';
 import ToolbarButton from '@/components/misc/ToolbarButton/ToolbarButton';
 import CreateDialog from '../../dialogs/CreateDialog/CreateDialog';
 

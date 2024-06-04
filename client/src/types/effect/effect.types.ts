@@ -1,46 +1,63 @@
-import { FrameHistoryT } from '../effects/effect.types';
+import { ColorT } from '../color/color.types';
+import { CoordinateT, RecordT } from '../misc/misc.types';
 
-export type EffectSliceT = {
-	selectedFrames: number[];
-	frameHistory: FrameHistoryT[];
-	playerOptions: EffectPlayerOptionsT;
-	gridOptions: EffectGridOptionsT;
+export type EffectCollectionStateT = RecordT<EffectListStateT>;
+
+export type EffectListBaseT = RecordT<EffectBaseT>;
+export type EffectListStateT = RecordT<EffectStateT>;
+
+export type EffectT<T> = {
+	id: string;
+	name: string;
+	description?: string;
+	order: string[];
+	frames: T;
 };
+export type EffectBaseT = EffectT<FrameListBaseT>;
+export type EffectStateT = EffectT<FrameListStateT>;
 
-export type EffectGridOptionsT = {
-	cellSize: number;
-	borderEnabled: boolean;
-	indexEnabled: boolean;
-	blur: number;
+export type FrameListBaseT = RecordT<FrameBaseT>;
+export type FrameListStateT = RecordT<FrameStateT>;
+
+export type FrameBaseT = {
+	id: string;
+	data: FrameDataT;
+	duration: number;
+	transition: TransitionT;
+	disabled?: boolean;
 };
+export type FrameDataT = FrameCellT[][];
 
-export type UpdateGridOptionsT<K extends keyof EffectGridOptionsT> = {
-	key: K;
-	value: EffectGridOptionsT[K];
-};
+export type FrameCellT =
+	| { color: ColorT | undefined; transition: TransitionT | undefined }
+	| undefined;
 
-export type EffectPlayerOptionsT = {
-	castEnabled: boolean;
-	repeatEnabled: boolean;
-	borderEnabled: boolean;
-	indexEnabled: boolean;
-	blur: number;
-};
+export type FrameStateT = FrameBaseT & { history?: FrameCellHistoryT };
 
-export enum EffectPlayerOptionsKeys {
-	castEnabled = 'castEnabled',
-	repeatEnabled = 'repeatEnabled',
-	borderEnabled = 'borderEnabled',
-	indexEnabled = 'indexEnabled',
-	blur = 'blur',
+export enum TransitionT {
+	linear = 'linear',
+	easeIn = 'easeIn',
+	easeOut = 'easeOut',
+	easeInOut = 'easeInOut',
 }
 
-export type UpdatePlayerOptionsT<K extends keyof EffectPlayerOptionsT> = {
-	key: K;
-	value: EffectPlayerOptionsT[K];
+export type FrameCellHistoryT = {
+	undo?: FrameCellHistoryItemT[];
+	redo?: FrameCellHistoryItemT[];
 };
 
-// export type UpdateKeyValuePayloadT<T> = {
-// 	key: keyof T;
-// 	value: T[keyof T];
-// };
+export type FrameCellHistoryItemT = {
+	coordinate: CoordinateT;
+	value: ColorT;
+};
+
+export type FrameHistoryT = {
+	frameIndex: number;
+	type: FrameHistoryTypes;
+	data: FrameStateT;
+};
+
+export enum FrameHistoryTypes {
+	added = 'added',
+	deleted = 'deleted',
+}

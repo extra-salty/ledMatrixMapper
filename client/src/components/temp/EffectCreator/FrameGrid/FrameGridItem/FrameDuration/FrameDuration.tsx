@@ -38,22 +38,11 @@ const FrameDuration = ({ frameId, duration }: { frameId: string; duration: numbe
 				display: 'flex',
 				alignItems: 'center',
 				gap: '10px',
-				paddingInline: '8px',
+				paddingInline: 2,
 			}}
 		>
-			<Tooltip title='Duration' placement='top'>
-				<Timelapse fontSize='small' />
-			</Tooltip>
-			<Slider
-				size='small'
-				min={min}
-				max={modifiedMax}
-				value={value}
-				onChange={handleSliderChange}
-				onChangeCommitted={handleSliderChange}
-			/>
 			<Tooltip title='miliseconds'>
-				<Box width={'85px'}>
+				<Box width={'75px'}>
 					<NumberInput
 						min={min}
 						max={max}
@@ -65,6 +54,14 @@ const FrameDuration = ({ frameId, duration }: { frameId: string; duration: numbe
 					/>
 				</Box>
 			</Tooltip>
+			<Slider
+				size='small'
+				min={min}
+				max={modifiedMax}
+				value={value}
+				onChange={handleSliderChange}
+				onChangeCommitted={handleSliderChange}
+			/>
 		</Box>
 	);
 };

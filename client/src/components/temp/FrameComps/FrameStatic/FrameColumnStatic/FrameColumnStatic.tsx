@@ -1,19 +1,15 @@
 import { memo } from 'react';
-import { FrameCellT } from '@/types/effects/effect.types';
+import { ColorT } from '@/types/color/color.types';
 import FrameCellStatic from './FrameCellStatic/FrameCellStatic';
 
 const FrameColumnStatic = ({
-	frameId,
 	frameColumn,
 	xIndex,
 	showCoordinate,
-	showBorder,
 }: {
-	frameId: string;
-	frameColumn: FrameCellT[];
+	frameColumn: (ColorT | undefined)[];
 	xIndex: number;
 	showCoordinate?: boolean;
-	showBorder?: boolean;
 }) => {
 	return (
 		<div
@@ -30,7 +26,6 @@ const FrameColumnStatic = ({
 					xIndex={xIndex}
 					yIndex={y}
 					showCoordinate={showCoordinate}
-					showBorder={showBorder}
 				/>
 			))}
 		</div>

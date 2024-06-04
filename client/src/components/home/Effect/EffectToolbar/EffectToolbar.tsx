@@ -1,11 +1,11 @@
-import { EffectStateT } from '@/types/effects/effect.types';
+import { EffectStateT } from '@/types/effect/effect.types';
 import { Box, Divider } from '@mui/material';
 import ColorActionsGroup from '../ColorActions/ColorActions';
 import FrameActions from '../Actions/FrameActions/FrameActions';
 import FrameOptions from '../Actions/FrameOptions';
 import ColorSelector from '../../Color/SelectedColor/ColorSelector';
 import BrushSizeSlider from '../BrushSizeSlider/BrushSizeSlider';
-import ColorHistory from './ColorHistory/ColorHistory';
+import TransitionSelector from './TransitionSelector/TransitionSelector';
 
 const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefined }) => {
 	return (
@@ -22,17 +22,13 @@ const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefine
 			<Divider orientation='vertical' flexItem />
 			<FrameActions disabled={!activeEffect} />
 			<Divider orientation='vertical' flexItem />
-			<ColorActionsGroup />
-			<Divider orientation='vertical' flexItem />
+			<ColorSelector />
 			<BrushSizeSlider />
 			<Divider orientation='vertical' flexItem />
-			<ColorSelector />
+			<ColorActionsGroup />
 			<Divider orientation='vertical' flexItem />
-			{/* <IconButton onClick={handleReset}>
-				<Tooltip title='Clear Color History'>
-					<Clear />
-				</Tooltip>
-			</IconButton> */}
+			<TransitionSelector />
+			<Divider orientation='vertical' flexItem />
 		</Box>
 	);
 };

@@ -1,27 +1,24 @@
 import { memo } from 'react';
-import { FrameCellT } from '@/types/effects/effect.types';
+import { ColorT } from '@/types/color/color.types';
 
-const FrameCellDynamic = ({
+const FrameCellStatic = ({
 	xIndex,
 	yIndex,
 	color,
 	showCoordinate,
-	showBorder,
 }: {
 	xIndex: number;
 	yIndex: number;
-	color: FrameCellT;
+	color: ColorT | undefined;
 	showCoordinate?: boolean;
-	showBorder?: boolean;
 }) => {
 	const convertedColor = color
-		? `hsl(${color.hue} ${color.saturation}% ${color.lightness}% / ${
-				(color.lightness / 100) * 2
-		  }`
+		? `hsl(${color.hue} ${color.saturation}% ${color.lightness}% / 
+  ${color.lightness / 100})`
 		: 'transparent';
 
 	return (
-		<button
+		<div
 			style={{
 				width: `100%`,
 				height: `auto`,
@@ -30,8 +27,8 @@ const FrameCellDynamic = ({
 				padding: '0',
 				backgroundColor: convertedColor,
 			}}
-		></button>
+		></div>
 	);
 };
 
-export default memo(FrameCellDynamic);
+export default memo(FrameCellStatic);

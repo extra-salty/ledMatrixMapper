@@ -1,5 +1,5 @@
 import useCommonTableStylingProps from '@/components/misc/commonTableProps/useCommonTableStylingProps';
-import { EffectsTablePropsT, EffectsTableRowT } from '@/types/effects/effectTable.types';
+import { EffectsTablePropsT, EffectsTableRowT } from '@/types/effect/effectTable.types';
 import { darken, lighten } from '@mui/material/styles';
 
 const useStylingProps = (): EffectsTablePropsT => {

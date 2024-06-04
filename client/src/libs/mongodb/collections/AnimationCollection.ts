@@ -6,7 +6,7 @@ import {
 	EffectBaseT,
 	EffectListStateT,
 	EffectCollectionStateT,
-} from '@/types/effects/effect.types';
+} from '@/types/effect/effect.types';
 import { PlaylistDataT } from '@/types/playlist/playlist.types';
 
 import dayjs from 'dayjs';

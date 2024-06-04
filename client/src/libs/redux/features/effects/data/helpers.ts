@@ -1,4 +1,4 @@
-import { FrameCellSelectionT } from '@/types/effects/effectPayload.types';
+import { FrameCellSelectionT } from '@/types/effect/effectPayload.types';
 
 export const getSelectionCoordinates = (selection: FrameCellSelectionT) => {
 	const { startCoordinate, endCoordinate, selectCoordinate } = selection;

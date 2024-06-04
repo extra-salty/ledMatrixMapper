@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { FrameCellT, FrameDataT } from '@/types/effects/effect.types';
+import { FrameCellT, FrameDataT } from '@/types/effect/effect.types';
 import { ColorT } from '@/types/color/color.types';
 import { Popover } from '@mui/material';
 import ColorCoverageTable from './ColorCoverageTable/ColorCoverageTable';

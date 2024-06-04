@@ -4,17 +4,17 @@ import {
 	FrameStateT,
 	FrameListStateT,
 	FrameCellT,
-	FrameTransitionT,
+	TransitionT,
 } from './effect.types';
 
-export const createFrameData = (color: FrameCellT): FrameCellT[][] =>
-	Array(24).fill(Array(12).fill(color));
+export const createFrameData = (cell: FrameCellT): FrameCellT[][] =>
+	Array(24).fill(Array(12).fill(cell));
 
 export const createFrame = (): FrameStateT => ({
 	id: nanoid(12),
 	data: createFrameData(undefined),
 	duration: 1000,
-	transition: FrameTransitionT.linear,
+	transition: TransitionT.linear,
 	history: {
 		redo: [],
 		undo: [],

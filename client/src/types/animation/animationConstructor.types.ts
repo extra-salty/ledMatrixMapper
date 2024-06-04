@@ -1,4 +1,4 @@
-import { EffectListBaseT } from '../effects/effect.types';
+import { EffectListBaseT } from '../effect/effect.types';
 import { AnimationBaseT, AnimationChildrenBaseT, MatrixSizeT } from './animation.types';
 
 export class Animation implements Omit<AnimationBaseT, '_id'> {

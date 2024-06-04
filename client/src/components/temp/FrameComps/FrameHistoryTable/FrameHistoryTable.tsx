@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import { RedoOutlined, UndoOutlined } from '@mui/icons-material';
 import styles from './FrameHistoryTable.module.scss';
-import { FrameHistoryTypes } from '@/types/effects/effect.types';
+import { FrameHistoryTypes } from '@/types/effect/effect.types';
 
 export type FrameHistoryDataT = {
 	index: number;

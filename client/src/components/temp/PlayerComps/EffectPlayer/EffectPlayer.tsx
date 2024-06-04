@@ -1,8 +1,11 @@
 import { memo, useMemo, useState } from 'react';
 import { useTimer } from 'react-use-precision-timer';
-import { useEffectPlayerRepeat } from '@/libs/redux/features/effectEditor/selectors';
-import { mockFrame } from '@/types/effects/effectConstructors';
-import { FrameStateT } from '@/types/effects/effect.types';
+import {
+	useEffectPlayerRefreshRate,
+	useEffectPlayerRepeat,
+} from '@/libs/redux/features/effectEditor/selectors';
+import { mockFrame } from '@/types/effect/effectConstructors';
+import { FrameStateT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
 import EffectPlayerFrame from '../EffectPlayerFrame/EffectPlayerFrame';
 import EffectProgress from '../EffectProgress/EffectProgress';
@@ -11,6 +14,7 @@ import EffectPlayerControls from '../EffectPlayerControls/EffectPlayerControls';
 
 const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 	const repeatEnabled = useEffectPlayerRepeat();
+	const refreshRate = useEffectPlayerRefreshRate();
 	const [elapsedEffectTime, setElapsedEffectTime] = useState<number>(0);
 
 	const timestamps = useMemo(
@@ -39,7 +43,7 @@ const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 	);
 
 	const effectTimer = useTimer(
-		{ runOnce: false, delay: 20, fireOnStart: false, startImmediately: false },
+		{ runOnce: false, delay: refreshRate, fireOnStart: false, startImmediately: false },
 		() => {
 			const elapsedTime = effectTimer.getElapsedRunningTime();
 			const limitedElepsedTime = Math.min(elapsedTime, overallTime);

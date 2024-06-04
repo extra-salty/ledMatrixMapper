@@ -5,7 +5,7 @@ import useStylingProps from './useFrameProps/useStylingProps';
 import useStateProps from './useFrameProps/useStateProps';
 import useComponentProps from './useFrameProps/useComponentProps';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { EffectsTableColumnsPartialT } from '@/types/effects/effectTable.types';
+import { EffectsTableColumnsPartialT } from '@/types/effect/effectTable.types';
 
 const FramesTable = () => {
 	const data = useConvertedData();

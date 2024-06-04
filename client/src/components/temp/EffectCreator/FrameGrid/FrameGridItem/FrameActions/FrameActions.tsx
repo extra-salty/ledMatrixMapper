@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { ActionButtonProps } from '@/types/components/components.types';
-import { FrameStateT } from '@/types/effects/effect.types';
+import { FrameStateT } from '@/types/effect/effect.types';
 import {
 	ArrowDropDown,
 	InvertColors,

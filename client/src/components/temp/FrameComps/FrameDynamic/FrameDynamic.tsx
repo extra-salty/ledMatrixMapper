@@ -2,7 +2,7 @@ import { useActiveMatrixSize } from '@/libs/redux/features/effects/data/selector
 import { useSelectionOverlay } from './FrameColumnDynamic/FrameCellDynamic/frameCellDynamicHelpers';
 import { useEffectPlayerOptions } from '@/libs/redux/features/effectEditor/selectors';
 import { memo } from 'react';
-import { FrameDataT } from '@/types/effects/effect.types';
+import { FrameDataT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
 import FrameColumnDynamic from './FrameColumnDynamic/FrameColumnDynamic';
 

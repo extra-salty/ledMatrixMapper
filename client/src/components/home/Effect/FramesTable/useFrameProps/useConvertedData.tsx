@@ -2,7 +2,7 @@ import {
 	useActiveEffectFrames2,
 	useEffectCollections,
 } from '@/libs/redux/features/effects/data/selector';
-import { EffectsTableRowT } from '@/types/effects/effectTable.types';
+import { EffectsTableRowT } from '@/types/effect/effectTable.types';
 import { useAnimationNames } from '@/libs/redux/features/playlist/data/selectors';
 
 const useConvertedData = (): any[] => {

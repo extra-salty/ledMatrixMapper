@@ -11,7 +11,7 @@ import {
 import { RestartAlt } from '@mui/icons-material';
 import { IconButton, Tooltip } from '@mui/material';
 import { initialState } from '@/libs/redux/features/playlist/state/slice';
-import { EffectsTableInstanceT } from '@/types/effects/effectTable.types';
+import { EffectsTableInstanceT } from '@/types/effect/effectTable.types';
 import { effectsStateActions } from '@/libs/redux/features/effects/state/slice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/libs/redux/store';

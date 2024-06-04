@@ -5,7 +5,7 @@ import { getCroppedImg } from '../../helpers/useImageImport';
 import { LoadingButton } from '@mui/lab';
 import { Box, Skeleton } from '@mui/material';
 import { Deblur } from '@mui/icons-material';
-import { FrameDataT } from '@/types/effects/effect.types';
+import { FrameDataT } from '@/types/effect/effect.types';
 import Cropper, { Area } from 'react-easy-crop';
 import ImageCropperOptions from '../ImageCropperOptions/ImageCropperOptions';
 import ImageCropperSliders from '../ImageCropperSliders/ImageCropperSliders';
@@ -41,7 +41,7 @@ const ImageCropper = ({
 
 			const framedata = await pixelateImage(croppedImage);
 
-			if (framedata) setFrameData(framedata);
+			// if (framedata) setFrameData(framedata);
 		}
 	};
 

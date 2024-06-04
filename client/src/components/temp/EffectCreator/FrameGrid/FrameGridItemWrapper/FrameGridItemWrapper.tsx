@@ -1,4 +1,4 @@
-import { FrameStateT } from '@/types/effects/effect.types';
+import { FrameStateT } from '@/types/effect/effect.types';
 import FrameGridItem from '../FrameGridItem/FrameGridItem';
 import { useMemo } from 'react';
 

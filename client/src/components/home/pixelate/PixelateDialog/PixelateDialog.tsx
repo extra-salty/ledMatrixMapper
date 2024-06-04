@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import { FrameDataT } from '@/types/effects/effect.types';
+import { FrameDataT } from '@/types/effect/effect.types';
 import GenericDialog from '@/components/misc/generics/GenericDialog/GenericDialog';
 import PixelateDialogContent from './PixelateDialogContent/PixelateDialogContent';
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/libs/redux/store';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import { DndContext, closestCenter, DragEndEvent, Active } from '@dnd-kit/core';
-import { EffectStateT } from '@/types/effects/effect.types';
+import { EffectStateT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
 import FrameGrid from '@/components/temp/EffectCreator/FrameGrid/FrameGrid';
 import FrameDragOverlay from './FrameDragOverlay/FrameDragOverlay';

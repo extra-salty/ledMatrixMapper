@@ -10,5 +10,8 @@ export const useEffectPlayerOptions = () =>
 export const useEffectPlayerRepeat = () =>
 	useSelector((state: RootState) => state.effectEditor.playerOptions.repeatEnabled);
 
+export const useEffectPlayerRefreshRate = () =>
+	useSelector((state: RootState) => state.effectEditor.playerOptions.refreshRate);
+
 export const useEffectPlayerBorder = () =>
 	useSelector((state: RootState) => state.effectEditor.playerOptions.borderEnabled);

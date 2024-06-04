@@ -12,15 +12,11 @@ import {
 	Tooltip,
 } from '@mui/material';
 import Image from 'next/image';
+import { useActiveTransition } from '@/libs/redux/features/effects/data/selector';
 
-const FrameTransition = ({
-	frameId,
-	transition,
-}: {
-	frameId: string;
-	transition: TransitionT;
-}) => {
+const TransitionSelector = () => {
 	const dispatch = useDispatch();
+	const activeTransition = useActiveTransition();
 
 	const transitions: { type: TransitionT; text: string }[] = [
 		{
@@ -42,29 +38,22 @@ const FrameTransition = ({
 	];
 
 	const handleChange = ({ target: { value } }: SelectChangeEvent) =>
-		dispatch(
-			effectsDataActions.updateFrame({
-				frameId,
-				key: 'transition',
-				value: value as TransitionT,
-			}),
-		);
+		dispatch(effectsDataActions.setActiveTransition(value as TransitionT));
 
 	return (
 		<Tooltip title='Transition' placement='top-start' arrow>
 			<FormControl>
 				<Select
-					variant='standard'
+					variant='outlined'
 					size='small'
 					disableUnderline
-					value={transition}
+					value={activeTransition}
 					onChange={handleChange}
 					SelectDisplayProps={{
 						style: {
 							display: 'flex',
 							alignItems: 'center',
-							width: '25px',
-							paddingBottom: '0',
+							// paddingBottom: '0',
 						},
 					}}
 					MenuProps={{
@@ -80,7 +69,7 @@ const FrameTransition = ({
 				>
 					{Object.values(transitions).map(({ type, text }) => (
 						<MenuItem key={type} value={type}>
-							<ListItemIcon sx={{ marginLeft: 1 }}>
+							<ListItemIcon sx={{ minWidth: '0', marginInline: 1 }}>
 								<Image src={`/${type}.svg`} alt={type} width={20} height={20} />
 							</ListItemIcon>
 							<ListItemText sx={{ my: 0 }}>{text}</ListItemText>
@@ -92,4 +81,4 @@ const FrameTransition = ({
 	);
 };
 
-export default memo(FrameTransition);
+export default memo(TransitionSelector);

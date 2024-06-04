@@ -1,7 +1,7 @@
 import { AnimationStateT } from '@/types/animation/animation.types';
 import { AnimationTableRowT } from '@/types/animation/animationTable.types';
 import { TimestampsT } from './useConvertedData';
-import { EffectListStateT, FrameStateT } from '@/types/effects/effect.types';
+import { EffectListStateT, FrameStateT } from '@/types/effect/effect.types';
 
 type TimestampPropsT = {
 	animationId: string;

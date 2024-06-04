@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { FrameCellT } from '@/types/effects/effect.types';
+import { FrameCellT } from '@/types/effect/effect.types';
 import FrameCellDynamic from './FrameCellDynamic/FrameCellDynamic';
 
 const FrameColumnDynamic = ({
@@ -21,10 +21,10 @@ const FrameColumnDynamic = ({
 				flexGrow: '1',
 			}}
 		>
-			{frameColumn.map((color, y) => (
+			{frameColumn.map((cell, y) => (
 				<FrameCellDynamic
 					key={`${xIndex}/${y}`}
-					color={color}
+					cell={cell}
 					xIndex={xIndex}
 					yIndex={y}
 					frameId={frameId}

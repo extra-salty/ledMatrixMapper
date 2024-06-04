@@ -4,7 +4,7 @@ import {
 	useBrushSize,
 	useFrameCellSelection,
 } from '@/libs/redux/features/effects/data/selector';
-import { ColorActions, FrameCellSelectionT } from '@/types/effects/effectPayload.types';
+import { ColorActions, FrameCellSelectionT } from '@/types/effect/effectPayload.types';
 import { CoordinateT } from '@/types/misc/misc.types';
 import { keyframes } from '@mui/material';
 import { CSSProperties } from 'react';

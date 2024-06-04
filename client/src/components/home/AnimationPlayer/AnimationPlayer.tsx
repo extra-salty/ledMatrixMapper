@@ -1,7 +1,7 @@
 import { useEffectCollections } from '@/libs/redux/features/effects/data/selector';
 import { useTimer } from 'react-use-precision-timer';
 import { useState } from 'react';
-import { mockFrame } from '@/types/effects/effectConstructors';
+import { mockFrame } from '@/types/effect/effectConstructors';
 import { TimestampsT } from '../Playlist/usePlaylistProps/useConvertedData';
 import { Box } from '@mui/material';
 import EffectPlayerFrame from '@/components/temp/PlayerComps/EffectPlayerFrame/EffectPlayerFrame';

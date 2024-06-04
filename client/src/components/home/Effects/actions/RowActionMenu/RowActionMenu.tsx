@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MoreVert } from '@mui/icons-material';
 import { IconButton, Menu } from '@mui/material';
-import { EffectsTableRowT } from '@/types/effects/effectTable.types';
+import { EffectsTableRowT } from '@/types/effect/effectTable.types';
 import RowActionMenuItems from './RowActionMenuItems/RowActionMenuItems';
 import CreateDialog from '../../dialogs/CreateDialog/CreateDialog';
 import DuplicateDialog from '../../dialogs/DuplicateDialog/DuplicateDialog';

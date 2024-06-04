@@ -1,7 +1,7 @@
 import {
 	EffectTableColumnsT,
 	EffectsTableColumnsPartialT,
-} from '@/types/effects/effectTable.types';
+} from '@/types/effect/effectTable.types';
 import { MRT_ExpandAllButton, MRT_ExpandButton } from 'material-react-table';
 import { Layers, Timelapse } from '@mui/icons-material';
 import { Box, Stack, Tooltip, Typography } from '@mui/material';

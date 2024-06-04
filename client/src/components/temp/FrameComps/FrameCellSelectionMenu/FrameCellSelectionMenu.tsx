@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import {
+	AutoGraph,
 	ContentCopy,
 	ContentCut,
 	ContentPaste,
@@ -17,7 +18,7 @@ import {
 	useFrameCellSelection,
 } from '@/libs/redux/features/effects/data/selector';
 import { isCellSelected } from '../FrameDynamic/FrameColumnDynamic/FrameCellDynamic/frameCellDynamicHelpers';
-import { ColorActions } from '@/types/effects/effectPayload.types';
+import { ColorActions } from '@/types/effect/effectPayload.types';
 
 const FrameCellSelectionMenu = ({
 	coordinate,
@@ -50,12 +51,19 @@ const FrameCellSelectionMenu = ({
 		{
 			icon: <FormatColorReset />,
 			text: 'Clear',
-			onClick: () => dispatch(effectsDataActions.clearSelection()),
+			onClick: () =>
+				dispatch(effectsDataActions.updateFrameSelection(ColorActions.clear)),
 		},
 		{
 			icon: <FormatColorFill />,
 			text: 'Fill',
-			onClick: () => dispatch(effectsDataActions.fillFrameCellSelection()),
+			onClick: () => dispatch(effectsDataActions.updateFrameSelection(ColorActions.fill)),
+		},
+		{
+			icon: <AutoGraph />,
+			text: 'Set Transition',
+			onClick: () =>
+				dispatch(effectsDataActions.updateFrameSelection(ColorActions.transition)),
 		},
 		{
 			icon: <ContentCopy />,

@@ -1,19 +1,15 @@
 import { useEffectPlayerOptions } from '@/libs/redux/features/effectEditor/selectors';
 import { useActiveMatrixSize } from '@/libs/redux/features/effects/data/selector';
 import { memo } from 'react';
-import { FrameDataT } from '@/types/effects/effect.types';
+import { ColorT } from '@/types/color/color.types';
 import { Box } from '@mui/material';
 import FrameColumnStatic from './FrameColumnStatic/FrameColumnStatic';
 
-const FrameStatic = ({
-	frameId,
-	frameData,
-}: {
-	frameId: string;
-	frameData: FrameDataT;
-}) => {
+const FrameStatic = ({ frameData }: { frameData: (ColorT | undefined)[][] }) => {
 	const { borderEnabled, blur } = useEffectPlayerOptions();
-	const { height, width } = useActiveMatrixSize()!;
+	const matrixSize = useActiveMatrixSize();
+	const width = matrixSize ? matrixSize.width : 0;
+	const height = matrixSize ? matrixSize.height : 0;
 
 	return (
 		<Box
@@ -44,7 +40,6 @@ const FrameStatic = ({
 				{frameData.map((frameColumn, x) => (
 					<FrameColumnStatic
 						key={`column${x}`}
-						frameId={frameId}
 						frameColumn={frameColumn}
 						xIndex={x}
 						showCoordinate={false}

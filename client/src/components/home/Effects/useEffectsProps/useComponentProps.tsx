@@ -1,4 +1,4 @@
-import { EffectsTablePropsT } from '@/types/effects/effectTable.types';
+import { EffectsTablePropsT } from '@/types/effect/effectTable.types';
 import ToolbarCustomActions from '../actions/ToolbarCustomActions/ToolbarCustomActions';
 import ToolbarInternalActions from '../actions/ToolbarInternalActions/ToolbarInternalActions';
 import EmptyRowsFallback from '../comps/EmptyRowsFallback/EmptyRowsFallback';

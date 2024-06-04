@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useEffectsState } from '@/libs/redux/features/effects/state/selector';
 import { AppDispatch } from '@/libs/redux/store';
-import { EffectsTablePropsT } from '@/types/effects/effectTable.types';
+import { EffectsTablePropsT } from '@/types/effect/effectTable.types';
 import { effectsStateActions } from '@/libs/redux/features/effects/state/slice';
 import { MRT_DensityState } from 'material-react-table';
 

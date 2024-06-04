@@ -1,4 +1,4 @@
-import { EffectsTableRowT } from '@/types/effects/effectTable.types';
+import { EffectsTableRowT } from '@/types/effect/effectTable.types';
 import { Box, TextField } from '@mui/material';
 
 const DuplicateDialogContent = ({

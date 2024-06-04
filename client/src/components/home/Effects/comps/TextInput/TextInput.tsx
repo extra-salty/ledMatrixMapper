@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { playlistDataActions } from '@/libs/redux/features/playlist/data/slice';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import { AnimationChildrenBaseT } from '@/types/animation/animation.types';
-import { EffectsTableRowT } from '@/types/effects/effectTable.types';
+import { EffectsTableRowT } from '@/types/effect/effectTable.types';
 import { ChangeEvent, FocusEvent, useState } from 'react';
 import { TextField } from '@mui/material';
 

@@ -16,7 +16,7 @@ export const getAnimation = createAsyncThunk<void, string, ThunkApiT>(
 				const { effects, details } = animation;
 				const { matrixSize } = details;
 				const { height, width } = matrixSize;
-				const activeMatrixSize = getState().effects.data.activeMatrixSize;
+				const activeMatrixSize = getState().effects.data.options.activeMatrixSize;
 
 				if (
 					activeMatrixSize === undefined ||

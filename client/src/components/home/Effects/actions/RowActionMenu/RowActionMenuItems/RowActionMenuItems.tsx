@@ -3,7 +3,7 @@ import { AppDispatch } from '@/libs/redux/store';
 import { Dispatch, SetStateAction } from 'react';
 import { ActionButtonProps } from '@/types/components/components.types';
 import { Add, ContentCopy, Delete, Edit } from '@mui/icons-material';
-import { EffectsTableRowT } from '@/types/effects/effectTable.types';
+import { EffectsTableRowT } from '@/types/effect/effectTable.types';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import { appActions } from '@/libs/redux/features/app/slice';
 import { MainTabs } from '@/libs/redux/features/app/appSlice.types';

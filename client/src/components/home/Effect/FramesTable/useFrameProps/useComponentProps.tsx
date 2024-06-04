@@ -1,4 +1,4 @@
-import { EffectsTablePropsT } from '@/types/effects/effectTable.types';
+import { EffectsTablePropsT } from '@/types/effect/effectTable.types';
 
 const useComponentProps = (): EffectsTablePropsT => {
 	return {

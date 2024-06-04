@@ -70,7 +70,7 @@ const EffectPlayerControls = ({
 				disabled={!timestamps}
 				onClick={handlePlayPause}
 				startIcon={isRunning ? <Pause /> : <PlayArrow />}
-				sx={{ padding: '5px', minWidth: '0', width: '32px' }}
+				sx={{ padding: '5px', minWidth: '32px', width: '32px' }}
 			/>
 			<Pagination
 				shape='rounded'
@@ -79,7 +79,7 @@ const EffectPlayerControls = ({
 				showLastButton
 				page={activeFrameIndex + 1}
 				count={timestamps.length}
-				siblingCount={2}
+				siblingCount={1}
 				onChange={handleFrameChange}
 			/>
 			<ToggleButton

@@ -19,7 +19,7 @@ export type AttributeType = {
 const ColorSelectorPopover = () => {
 	const dispatch = useDispatch();
 
-	const handleColorReset = () => dispatch(effectsDataActions.resetSelectedColor());
+	const handleColorReset = () => dispatch(effectsDataActions.resetColor());
 
 	return (
 		<Box

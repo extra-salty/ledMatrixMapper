@@ -2,9 +2,8 @@ import { useDispatch } from 'react-redux';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
-import { MouseEvent } from 'react';
 import { CheckBoxOutlineBlank, DisabledByDefault, OpenWith } from '@mui/icons-material';
-import { Box, Checkbox, IconButton, ToggleButton, Tooltip } from '@mui/material';
+import { Box, Checkbox, IconButton, Tooltip, Typography } from '@mui/material';
 
 const FrameSelector = ({
 	frameId,
@@ -33,6 +32,19 @@ const FrameSelector = ({
 
 	return (
 		<Box>
+			{/* <Tooltip
+				title='Frame Index'
+				sx={{
+					position: 'absolute',
+					left: '50%',
+					top: '50%',
+					transform: 'translate(-50%, -50%)',
+				}}
+			>
+				<Typography fontWeight={500} letterSpacing={3}>{`${
+					frameIndex + 1
+				}/${framesLength}`}</Typography>
+			</Tooltip> */}
 			<IconButton
 				size='small'
 				sx={{
