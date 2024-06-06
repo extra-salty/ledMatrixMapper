@@ -1,14 +1,14 @@
-import NumberInput from '@/components/misc/NumberInput/NumberInput';
-import { useEffectPlayerRefreshRate } from '@/libs/redux/features/effectEditor/selectors';
+import { useEffectPlayerSelect } from '@/libs/redux/features/effectEditor/selectors';
 import { effectEditorActions } from '@/libs/redux/features/effectEditor/slice';
 import { Speed, Update } from '@mui/icons-material';
 import { Box, SvgIconProps, Tooltip } from '@mui/material';
 import { ReactElement, memo } from 'react';
 import { useDispatch } from 'react-redux';
+import NumberInput from '@/components/misc/NumberInput/NumberInput';
 
 const EffectPlayerSettings = () => {
 	const dispatch = useDispatch();
-	const refreshRate = useEffectPlayerRefreshRate();
+	const refreshRate = useEffectPlayerSelect('refreshRate');
 
 	const settings: {
 		value: number;
@@ -27,8 +27,8 @@ const EffectPlayerSettings = () => {
 			incrementValue: 10,
 			title: 'Refresh rate (ms)',
 			icon: <Update />,
-			onChange: (value: number) =>
-				dispatch(effectEditorActions.updatePlayerOptions({ key: 'refreshRate', value })),
+			onChange: (value: number) => {},
+			// dispatch(effectEditorActions.updatePlayerOptions({ key: 'refreshRate', value })),
 		},
 		{
 			disabled: true,

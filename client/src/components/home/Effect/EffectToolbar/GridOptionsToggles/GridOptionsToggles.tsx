@@ -17,17 +17,6 @@ const GridOptionsToggles = () => {
 	const toggles = useFrameGridOptionsToggles();
 	const { borderEnabled, indexEnabled, transitionEnabled } = toggles;
 
-	const handleChange = (
-		event: MouseEvent<HTMLElement>,
-		key: keyof FrameGridOptionsT['toggle'],
-	) =>
-		dispatch(
-			effectEditorActions.updateGridToggles({
-				key,
-				value: !toggles[key],
-			}),
-		);
-
 	const toggleButtons: {
 		key: keyof FrameGridOptionsT['toggle'];
 		selected: boolean;
@@ -56,6 +45,17 @@ const GridOptionsToggles = () => {
 			icon: { hide: <AutoGraph />, show: <ShowChart /> },
 		},
 	];
+
+	const handleChange = (
+		event: MouseEvent<HTMLElement>,
+		key: keyof FrameGridOptionsT['toggle'],
+	) =>
+		dispatch(
+			effectEditorActions.updateGridToggles({
+				key,
+				value: !toggles[key],
+			}),
+		);
 
 	return (
 		<ToggleButtonGroup size='small' aria-label='Frame grid options'>

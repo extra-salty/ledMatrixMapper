@@ -18,7 +18,7 @@ const FrameGrid = ({ frames }: { frames: FrameStateT[] }) => {
 		const resizeObserver = new ResizeObserver(([grid]) => {
 			const width = grid.contentRect.width;
 
-			dispatch(effectEditorActions.updateGridOptions({ key: 'gridWidth', value: width }));
+			dispatch(effectEditorActions.updateGridWidth(width));
 		});
 
 		const currentRef = ref.current;

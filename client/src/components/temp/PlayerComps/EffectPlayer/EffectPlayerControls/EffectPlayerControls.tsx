@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useEffectPlayerRepeat } from '@/libs/redux/features/effectEditor/selectors';
+import { useEffectPlayerToggle } from '@/libs/redux/features/effectEditor/selectors';
 import { Dispatch, SetStateAction, memo } from 'react';
 import { effectEditorActions } from '@/libs/redux/features/effectEditor/slice';
 import { Timer } from 'react-use-precision-timer';
@@ -18,7 +18,8 @@ const EffectPlayerControls = ({
 	setElapsedEffectTime: Dispatch<SetStateAction<number>>;
 }) => {
 	const dispatch = useDispatch();
-	const repeatEnabled = useEffectPlayerRepeat();
+
+	const repeatEnabled = useEffectPlayerToggle('repeatEnabled');
 	const isRunning = effectTimer.isRunning();
 
 	const handlePlayPause = () => {
@@ -46,7 +47,7 @@ const EffectPlayerControls = ({
 
 	const handleRepeatChange = () =>
 		dispatch(
-			effectEditorActions.updatePlayerOptions({
+			effectEditorActions.updatePlayerToggles({
 				key: 'repeatEnabled',
 				value: !repeatEnabled,
 			}),

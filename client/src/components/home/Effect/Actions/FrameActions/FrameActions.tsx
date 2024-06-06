@@ -28,6 +28,7 @@ const FrameActions = ({ disabled }: { disabled: boolean }) => {
 		{
 			icon: <Delete />,
 			text: 'Delete Frames',
+			disabled: true,
 			onClick: () => {},
 		},
 	];
@@ -36,14 +37,12 @@ const FrameActions = ({ disabled }: { disabled: boolean }) => {
 		<>
 			<PixelateDialog open={isImportDialogOpen} setOpen={setIsImportDialogOpen} />
 			<Box
-				sx={{
-					height: '24px',
+				sx={(theme) => ({
 					display: 'flex',
 					alignItems: 'center',
-					// border: '1px solid rgba(255, 255, 255, 0.12)',
-					// padding: 2,
-					// borderRadius: '4px',
-				}}
+					border: `1px solid ${theme.palette.divider}`,
+					borderRadius: '4px',
+				})}
 			>
 				<GenericActions actions={actions} disableAll={disabled} />
 			</Box>

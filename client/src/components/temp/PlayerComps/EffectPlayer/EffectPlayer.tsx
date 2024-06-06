@@ -1,9 +1,11 @@
-import { memo, useMemo, useState } from 'react';
-import { useTimer } from 'react-use-precision-timer';
+import { useActiveMatrixSize } from '@/libs/redux/features/effects/data/selector';
 import {
-	useEffectPlayerRefreshRate,
-	useEffectPlayerRepeat,
+	useEffectPlayerSelect,
+	useEffectPlayerToggle,
 } from '@/libs/redux/features/effectEditor/selectors';
+import { useTimer } from 'react-use-precision-timer';
+import { memo, useMemo, useState } from 'react';
+import { createFrame } from '@/types/effect/effectConstructors';
 import { FrameStateT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
 import EffectProgress from './EffectProgress/EffectProgress';
@@ -11,12 +13,11 @@ import FrameProgress from './FrameProgress/FrameProgress';
 import EffectPlayerControls from './EffectPlayerControls/EffectPlayerControls';
 import EffectPlayerFrame from './EffectPlayerFrame/EffectPlayerFrame';
 import EffectPlayerSettings from './EffectPlayerSettings/EffectPlayerSettings';
-import { createFrame } from '@/types/effect/effectConstructors';
-import { useActiveMatrixSize } from '@/libs/redux/features/effects/data/selector';
 
 const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
-	const repeatEnabled = useEffectPlayerRepeat();
-	const refreshRate = useEffectPlayerRefreshRate();
+	const repeatEnabled = useEffectPlayerToggle('repeatEnabled');
+	const refreshRate = useEffectPlayerSelect('refreshRate');
+
 	const matrixSize = useActiveMatrixSize() || { width: 0, height: 0 };
 	const [elapsedEffectTime, setElapsedEffectTime] = useState<number>(0);
 

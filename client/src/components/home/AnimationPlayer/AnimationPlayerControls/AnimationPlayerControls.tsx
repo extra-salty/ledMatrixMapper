@@ -1,4 +1,3 @@
-import { useEffectPlayerRepeat } from '@/libs/redux/features/effectEditor/selectors';
 import { Dispatch, SetStateAction } from 'react';
 import { Timer } from 'react-use-precision-timer';
 import { Box, Button, Pagination, ToggleButton, Tooltip } from '@mui/material';
@@ -19,7 +18,7 @@ const AnimationPlayerControls = ({
 	setElapsedAnimationTime: Dispatch<SetStateAction<number>>;
 }) => {
 	const dispatch = useDispatch();
-	const repeatEnabled = useEffectPlayerRepeat();
+	const repeatEnabled = false;
 	const isRunning = animationTimer.isRunning();
 
 	const handlePlayPause = () => {
@@ -45,13 +44,13 @@ const AnimationPlayerControls = ({
 		animationTimer.pause();
 	};
 
-	const handleRepeatChange = () =>
-		dispatch(
-			effectEditorActions.updatePlayerOptions({
-				key: 'repeatEnabled',
-				value: !repeatEnabled,
-			}),
-		);
+	const handleRepeatChange = () => {};
+	// dispatch(
+	// 	effectEditorActions.updatePlayerOptions({
+	// 		key: 'repeatEnabled',
+	// 		value: !repeatEnabled,
+	// 	}),
+	// );
 
 	return (
 		<Box

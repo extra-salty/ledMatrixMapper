@@ -1,9 +1,7 @@
 import {
 	FrameGridOptionsT,
-	EffectPlayerOptionsT,
 	EffectEditorSliceT,
-	UpdateGridOptionsT,
-	UpdatePlayerOptionsT,
+	EffectPlayerOptionsT,
 } from '@/types/effectEditor/effectEditor.types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
@@ -21,12 +19,16 @@ const initialState: EffectEditorSliceT = {
 		gridWidth: 0,
 	},
 	playerOptions: {
-		castEnabled: false,
-		repeatEnabled: false,
-		borderEnabled: false,
-		indexEnabled: false,
-		blur: 0,
-		refreshRate: 10,
+		toggle: {
+			castEnabled: false,
+			repeatEnabled: false,
+			borderEnabled: false,
+			indexEnabled: false,
+		},
+		select: {
+			blur: 0,
+			refreshRate: 10,
+		},
 	},
 };
 
@@ -34,6 +36,9 @@ export const effectEditorSlice = createSlice({
 	name: 'effectEditor',
 	initialState,
 	reducers: {
+		updateGridWidth: (state, action: PayloadAction<number>) => {
+			state.gridOptions.gridWidth = action.payload;
+		},
 		updateGridToggles: (
 			state,
 			action: PayloadAction<{ key: keyof FrameGridOptionsT['toggle']; value: boolean }>,
@@ -50,36 +55,39 @@ export const effectEditorSlice = createSlice({
 
 			state.gridOptions.select[key] = value;
 		},
-		updateGridOptions: <K extends keyof FrameGridOptionsT>(
-			state: EffectEditorSliceT,
-			action: PayloadAction<UpdateGridOptionsT<K>>,
+		updatePlayerToggles: (
+			state,
+			action: PayloadAction<{
+				key: keyof EffectPlayerOptionsT['toggle'];
+				value: boolean;
+			}>,
 		) => {
 			const { key, value } = action.payload;
 
-			state.gridOptions[key] = value;
+			state.playerOptions.toggle[key] = value;
 		},
-		updatePlayerOptions: <K extends keyof EffectPlayerOptionsT>(
-			state: EffectEditorSliceT,
-			action: PayloadAction<UpdatePlayerOptionsT<K>>,
+		updatePlayerSelects: (
+			state,
+			action: PayloadAction<{ key: keyof EffectPlayerOptionsT['select']; value: number }>,
 		) => {
 			const { key, value } = action.payload;
 
-			state.playerOptions[key] = value;
+			state.playerOptions.select[key] = value;
 		},
 	},
 });
 
-const { updatePlayerOptions, updateGridOptions, ...rest } = effectEditorSlice.actions;
+export const effectEditorActions = effectEditorSlice.actions;
 
-export const effectEditorActions = {
-	...rest,
-	updateGridOptions: updateGridOptions as <K extends keyof FrameGridOptionsT>(
-		payload: UpdateGridOptionsT<K>,
-	) => PayloadAction<UpdateGridOptionsT<K>>,
-	updatePlayerOptions: updatePlayerOptions as <K extends keyof EffectPlayerOptionsT>(
-		payload: UpdatePlayerOptionsT<K>,
-	) => PayloadAction<UpdatePlayerOptionsT<K>>,
-};
+// export const effectEditorActions = {
+// 	...rest,
+// 	updateGridOptions: updateGridOptions as <K extends keyof FrameGridOptionsT>(
+// 		payload: UpdateGridOptionsT<K>,
+// 	) => PayloadAction<UpdateGridOptionsT<K>>,
+// 	updatePlayerOptions: updatePlayerOptions as <K extends keyof EffectPlayerOptionsT>(
+// 		payload: UpdatePlayerOptionsT<K>,
+// 	) => PayloadAction<UpdatePlayerOptionsT<K>>,
+// };
 
 // // Effect actions
 // setEffect: (state, action: PayloadAction<AnimationT>) => {

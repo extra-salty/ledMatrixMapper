@@ -1,11 +1,11 @@
 import { RootState } from '@/libs/redux/store';
-import { FrameGridOptionsT } from '@/types/effectEditor/effectEditor.types';
+import {
+	EffectPlayerOptionsT,
+	FrameGridOptionsT,
+} from '@/types/effectEditor/effectEditor.types';
 import { useSelector } from 'react-redux';
 
-export const useEffectPlayerOptions = () =>
-	useSelector((state: RootState) => state.effectEditor.playerOptions);
-
-// gridOptions
+// Frame Grid Options
 export const useFrameGridWidth = () =>
 	useSelector((state: RootState) => state.effectEditor.gridOptions.gridWidth);
 
@@ -45,12 +45,16 @@ export const useFrameCellSize = () =>
 		return cellSize;
 	});
 
-//
-export const useEffectPlayerRepeat = () =>
-	useSelector((state: RootState) => state.effectEditor.playerOptions.repeatEnabled);
+// Effect Player Options
 
-export const useEffectPlayerRefreshRate = () =>
-	useSelector((state: RootState) => state.effectEditor.playerOptions.refreshRate);
+export const useEffectPlayerToggles = () =>
+	useSelector((state: RootState) => state.effectEditor.playerOptions.toggle);
 
-export const useEffectPlayerBorder = () =>
-	useSelector((state: RootState) => state.effectEditor.playerOptions.borderEnabled);
+export const useEffectPlayerToggle = (key: keyof EffectPlayerOptionsT['toggle']) =>
+	useSelector((state: RootState) => state.effectEditor.playerOptions.toggle[key]);
+
+export const useEffectPlayerSelects = () =>
+	useSelector((state: RootState) => state.effectEditor.playerOptions.select);
+
+export const useEffectPlayerSelect = (key: keyof EffectPlayerOptionsT['select']) =>
+	useSelector((state: RootState) => state.effectEditor.playerOptions.select[key]);

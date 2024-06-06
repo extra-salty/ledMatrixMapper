@@ -19,7 +19,13 @@ const ColorSelector = () => {
 
 	return (
 		<>
-			<IconButton onClick={handleClick}>
+			<IconButton
+				onClick={handleClick}
+				sx={(theme) => ({
+					border: `1px solid ${theme.palette.divider}`,
+					borderRadius: 1,
+				})}
+			>
 				<Tooltip title='Selected Color'>
 					<Square sx={{ color: colorString, stroke: 'rgba(255,255,255,0.6)' }} />
 				</Tooltip>
