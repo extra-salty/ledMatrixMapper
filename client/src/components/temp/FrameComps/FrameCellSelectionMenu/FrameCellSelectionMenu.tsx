@@ -5,6 +5,7 @@ import {
 	ContentCopy,
 	ContentCut,
 	ContentPaste,
+	Flip,
 	FormatColorFill,
 	FormatColorReset,
 } from '@mui/icons-material';
@@ -81,6 +82,16 @@ const FrameCellSelectionMenu = ({
 				dispatch(effectsDataActions.setActiveColorAction(ColorActions.cut));
 			},
 		},
+		{
+			icon: <Flip />,
+			text: 'Flip Horizontal',
+			onClick: () => {},
+		},
+		{
+			icon: <Flip sx={{ rotate: '90deg' }} />,
+			text: 'Flip Vertical',
+			onClick: () => {},
+		},
 	];
 
 	const pasteItems: ActionButtonProps[] = [
@@ -106,7 +117,7 @@ const FrameCellSelectionMenu = ({
 			open={isOpen}
 			anchorEl={anchorEl}
 			anchorOrigin={{
-				vertical: 'bottom',
+				vertical: 'top',
 				horizontal: 'right',
 			}}
 			onClose={handleClose}

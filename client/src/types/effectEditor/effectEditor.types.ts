@@ -1,22 +1,24 @@
-import { FrameHistoryT } from '../effect/effect.types';
-
-export type EffectSliceT = {
-	selectedFrames: number[];
-	frameHistory: FrameHistoryT[];
+export type EffectEditorSliceT = {
 	playerOptions: EffectPlayerOptionsT;
-	gridOptions: EffectGridOptionsT;
+	gridOptions: FrameGridOptionsT;
 };
 
-export type EffectGridOptionsT = {
-	cellSize: number;
-	borderEnabled: boolean;
-	indexEnabled: boolean;
-	blur: number;
+export type FrameGridOptionsT = {
+	toggle: {
+		indexEnabled: boolean;
+		borderEnabled: boolean;
+		transitionEnabled: boolean;
+	};
+	select: {
+		numberOfColumns: number;
+		blur: number;
+	};
+	gridWidth: number;
 };
 
-export type UpdateGridOptionsT<K extends keyof EffectGridOptionsT> = {
+export type UpdateGridOptionsT<K extends keyof FrameGridOptionsT> = {
 	key: K;
-	value: EffectGridOptionsT[K];
+	value: FrameGridOptionsT[K];
 };
 
 export type EffectPlayerOptionsT = {

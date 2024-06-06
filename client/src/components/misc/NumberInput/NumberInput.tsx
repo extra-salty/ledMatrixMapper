@@ -1,6 +1,7 @@
-import { ChangeEvent, memo, useRef, useState, FocusEvent } from 'react';
+import { ChangeEvent, memo, useRef, useState, FocusEvent, ReactElement } from 'react';
 import Image from 'next/image';
 import styles from './NumberInput.module.scss';
+import { SvgIconProps } from '@mui/material';
 
 export type NumberInputProps = {
 	controlledValue: number;
@@ -10,8 +11,10 @@ export type NumberInputProps = {
 	hasIncrements?: boolean;
 	incrementAlwaysVisible?: boolean;
 	incrementValue?: number;
+	hasBorder?: boolean;
 	disabled?: boolean;
 	align?: 'left' | 'right';
+	icon?: ReactElement<SvgIconProps>;
 	onChange?: (value: number) => void;
 	onBlur?: (value: number) => void;
 };
@@ -23,9 +26,11 @@ const NumberInput = ({
 	hasIncrements,
 	incrementAlwaysVisible,
 	incrementValue = 1,
+	hasBorder,
 	unit,
 	align = 'left',
 	disabled = false,
+	icon,
 	onChange,
 	onBlur,
 }: NumberInputProps) => {
@@ -53,6 +58,8 @@ const NumberInput = ({
 	const handleOnIncrement = (value: number, increase: 'increase' | 'decrease') => {
 		ref.current && ref.current.focus();
 
+		// if (value === internalValue) return;
+
 		const newValue =
 			increase === 'increase' ? value + incrementValue : value - incrementValue;
 		const limitedValue = limitValue(newValue);
@@ -73,6 +80,7 @@ const NumberInput = ({
 
 	return (
 		<div className={styles.numberInput} onBlur={handleOnBlur}>
+			{icon}
 			<input
 				ref={ref}
 				type='text'

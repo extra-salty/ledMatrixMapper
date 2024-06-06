@@ -54,7 +54,7 @@ const EffectPlayerToolbar = () => {
 				borderColor: theme.palette.divider,
 			})}
 		>
-			<ToggleButton
+			{/* <ToggleButton
 				size='small'
 				value='castEnabled'
 				aria-label='Border Enable'
@@ -65,7 +65,7 @@ const EffectPlayerToolbar = () => {
 				<Tooltip title={castEnabled ? 'Disable Cast' : 'Enable Cast'}>
 					<Cast color={castEnabled ? 'success' : 'warning'} />
 				</Tooltip>
-			</ToggleButton>
+			</ToggleButton> */}
 			<ToggleButtonGroup size='small'>
 				<ToggleButton
 					selected={borderEnabled}

@@ -1,5 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
-import { memo } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/libs/redux/store';
+import { memo, useRef } from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import { Box, Divider, Paper } from '@mui/material';
 import { FrameStateT } from '@/types/effect/effect.types';
@@ -20,6 +22,8 @@ const FrameGridItem = ({
 	frame: FrameStateT;
 	disabledExternally?: boolean;
 }) => {
+	const ref = useRef<HTMLDivElement>(null);
+
 	const { id, data, duration, disabled } = frame;
 
 	const {
@@ -50,6 +54,7 @@ const FrameGridItem = ({
 			}}
 		>
 			<Box
+				ref={ref}
 				sx={{
 					display: 'flex',
 					alignItems: 'center',

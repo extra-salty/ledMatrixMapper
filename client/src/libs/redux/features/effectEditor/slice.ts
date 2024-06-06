@@ -1,20 +1,24 @@
 import {
-	EffectGridOptionsT,
+	FrameGridOptionsT,
 	EffectPlayerOptionsT,
-	EffectSliceT,
+	EffectEditorSliceT,
 	UpdateGridOptionsT,
 	UpdatePlayerOptionsT,
 } from '@/types/effectEditor/effectEditor.types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const initialState: EffectSliceT = {
-	selectedFrames: [],
-	frameHistory: [],
+const initialState: EffectEditorSliceT = {
 	gridOptions: {
-		cellSize: 20,
-		borderEnabled: false,
-		indexEnabled: false,
-		blur: 0,
+		toggle: {
+			indexEnabled: false,
+			borderEnabled: false,
+			transitionEnabled: false,
+		},
+		select: {
+			blur: 0,
+			numberOfColumns: 3,
+		},
+		gridWidth: 0,
 	},
 	playerOptions: {
 		castEnabled: false,
@@ -30,8 +34,24 @@ export const effectEditorSlice = createSlice({
 	name: 'effectEditor',
 	initialState,
 	reducers: {
-		updateGridOptions: <K extends keyof EffectGridOptionsT>(
-			state: EffectSliceT,
+		updateGridToggles: (
+			state,
+			action: PayloadAction<{ key: keyof FrameGridOptionsT['toggle']; value: boolean }>,
+		) => {
+			const { key, value } = action.payload;
+
+			state.gridOptions.toggle[key] = value;
+		},
+		updateGridSelects: (
+			state,
+			action: PayloadAction<{ key: keyof FrameGridOptionsT['select']; value: number }>,
+		) => {
+			const { key, value } = action.payload;
+
+			state.gridOptions.select[key] = value;
+		},
+		updateGridOptions: <K extends keyof FrameGridOptionsT>(
+			state: EffectEditorSliceT,
 			action: PayloadAction<UpdateGridOptionsT<K>>,
 		) => {
 			const { key, value } = action.payload;
@@ -39,7 +59,7 @@ export const effectEditorSlice = createSlice({
 			state.gridOptions[key] = value;
 		},
 		updatePlayerOptions: <K extends keyof EffectPlayerOptionsT>(
-			state: EffectSliceT,
+			state: EffectEditorSliceT,
 			action: PayloadAction<UpdatePlayerOptionsT<K>>,
 		) => {
 			const { key, value } = action.payload;
@@ -53,7 +73,7 @@ const { updatePlayerOptions, updateGridOptions, ...rest } = effectEditorSlice.ac
 
 export const effectEditorActions = {
 	...rest,
-	updateGridOptions: updateGridOptions as <K extends keyof EffectGridOptionsT>(
+	updateGridOptions: updateGridOptions as <K extends keyof FrameGridOptionsT>(
 		payload: UpdateGridOptionsT<K>,
 	) => PayloadAction<UpdateGridOptionsT<K>>,
 	updatePlayerOptions: updatePlayerOptions as <K extends keyof EffectPlayerOptionsT>(

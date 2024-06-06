@@ -1,10 +1,13 @@
-import { useFrameCellSize } from '@/libs/redux/features/effectEditor/selectors';
 import { useDispatch } from 'react-redux';
+import { useFrameGridOptionsToggle } from '@/libs/redux/features/effectEditor/selectors';
 import { useCallback, MouseEvent, memo, useMemo, useState, useRef } from 'react';
 import { useActiveColorAction } from '@/libs/redux/features/effects/data/selector';
-import { useCursor } from './frameCellDynamicHelpers';
 import { AppDispatch } from '@/libs/redux/store';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
+import {
+	hslToString,
+	hsvToHsl,
+} from '@/components/home/Color/SelectedColor/AttributeSlider/useBackgroundColor';
 import { CoordinateT } from '@/types/misc/misc.types';
 import {
 	ColorActions,
@@ -12,12 +15,8 @@ import {
 } from '@/types/effect/effectPayload.types';
 import { FrameCellT } from '@/types/effect/effect.types';
 import FrameCellSelectionMenu from '../../../FrameCellSelectionMenu/FrameCellSelectionMenu';
-import styles from './FrameCellDynamic.module.scss';
 import Image from 'next/image';
-import {
-	hslToString,
-	hsvToHsl,
-} from '@/components/home/Color/SelectedColor/AttributeSlider/useBackgroundColor';
+import styles from './FrameCellDynamic.module.scss';
 
 const FrameCellDynamic = ({
 	frameId,
@@ -38,8 +37,7 @@ const FrameCellDynamic = ({
 	const ref = useRef<HTMLButtonElement>(null);
 
 	const colorAction = useActiveColorAction();
-	const cursor = useCursor();
-	const cellSize = useFrameCellSize();
+	const transitionEnabled = useFrameGridOptionsToggle('transitionEnabled');
 
 	const coordinate: CoordinateT = useMemo(
 		() => ({ x: xIndex, y: yIndex }),
@@ -51,7 +49,6 @@ const FrameCellDynamic = ({
 	);
 
 	const backgroundColor = cell?.color ? hslToString(hsvToHsl(cell.color)) : 'transparent';
-	console.log('🚀 ~ backgroundColor:', backgroundColor);
 
 	const handleMouseDown = useCallback(
 		(e: MouseEvent<HTMLButtonElement>) => {
@@ -123,9 +120,12 @@ const FrameCellDynamic = ({
 				ref={ref}
 				className={styles.cell}
 				style={{
-					cursor,
-					width: `${cellSize}px`,
-					height: `${cellSize}px`,
+					cursor: 'inherit',
+					width: '100%',
+					height: 'auto',
+					aspectRatio: '1 / 1',
+					borderColor: backgroundColor,
+					border: 'none',
 					backgroundColor,
 					display: 'flex',
 					justifyContent: 'center',
@@ -138,17 +138,17 @@ const FrameCellDynamic = ({
 				onMouseDown={handleMouseDown}
 				onMouseOver={handleMouseOver}
 			>
-				{cell && cell.transition && (
+				{/* {transitionEnabled && cell && cell.transition && (
 					<Image
 						src={`/${cell.transition}.svg`}
 						alt='image'
-						width={cellSize - 5}
-						height={cellSize - 5}
+						// width={cellSize - 5}
+						// height={cellSize - 5}
 						style={{
 							pointerEvents: 'none',
 						}}
 					/>
-				)}
+				)} */}
 			</button>
 			{isOpen && (
 				<FrameCellSelectionMenu
