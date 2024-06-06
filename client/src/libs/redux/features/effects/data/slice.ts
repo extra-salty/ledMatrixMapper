@@ -13,7 +13,7 @@ import {
 } from '@/types/effect/effectConstructors';
 import { EffectsTableRowT } from '@/types/effect/effectTable.types';
 import { CoordinateT } from '@/types/misc/misc.types';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice, current } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { DEFAULT_COLOR } from '../../color/slice';
 import {
@@ -35,7 +35,7 @@ export const initialState: EffectsSliceT = {
 	options: {
 		activeMatrixSize: undefined,
 		activeColorAction: ColorActions.brush,
-		activeTransition: TransitionT.linear,
+		activeTransition: 'linear',
 		brushSize: 0,
 	},
 	selection: {
@@ -43,7 +43,7 @@ export const initialState: EffectsSliceT = {
 		colorActionCoordinate: undefined,
 	},
 	color: {
-		selectedColor: { hue: 0, saturation: 100, lightness: 50 },
+		selectedColor: { hue: 0, saturation: 100, brightness: 50 },
 		colorHistory: [],
 	},
 };
@@ -238,7 +238,8 @@ export const effectsDataSlice = createSlice({
 		resetFrame: (state, action: PayloadAction<string>) => {
 			const { animationId, effectId } = state.activeEffect!;
 			const frameId = action.payload;
-			const frameData = createFrameData(undefined);
+			const matrixSize = state.options.activeMatrixSize!;
+			const frameData = createFrameData({ matrixSize, cell: undefined });
 
 			state.animations[animationId][effectId].frames[frameId].data = frameData;
 		},
@@ -354,13 +355,16 @@ export const effectsDataSlice = createSlice({
 		},
 		removeAnimation: (state, action: PayloadAction<string>) => {
 			delete state.animations[action.payload];
+
+			if ((state.animations = {})) state.options.activeMatrixSize = undefined;
 		},
 		//
 		// Effects
 		addEffect: (state, action: PayloadAction<FormData>) => {
 			const formData = action.payload;
 			const animationId = formData.get('animationId') as string;
-			const newEffect = createEffect(formData);
+			const matrixSize = state.options.activeMatrixSize!;
+			const newEffect = createEffect({ formData, matrixSize });
 
 			state.animations[animationId][newEffect.id] = newEffect;
 		},
@@ -409,7 +413,8 @@ export const effectsDataSlice = createSlice({
 			const { animationId, effectId } = state.activeEffect!;
 			const effect = state.animations[animationId][effectId];
 			const index = action.payload;
-			const newFrame = createFrame();
+			const matrixSize = state.options.activeMatrixSize!;
+			const newFrame = createFrame(matrixSize);
 			const newFrameId = newFrame.id;
 
 			if (index) {
@@ -450,8 +455,8 @@ export const effectsDataSlice = createSlice({
 		importFrame: (state, action: PayloadAction<FrameStateT['data']>) => {
 			const { animationId, effectId } = state.activeEffect!;
 			const data = action.payload;
-			const newFrame = createFrame();
-			const modifiedNewFrame = { ...newFrame, data };
+			// const newFrame = createFrame();
+			// const modifiedNewFrame = { ...newFrame, data };
 
 			// state.animations[animationId][effectId].frames.push(modifiedNewFrame);
 		},

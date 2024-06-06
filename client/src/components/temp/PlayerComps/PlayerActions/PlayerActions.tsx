@@ -1,6 +1,6 @@
 import { Repeat } from '@mui/icons-material';
 import { Box, IconButton, Tooltip } from '@mui/material';
-import EffectPlayerControls from '../EffectPlayerControls/EffectPlayerControls';
+import EffectPlayerControls from '../EffectPlayer/EffectPlayerControls/EffectPlayerControls';
 
 const PlayerActions = () => {
 	const repeatOff = true;

@@ -1,6 +1,6 @@
-import { ColorT } from '@/types/color/color.types';
+import { FrameCellT, FrameDataT } from '@/types/effect/effect.types';
 
-const pixelateImage = async (imageSrc: string): Promise<ColorT[][] | undefined> => {
+const pixelateImage = async (imageSrc: string): Promise<FrameDataT | undefined> => {
 	return new Promise((resolve) => {
 		const image = new Image();
 		image.src = imageSrc;
@@ -16,12 +16,12 @@ const pixelateImage = async (imageSrc: string): Promise<ColorT[][] | undefined> 
 
 			ctx.drawImage(image, 0, 0, image.width, image.height);
 
-			const matrix: ColorT[][] = [];
+			const matrix: FrameDataT = [];
 			const { width, height } = canvas;
 			const cellSize = Math.min(width / 24, height / 12);
 
 			for (let x = 0; x < 24; x++) {
-				const column: ColorT[] = [];
+				const column: FrameCellT[] = [];
 
 				for (let y = 0; y < 12; y++) {
 					const data = ctx.getImageData(
@@ -76,9 +76,12 @@ const pixelateImage = async (imageSrc: string): Promise<ColorT[][] | undefined> 
 					}
 
 					column.push({
-						hue: h * 360,
-						saturation: s * 100,
-						lightness: l * 100,
+						color: {
+							hue: h * 360,
+							saturation: s * 100,
+							brightness: l * 100,
+						},
+						transition: undefined,
 					});
 				}
 				matrix.push(column);

@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const DEFAULT_COLOR: ColorT = {
 	hue: 0,
 	saturation: 100,
-	lightness: 0,
+	brightness: 100,
 };
 
 const initialState: {

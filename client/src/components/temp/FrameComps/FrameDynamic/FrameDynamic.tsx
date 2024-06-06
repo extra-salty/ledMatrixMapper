@@ -34,8 +34,8 @@ const FrameDynamic = ({
 							content: '""',
 							width: '100%',
 							height: '100%',
-							background: `linear-gradient(to right, ${theme.palette.divider} 2px, transparent 2px),
-                linear-gradient(to bottom, ${theme.palette.divider} 2px, transparent 2px)`,
+							background: `linear-gradient(to right, gray 1px, transparent 1px),
+                linear-gradient(to bottom, gray 1px, transparent 1px)`,
 							backgroundSize: `calc(100% / ${width}) calc(100% / ${height})`,
 							pointerEvents: 'none',
 					  }

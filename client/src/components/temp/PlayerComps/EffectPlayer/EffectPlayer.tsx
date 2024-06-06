@@ -4,18 +4,23 @@ import {
 	useEffectPlayerRefreshRate,
 	useEffectPlayerRepeat,
 } from '@/libs/redux/features/effectEditor/selectors';
-import { mockFrame } from '@/types/effect/effectConstructors';
 import { FrameStateT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
-import EffectPlayerFrame from '../EffectPlayerFrame/EffectPlayerFrame';
-import EffectProgress from '../EffectProgress/EffectProgress';
-import FrameProgress from '../FrameProgress/FrameProgress';
-import EffectPlayerControls from '../EffectPlayerControls/EffectPlayerControls';
+import EffectProgress from './EffectProgress/EffectProgress';
+import FrameProgress from './FrameProgress/FrameProgress';
+import EffectPlayerControls from './EffectPlayerControls/EffectPlayerControls';
+import EffectPlayerFrame from './EffectPlayerFrame/EffectPlayerFrame';
+import EffectPlayerSettings from './EffectPlayerSettings/EffectPlayerSettings';
+import { createFrame } from '@/types/effect/effectConstructors';
+import { useActiveMatrixSize } from '@/libs/redux/features/effects/data/selector';
 
 const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 	const repeatEnabled = useEffectPlayerRepeat();
 	const refreshRate = useEffectPlayerRefreshRate();
+	const matrixSize = useActiveMatrixSize() || { width: 0, height: 0 };
 	const [elapsedEffectTime, setElapsedEffectTime] = useState<number>(0);
+
+	const mockFrame = createFrame(matrixSize);
 
 	const timestamps = useMemo(
 		() =>
@@ -29,7 +34,7 @@ const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 	);
 	const activeFrame = useMemo(
 		() => (frames[activeFrameIndex] === undefined ? mockFrame : frames[activeFrameIndex]),
-		[frames, activeFrameIndex],
+		[frames, activeFrameIndex, mockFrame],
 	);
 
 	const elapsedFrameTime =
@@ -64,11 +69,7 @@ const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 				flexDirection: 'column',
 			}}
 		>
-			<EffectPlayerFrame
-				data={activeFrame.data}
-				elapsedFrameTime={elapsedFrameTime}
-				frameTime={frames[activeFrameIndex]?.duration || 0}
-			/>
+			<EffectPlayerFrame elapsedFrameTime={elapsedFrameTime} frame={activeFrame} />
 			<EffectProgress
 				effectTimer={effectTimer}
 				overallTime={overallTime}
@@ -79,6 +80,7 @@ const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 				elapsedFrameTime={elapsedFrameTime}
 				overallTime={activeFrame.duration}
 			/>
+			<EffectPlayerSettings />
 			<EffectPlayerControls
 				effectTimer={effectTimer}
 				activeFrameIndex={activeFrameIndex}

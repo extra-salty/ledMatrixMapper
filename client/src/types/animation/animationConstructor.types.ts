@@ -15,8 +15,8 @@ export class Animation implements Omit<AnimationBaseT, '_id'> {
 	constructor(userId: string, formData: FormData) {
 		const name = formData.get('name') as string;
 		const description = formData.get('description') as string;
-		const width = formData.get('width') as unknown as number;
-		const height = formData.get('height') as unknown as number;
+		const width = Number(formData.get('width') as string);
+		const height = Number(formData.get('height') as string);
 
 		this.userId = userId;
 		this.name = name;

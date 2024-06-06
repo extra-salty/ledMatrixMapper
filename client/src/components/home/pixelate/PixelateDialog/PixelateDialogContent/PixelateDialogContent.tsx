@@ -6,6 +6,7 @@ import { FileOpen, RestartAlt } from '@mui/icons-material';
 import { Box, Button, TextField } from '@mui/material';
 import FrameDynamic from '@/components/temp/FrameComps/FrameDynamic/FrameDynamic';
 import ImageCropper from '@/components/home/Effect/Actions/ImageImport/components/ImageCropper/ImageCropper';
+import FrameStatic from '@/components/temp/FrameComps/FrameStatic/FrameStatic';
 
 const PixelateDialogContent = ({
 	frameData,
@@ -39,6 +40,18 @@ const PixelateDialogContent = ({
 		throwOnError: false,
 	});
 
+	const newData = frameData?.map((column, x) =>
+		column.map((cell, y) => {
+			if (cell && cell?.color) {
+				const brightness = cell.color.brightness;
+
+				return { ...cell.color, brightness: 100 };
+			} else {
+				return undefined;
+			}
+		}),
+	);
+
 	return (
 		<Box
 			sx={{
@@ -61,7 +74,7 @@ const PixelateDialogContent = ({
 			</Box>
 			{frameData ? (
 				<Box>
-					<FrameDynamic isDisabled frameData={frameData} frameId='pixelate' />
+					{/* <FrameStatic frameData={newData} /> */}
 					<Button variant='outlined' onClick={handleReset} startIcon={<RestartAlt />}>
 						Reset
 					</Button>

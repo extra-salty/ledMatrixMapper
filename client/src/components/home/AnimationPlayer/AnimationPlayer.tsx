@@ -1,10 +1,8 @@
 import { useEffectCollections } from '@/libs/redux/features/effects/data/selector';
 import { useTimer } from 'react-use-precision-timer';
 import { useState } from 'react';
-import { mockFrame } from '@/types/effect/effectConstructors';
 import { TimestampsT } from '../Playlist/usePlaylistProps/useConvertedData';
 import { Box } from '@mui/material';
-import EffectPlayerFrame from '@/components/temp/PlayerComps/EffectPlayerFrame/EffectPlayerFrame';
 import AnimationProgress from './progress/AnimationProgress/AnimationProgress';
 import EffectProgress from './progress/EffectProgress/EffectProgress';
 import FrameProgress from './progress/FrameProgress/FrameProgress';
@@ -21,7 +19,7 @@ const AnimationPlayer = ({ timestamps }: { timestamps: TimestampsT[] }) => {
 
 	let activeAnimation;
 	let activeEffect;
-	let activeFrame = mockFrame;
+	let activeFrame;
 	let activeEffectOverallTime = 0;
 
 	if (activeIds) {
@@ -87,7 +85,7 @@ const AnimationPlayer = ({ timestamps }: { timestamps: TimestampsT[] }) => {
 				setElapsedEffectTime={setElapsedAnimationTime}
 			/>
 			<FrameProgress
-				overallTime={activeFrame.duration}
+				overallTime={activeFrame?.duration || 0}
 				elapsedFrameTime={elapsedFrameTime}
 			/>
 			<AnimationPlayerControls

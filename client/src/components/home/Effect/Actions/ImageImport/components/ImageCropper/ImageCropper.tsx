@@ -41,7 +41,7 @@ const ImageCropper = ({
 
 			const framedata = await pixelateImage(croppedImage);
 
-			// if (framedata) setFrameData(framedata);
+			if (framedata) setFrameData(framedata);
 		}
 	};
 

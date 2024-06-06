@@ -24,19 +24,19 @@ const FrameTransition = ({
 
 	const transitions: { type: TransitionT; text: string }[] = [
 		{
-			type: TransitionT.linear,
+			type: 'linear',
 			text: 'Linear',
 		},
 		{
-			type: TransitionT.easeIn,
+			type: 'easeIn',
 			text: 'Ease In',
 		},
 		{
-			type: TransitionT.easeOut,
+			type: 'easeOut',
 			text: 'Ease Out',
 		},
 		{
-			type: TransitionT.easeInOut,
+			type: 'easeInOut',
 			text: 'Ease In Out',
 		},
 	];

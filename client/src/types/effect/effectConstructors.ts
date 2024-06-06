@@ -1,34 +1,39 @@
 import { nanoid } from 'nanoid';
-import {
-	EffectStateT,
-	FrameStateT,
-	FrameListStateT,
-	FrameCellT,
-	TransitionT,
-} from './effect.types';
+import { EffectStateT, FrameStateT, FrameListStateT, FrameCellT } from './effect.types';
+import { MatrixSizeT } from '../animation/animation.types';
 
-export const createFrameData = (cell: FrameCellT): FrameCellT[][] =>
-	Array(24).fill(Array(12).fill(cell));
+export const createFrameData = ({
+	matrixSize: { width, height },
+	cell,
+}: {
+	matrixSize: MatrixSizeT;
+	cell: FrameCellT;
+}): FrameCellT[][] => Array(width).fill(Array(height).fill(cell));
 
-export const createFrame = (): FrameStateT => ({
+export const createFrame = (matrixSize: MatrixSizeT): FrameStateT => ({
 	id: nanoid(12),
-	data: createFrameData(undefined),
+	data: createFrameData({ matrixSize, cell: undefined }),
 	duration: 1000,
-	transition: TransitionT.linear,
+	transition: 'linear',
 	history: {
 		redo: [],
 		undo: [],
 	},
 });
 
-export const mockFrame = { ...createFrame(), duration: 0 };
-
-export const createEffect = (formData: FormData): EffectStateT => {
+export const createEffect = ({
+	matrixSize,
+	formData,
+}: {
+	matrixSize: MatrixSizeT;
+	formData: FormData;
+}): EffectStateT => {
 	const framesNumber = formData.get('frames') as string;
 
 	const frames: FrameListStateT = {};
 	Array.from({ length: Number(framesNumber) }, () => {
-		const newFrame = createFrame();
+		const newFrame = createFrame(matrixSize);
+
 		frames[newFrame.id] = newFrame;
 	});
 

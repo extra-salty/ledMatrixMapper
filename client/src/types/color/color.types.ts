@@ -1,25 +1,24 @@
+import { SvgIconProps } from '@mui/material';
+import { ReactElement } from 'react';
+
 export type ColorT = {
 	hue: number;
 	saturation: number;
-	lightness: number;
+	brightness: number;
 };
+
+export type ColorAttributesT = keyof ColorT;
 
 export class Color implements ColorT {
 	hue: number;
 	saturation: number;
-	lightness: number;
+	brightness: number;
 
 	constructor(hue: number, saturation: number, lightness: number) {
 		this.hue = hue;
 		this.saturation = saturation;
-		this.lightness = lightness;
+		this.brightness = lightness;
 	}
-}
-
-export enum Attributes {
-	hue = 'hue',
-	saturation = 'saturation',
-	lightness = 'lightness',
 }
 
 export enum Units {
@@ -27,3 +26,13 @@ export enum Units {
 	percentage = '%',
 	second = 's',
 }
+
+export type AttributeType = {
+	id: ColorAttributesT;
+	value: number;
+	max: number;
+	unit: string;
+	icon: ReactElement<SvgIconProps>;
+	background: string;
+	onChange: (value: number) => void;
+};

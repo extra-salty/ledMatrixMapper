@@ -1,20 +1,8 @@
 import { useDispatch } from 'react-redux';
-import { DEFAULT_COLOR, colorActions } from '@/libs/redux/features/color/slice';
-import { Attributes } from '@/types/color/color.types';
+import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import { RestartAlt } from '@mui/icons-material';
 import { Box, IconButton, InputLabel } from '@mui/material';
 import ColorAttributes from '../ColorAttributes/ColorAttributes';
-import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-
-export type AttributeType = {
-	value: number;
-	max: number;
-	unit: string;
-	icon: any;
-	background?: string;
-	id: Attributes;
-	onChange: (value: number) => void;
-};
 
 const ColorSelectorPopover = () => {
 	const dispatch = useDispatch();
@@ -24,7 +12,6 @@ const ColorSelectorPopover = () => {
 	return (
 		<Box
 			sx={{
-				width: '400px',
 				display: 'flex',
 				flexDirection: 'column',
 				padding: 3,
@@ -33,7 +20,7 @@ const ColorSelectorPopover = () => {
 			<Box
 				sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
 			>
-				<InputLabel shrink id='selected-color-label' sx={{}}>
+				<InputLabel shrink id='selected-color-label'>
 					Selected Color
 				</InputLabel>
 				<IconButton onClick={handleColorReset}>

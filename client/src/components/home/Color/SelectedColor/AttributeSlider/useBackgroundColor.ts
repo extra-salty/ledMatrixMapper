@@ -1,30 +1,41 @@
-import { Attributes, ColorT } from '@/types/color/color.types';
+import { ColorT } from '@/types/color/color.types';
 
-export const useBackgroundColor = (color: ColorT, attribute: Attributes) => {
-	const { hue: h, saturation: s, lightness: l } = color;
+export const useBackgroundColor = (color: ColorT) => {
+	const { hue, saturation, brightness } = color;
 
-	switch (attribute) {
-		case Attributes.hue:
-			return `linear-gradient(to right, ${Array.from(
-				{ length: 36 },
-				(_, i) => `hsl(${i * 10} ${s}% ${l}% / ${(l / 100) * 2})`,
-			).join(',')})`;
+	const satStart = hsvToHsl({ hue, saturation: 0, brightness });
+	const satEnd = hsvToHsl({ hue, saturation: 100, brightness });
 
-		case Attributes.saturation:
-			return `linear-gradient(
-        to right,
-        hsl(${h} 0% ${l}% / ${(l / 100) * 2}),
-        hsl(${h} 100% ${l}% / ${(l / 100) * 2})
-        )`;
+	const lightnessStart = hsvToHsl({ hue, saturation, brightness: 0 });
+	const lightnessEnd = hsvToHsl({ hue, saturation, brightness: 100 });
 
-		case Attributes.lightness:
-			return `linear-gradient(
-      to right,
-      hsl(${h} ${s}% 0% / 0),
-      hsl(${h} ${s}% 50%),
-      hsl(${h} ${s}% 100%)
-      )`;
-		default:
-			return '';
-	}
+	return {
+		hueBackground: `linear-gradient(to right, ${Array.from({ length: 36 }, (_, i) => {
+			const hsl = hsvToHsl({ hue: i * 10, saturation, brightness });
+
+			return hslToString(hsl);
+		}).join(',')})`,
+		saturationBackground: `linear-gradient(to right, ${hslToString(
+			satStart,
+		)}, ${hslToString(satEnd)})`,
+		brightnessBackground: `linear-gradient(to right, ${hslToString(
+			lightnessStart,
+		)}, ${hslToString(lightnessEnd)})`,
+	};
 };
+
+export const hsvToHsl = (hsv: ColorT) => {
+	let { hue: h, saturation: s, brightness: v } = hsv;
+
+	s /= 100;
+	v /= 100;
+	let l = (2 - s) * v;
+	let sl = s * v;
+	sl /= l <= 1 ? l : 2 - l;
+	l /= 2;
+
+	return [h, isNaN(sl) ? 0 : sl * 100, l * 100];
+};
+
+export const hslToString = ([h, s, l]: number[]) =>
+	`hsl(${h} ${s}% ${l}% / ${(l / 100) * 2})`;

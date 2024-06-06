@@ -34,12 +34,7 @@ export type FrameCellT =
 
 export type FrameStateT = FrameBaseT & { history?: FrameCellHistoryT };
 
-export enum TransitionT {
-	linear = 'linear',
-	easeIn = 'easeIn',
-	easeOut = 'easeOut',
-	easeInOut = 'easeInOut',
-}
+export type TransitionT = 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
 
 export type FrameCellHistoryT = {
 	undo?: FrameCellHistoryItemT[];

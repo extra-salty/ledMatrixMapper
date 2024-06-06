@@ -15,7 +15,6 @@ import {
 	EffectPlayerOptionsKeys,
 	EffectPlayerOptionsT,
 } from '@/types/effectEditor/effectEditor.types';
-import EffectPlayerRefreshRate from '../EffectPlayer/EffectPlayerRefreshRate/EffectPlayerRefreshRate';
 
 const EffectPlayerToolbar = () => {
 	const dispatch = useDispatch();
@@ -111,7 +110,6 @@ const EffectPlayerToolbar = () => {
 					sx={{ width: '100%' }}
 				/>
 			</Box>
-			<EffectPlayerRefreshRate />
 		</Box>
 	);
 };

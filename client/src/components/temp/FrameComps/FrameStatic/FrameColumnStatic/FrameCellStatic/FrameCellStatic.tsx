@@ -13,8 +13,8 @@ const FrameCellStatic = ({
 	showCoordinate?: boolean;
 }) => {
 	const convertedColor = color
-		? `hsl(${color.hue} ${color.saturation}% ${color.lightness}% / 
-  ${color.lightness / 100})`
+		? `hsl(${color.hue} ${color.saturation}% ${color.brightness}% / 
+  ${color.brightness / 100})`
 		: 'transparent';
 
 	return (

@@ -2,12 +2,13 @@ import { useSelectedColor } from '@/libs/redux/features/effects/data/selector';
 import { memo, useState } from 'react';
 import { Square } from '@mui/icons-material';
 import { IconButton, Popover, Tooltip } from '@mui/material';
+import { hslToString, hsvToHsl } from './AttributeSlider/useBackgroundColor';
 import ColorSelectorPopover from './ColorSelectorPopover/ColorSelectorPopover';
 
 const ColorSelector = () => {
-	const { hue: h, saturation: s, lightness: l } = useSelectedColor();
-
-	const color = `hsl(${h} ${s}% ${l}% / ${(l / 100) * 2})`;
+	const color = useSelectedColor();
+	const hsl = hsvToHsl(color);
+	const colorString = hslToString(hsl);
 
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -20,7 +21,7 @@ const ColorSelector = () => {
 		<>
 			<IconButton onClick={handleClick}>
 				<Tooltip title='Selected Color'>
-					<Square sx={{ color, stroke: 'rgba(255,255,255,0.6)' }} />
+					<Square sx={{ color: colorString, stroke: 'rgba(255,255,255,0.6)' }} />
 				</Tooltip>
 			</IconButton>
 			<Popover

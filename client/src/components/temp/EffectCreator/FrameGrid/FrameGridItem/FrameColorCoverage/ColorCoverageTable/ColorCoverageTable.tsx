@@ -11,7 +11,7 @@ type ColorTableRowT = {
 
 const ColorCoverageTable = ({ colorCount }: { colorCount: colorCountT }) => {
 	const rows = Object.values(colorCount).map(({ color, count }, index) => {
-		const { hue, saturation, lightness } = color;
+		const { hue, saturation, brightness: lightness } = color;
 
 		return {
 			index,

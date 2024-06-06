@@ -14,6 +14,10 @@ import { FrameCellT } from '@/types/effect/effect.types';
 import FrameCellSelectionMenu from '../../../FrameCellSelectionMenu/FrameCellSelectionMenu';
 import styles from './FrameCellDynamic.module.scss';
 import Image from 'next/image';
+import {
+	hslToString,
+	hsvToHsl,
+} from '@/components/home/Color/SelectedColor/AttributeSlider/useBackgroundColor';
 
 const FrameCellDynamic = ({
 	frameId,
@@ -46,12 +50,8 @@ const FrameCellDynamic = ({
 		[frameId, coordinate],
 	);
 
-	const color = cell ? cell.color : undefined;
-	const convertedColor = color
-		? `hsl(${color.hue} ${color.saturation}% ${color.lightness}% / ${
-				(color.lightness / 100) * 2
-		  } `
-		: 'transparent';
+	const backgroundColor = cell?.color ? hslToString(hsvToHsl(cell.color)) : 'transparent';
+	console.log('🚀 ~ backgroundColor:', backgroundColor);
 
 	const handleMouseDown = useCallback(
 		(e: MouseEvent<HTMLButtonElement>) => {
@@ -70,14 +70,6 @@ const FrameCellDynamic = ({
 					case ColorActions.clear: {
 						dispatch(effectsDataActions.updateFrameCell(payload));
 						break;
-						// if (e.shiftKey) {
-						// 	// dispatch(effectsDataActions.updateFrameDiagonal(payload));
-						// } else if (e.ctrlKey) {
-						// 	dispatch(effectsDataActions.updateFrameRow(payload));
-						// } else if (e.altKey) {
-						// 	dispatch(effectsDataActions.updateFrameColumn(payload));
-						// } else {
-						// }
 					}
 					case ColorActions.brushAll: {
 						dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
@@ -108,14 +100,6 @@ const FrameCellDynamic = ({
 					case ColorActions.brush: {
 						dispatch(effectsDataActions.updateFrameCell(payload));
 						break;
-						// if (e.shiftKey) {
-						// 	// dispatch(effectsDataActions.updateFrameDiagonal(payload));
-						// } else if (e.ctrlKey) {
-						// 	dispatch(effectsDataActions.updateFrameRow(payload));
-						// } else if (e.altKey) {
-						// 	dispatch(effectsDataActions.updateFrameColumn(payload));
-						// } else {
-						// }
 					}
 					case ColorActions.brushAll: {
 						dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
@@ -135,7 +119,6 @@ const FrameCellDynamic = ({
 
 	return (
 		<>
-			{/* <div style={{ width: `${cellSize}px`, height: `${cellSize}px` }}> */}
 			<button
 				ref={ref}
 				className={styles.cell}
@@ -143,8 +126,7 @@ const FrameCellDynamic = ({
 					cursor,
 					width: `${cellSize}px`,
 					height: `${cellSize}px`,
-					backgroundColor: convertedColor,
-					// border: showCoordinate ? '1px solid black' : 'none',
+					backgroundColor,
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
@@ -162,10 +144,12 @@ const FrameCellDynamic = ({
 						alt='image'
 						width={cellSize - 5}
 						height={cellSize - 5}
+						style={{
+							pointerEvents: 'none',
+						}}
 					/>
 				)}
 			</button>
-			{/* </div> */}
 			{isOpen && (
 				<FrameCellSelectionMenu
 					frameId={frameId}
@@ -180,3 +164,21 @@ const FrameCellDynamic = ({
 };
 
 export default memo(FrameCellDynamic);
+
+// if (e.shiftKey) {
+// 	// dispatch(effectsDataActions.updateFrameDiagonal(payload));
+// } else if (e.ctrlKey) {
+// 	dispatch(effectsDataActions.updateFrameRow(payload));
+// } else if (e.altKey) {
+// 	dispatch(effectsDataActions.updateFrameColumn(payload));
+// } else {
+// }
+
+// if (e.shiftKey) {
+// 	// dispatch(effectsDataActions.updateFrameDiagonal(payload));
+// } else if (e.ctrlKey) {
+// 	dispatch(effectsDataActions.updateFrameRow(payload));
+// } else if (e.altKey) {
+// 	dispatch(effectsDataActions.updateFrameColumn(payload));
+// } else {
+// }

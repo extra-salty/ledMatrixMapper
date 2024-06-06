@@ -1,21 +1,17 @@
 import { ChangeEvent } from 'react';
-import { Attributes, ColorT } from '@/types/color/color.types';
-import { useBackgroundColor } from './useBackgroundColor';
 import styles from './AttributeSlider.module.scss';
 
 const ColorAttributeSlider = ({
+	value,
 	max,
-	color,
-	id,
+	background,
 	onChange,
 }: {
+	value: number;
 	max: number;
-	color: ColorT;
-	id: Attributes;
+	background: string;
 	onChange: (value: number) => void;
 }) => {
-	const backgroundColor = useBackgroundColor(color, id);
-
 	const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		const value = Number(e.target.value);
 
@@ -26,10 +22,10 @@ const ColorAttributeSlider = ({
 		<div
 			className={styles.background}
 			style={{
-				background: backgroundColor,
+				background,
 			}}
 		>
-			<input type='range' max={max} value={color[id]} onChange={onChangeHandler} />
+			<input type='range' max={max} value={value} onChange={onChangeHandler} />
 		</div>
 	);
 };
