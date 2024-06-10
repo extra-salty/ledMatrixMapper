@@ -22,7 +22,7 @@ const FrameTransition = ({
 }) => {
 	const dispatch = useDispatch();
 
-	const transitions: { type: TransitionT; text: string }[] = [
+	const transitions: { type: TransitionT['function']; text: string }[] = [
 		{
 			type: 'linear',
 			text: 'Linear',
@@ -41,14 +41,14 @@ const FrameTransition = ({
 		},
 	];
 
-	const handleChange = ({ target: { value } }: SelectChangeEvent) =>
-		dispatch(
-			effectsDataActions.updateFrame({
-				frameId,
-				key: 'transition',
-				value: value as TransitionT,
-			}),
-		);
+	const handleChange = ({ target: { value } }: SelectChangeEvent) => {};
+	// dispatch(
+	// 	effectsDataActions.updateFrame({
+	// 		frameId,
+	// 		key: 'transition',
+	// 		value: value as TransitionT,
+	// 	}),
+	// );
 
 	return (
 		<Tooltip title='Transition' placement='top-start' arrow>
@@ -57,7 +57,7 @@ const FrameTransition = ({
 					variant='standard'
 					size='small'
 					disableUnderline
-					value={transition}
+					// value={transition}
 					onChange={handleChange}
 					SelectDisplayProps={{
 						style: {

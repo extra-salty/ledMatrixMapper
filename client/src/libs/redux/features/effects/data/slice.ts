@@ -5,6 +5,7 @@ import {
 	EffectCollectionStateT,
 	FrameStateT,
 	TransitionT,
+	FrameCellT,
 } from '@/types/effect/effect.types';
 import {
 	createEffect,
@@ -28,6 +29,7 @@ import {
 import { MatrixSizeT } from '@/types/animation/animation.types';
 import { isEqual } from 'lodash';
 import { getSelectionCoordinates } from './helpers';
+import { X } from '@mui/icons-material';
 
 export const initialState: EffectsSliceT = {
 	activeEffect: undefined,
@@ -35,7 +37,7 @@ export const initialState: EffectsSliceT = {
 	options: {
 		activeMatrixSize: undefined,
 		activeColorAction: ColorActions.brush,
-		activeTransition: 'linear',
+		activeTransition: { direction: 'appear', function: 'linear' },
 		brushSize: 0,
 	},
 	selection: {
@@ -155,6 +157,7 @@ export const effectsDataSlice = createSlice({
 			const { animationId, effectId } = state.activeEffect!;
 			const frames = state.animations[animationId][effectId].frames;
 
+			const colorAction = state.options.activeColorAction;
 			const { x: xOrig, y: yOrig } = action.payload;
 			const { width, height } = state.options.activeMatrixSize!;
 			const brushSize = state.options.brushSize;
@@ -170,7 +173,28 @@ export const effectsDataSlice = createSlice({
 				if (!disabled) {
 					for (let x = startX; x <= endX; x++) {
 						for (let y = startY; y <= endY; y++) {
-							data[x][y]!.color = state.color.selectedColor;
+							const frameCell = data[x][y];
+
+							switch (colorAction) {
+								case ColorActions.brush: {
+									data[x][y] = {
+										color: state.color.selectedColor,
+										transition: frameCell?.transition,
+									};
+									break;
+								}
+								case ColorActions.clear: {
+									data[x][y] = undefined;
+									break;
+								}
+								case ColorActions.transition: {
+									data[x][y] = {
+										color: frameCell?.color,
+										transition: state.options.activeTransition,
+									};
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -331,6 +355,50 @@ export const effectsDataSlice = createSlice({
 					if (xCurrent in targetFrameData && yCurrent in targetFrameData[xCurrent]) {
 						targetFrameData[xCurrent][yCurrent] = selectionFrameData[x][y];
 					}
+				}
+			}
+		},
+		flipSelectionHorizontally: (state) => {
+			const { animationId, effectId } = state.activeEffect!;
+			const frameId = state.selection.frameCellSelection!.frameId;
+			const frameData = state.animations[animationId][effectId].frames[frameId].data;
+			const selection = state.selection.frameCellSelection!;
+
+			const { xStart, yStart, xEnd, yEnd } = getSelectionCoordinates(selection);
+			const limit = xStart + (xEnd - xStart) / 2;
+
+			for (let x = xStart; x < limit; x++) {
+				for (let y = yStart; y <= yEnd; y++) {
+					const temp: FrameCellT = {
+						color: frameData[x][y]?.color,
+						transition: frameData[x][y]?.transition,
+					};
+					const xTarget = xEnd - (x - xStart);
+
+					frameData[x][y] = frameData[xTarget][y];
+					frameData[xTarget][y] = temp;
+				}
+			}
+		},
+		flipSelectionVertically: (state) => {
+			const { animationId, effectId } = state.activeEffect!;
+			const frameId = state.selection.frameCellSelection!.frameId;
+			const frameData = state.animations[animationId][effectId].frames[frameId].data;
+			const selection = state.selection.frameCellSelection!;
+
+			const { xStart, yStart, xEnd, yEnd } = getSelectionCoordinates(selection);
+			const limit = yStart + (yEnd - yStart) / 2;
+
+			for (let y = yStart; y < limit; y++) {
+				for (let x = xStart; x <= xEnd; x++) {
+					const temp: FrameCellT = {
+						color: frameData[x][y]?.color,
+						transition: frameData[x][y]?.transition,
+					};
+					const yTarget = yEnd - (y - yStart);
+
+					frameData[x][y] = frameData[x][yTarget];
+					frameData[x][yTarget] = temp;
 				}
 			}
 		},

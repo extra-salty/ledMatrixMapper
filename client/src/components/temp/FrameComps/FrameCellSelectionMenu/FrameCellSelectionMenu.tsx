@@ -85,12 +85,12 @@ const FrameCellSelectionMenu = ({
 		{
 			icon: <Flip />,
 			text: 'Flip Horizontal',
-			onClick: () => {},
+			onClick: () => dispatch(effectsDataActions.flipSelectionHorizontally()),
 		},
 		{
 			icon: <Flip sx={{ rotate: '90deg' }} />,
 			text: 'Flip Vertical',
-			onClick: () => {},
+			onClick: () => dispatch(effectsDataActions.flipSelectionVertically()),
 		},
 	];
 

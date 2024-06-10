@@ -1,5 +1,9 @@
 import { memo } from 'react';
 import { ColorT } from '@/types/color/color.types';
+import {
+	hslToString,
+	hsvToHsl,
+} from '@/components/home/Color/SelectedColor/AttributeSlider/useBackgroundColor';
 
 const FrameCellStatic = ({
 	xIndex,
@@ -12,10 +16,7 @@ const FrameCellStatic = ({
 	color: ColorT | undefined;
 	showCoordinate?: boolean;
 }) => {
-	const convertedColor = color
-		? `hsl(${color.hue} ${color.saturation}% ${color.brightness}% / 
-  ${color.brightness / 100})`
-		: 'transparent';
+	const backgroundColor = color ? hslToString(hsvToHsl(color)) : 'transparent';
 
 	return (
 		<div
@@ -25,7 +26,7 @@ const FrameCellStatic = ({
 				aspectRatio: '1 / 1',
 				border: '0',
 				padding: '0',
-				backgroundColor: convertedColor,
+				backgroundColor,
 			}}
 		></div>
 	);

@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { FrameStateT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
+import { ColorT } from '@/types/color/color.types';
 import FrameStatic from '@/components/temp/FrameComps/FrameStatic/FrameStatic';
 
 const easeInQuad = (t: number) => t * t;
@@ -16,33 +17,41 @@ const EffectPlayerFrame = ({
 }) => {
 	const ratio = elapsedFrameTime / frame.duration;
 
-	const convertedData = frame.data.map((column, x) =>
-		column.map((cell, y) => {
-			if (!cell || !cell.color || !cell.transition) {
-				return undefined;
-			} else {
+	const convertedData: (ColorT | undefined)[][] = frame.data.map((column) =>
+		column.map((cell) => {
+			if (cell && cell.color) {
 				let brightness: number;
 
-				switch (cell.transition) {
+				switch (cell.transition?.function) {
 					case 'linear': {
-						brightness = ratio;
+						brightness = ratio * 100;
+						break;
 					}
 					case 'easeIn': {
-						brightness = easeInQuad(ratio);
+						brightness = easeInQuad(ratio) * 100;
+						break;
 					}
 					case 'easeOut': {
-						brightness = easeOutQuad(ratio);
+						brightness = easeOutQuad(ratio) * 100;
+						break;
 					}
 					case 'easeInOut': {
-						brightness = easeInOutQuad(ratio);
+						brightness = easeInOutQuad(ratio) * 100;
+						break;
+					}
+					default: {
+						brightness = cell.color.brightness;
 					}
 				}
 
-				return { ...cell.color, brightness };
+				return {
+					...cell.color,
+					brightness:
+						cell.transition?.direction === 'appear' ? brightness : 100 - brightness,
+				};
 			}
 		}),
 	);
-	// console.log('🚀 ~ convertedData:', convertedData);
 
 	return (
 		<Box

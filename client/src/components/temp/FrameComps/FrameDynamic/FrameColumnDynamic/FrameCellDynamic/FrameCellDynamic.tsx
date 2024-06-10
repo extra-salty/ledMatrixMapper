@@ -1,5 +1,8 @@
 import { useDispatch } from 'react-redux';
-import { useFrameGridOptionsToggle } from '@/libs/redux/features/effectEditor/selectors';
+import {
+	useFrameCellSize,
+	useFrameGridOptionsToggle,
+} from '@/libs/redux/features/effectEditor/selectors';
 import { useCallback, MouseEvent, memo, useMemo, useState, useRef } from 'react';
 import { useActiveColorAction } from '@/libs/redux/features/effects/data/selector';
 import { AppDispatch } from '@/libs/redux/store';
@@ -38,6 +41,7 @@ const FrameCellDynamic = ({
 
 	const colorAction = useActiveColorAction();
 	const transitionEnabled = useFrameGridOptionsToggle('transitionEnabled');
+	const cellSize = useFrameCellSize();
 
 	const coordinate: CoordinateT = useMemo(
 		() => ({ x: xIndex, y: yIndex }),
@@ -121,15 +125,14 @@ const FrameCellDynamic = ({
 				className={styles.cell}
 				style={{
 					cursor: 'inherit',
-					width: '100%',
-					height: 'auto',
-					aspectRatio: '1 / 1',
-					borderColor: backgroundColor,
-					border: 'none',
-					backgroundColor,
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
+					width: '100%',
+					height: 'auto',
+					aspectRatio: '1 / 1',
+					border: `2px solid ${backgroundColor}`,
+					backgroundColor,
 				}}
 				onContextMenu={(e) => {
 					e.preventDefault();
@@ -138,17 +141,26 @@ const FrameCellDynamic = ({
 				onMouseDown={handleMouseDown}
 				onMouseOver={handleMouseOver}
 			>
-				{/* {transitionEnabled && cell && cell.transition && (
+				{transitionEnabled && cell?.transition ? (
 					<Image
-						src={`/${cell.transition}.svg`}
-						alt='image'
-						// width={cellSize - 5}
-						// height={cellSize - 5}
+						src={`/${cell.transition.function}.svg`}
+						alt={cell.transition.function}
+						width={cellSize * 0.8}
+						height={cellSize * 0.8}
 						style={{
 							pointerEvents: 'none',
+							transform:
+								cell.transition.direction === 'disappear' ? 'scaleX(-1)' : 'none',
 						}}
 					/>
-				)} */}
+				) : (
+					<div
+						style={{
+							width: `${cellSize * 0.8}px`,
+							height: `${cellSize * 0.8}px`,
+						}}
+					></div>
+				)}
 			</button>
 			{isOpen && (
 				<FrameCellSelectionMenu

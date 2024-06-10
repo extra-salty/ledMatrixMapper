@@ -1,11 +1,6 @@
 .cell {
-	box-sizing: border-box;
-	padding: 0;
-
 	&:hover {
-		// border: 2px solid rgb(200, 200, 200) !important;
+		border: 2px solid rgb(200, 200, 200) !important;
+		// outline: 2px solid white;
 	}
-
-	// &::after {
-	// }
 }

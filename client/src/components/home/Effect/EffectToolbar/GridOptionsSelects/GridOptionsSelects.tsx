@@ -42,11 +42,11 @@ const GridOptionsSelects = () => {
 			title: 'Number of columns',
 			icon: <DensityMedium sx={{ rotate: '90deg' }} />,
 			onChange: (value: number) => {
-				value < maxColumns &&
-					value !== numberOfColumns &&
-					dispatch(
-						effectEditorActions.updateGridSelects({ key: 'numberOfColumns', value }),
-					);
+				// value < maxColumns &&
+				// 	value !== numberOfColumns &&
+				dispatch(
+					effectEditorActions.updateGridSelects({ key: 'numberOfColumns', value }),
+				);
 			},
 		},
 	];
@@ -60,6 +60,7 @@ const GridOptionsSelects = () => {
 				border: `1px solid ${theme.palette.divider}`,
 				borderRadius: 1,
 				paddingLeft: 1,
+				height: 40,
 			})}
 		>
 			{selectItems.map(({ key, value, min, max, icon, title, onChange }, i) => (

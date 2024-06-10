@@ -24,6 +24,8 @@ const ColorSelector = () => {
 				sx={(theme) => ({
 					border: `1px solid ${theme.palette.divider}`,
 					borderRadius: 1,
+					height: 40,
+					width: 40,
 				})}
 			>
 				<Tooltip title='Selected Color'>

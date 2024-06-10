@@ -27,8 +27,8 @@ const EffectPlayerSettings = () => {
 			incrementValue: 10,
 			title: 'Refresh rate (ms)',
 			icon: <Update />,
-			onChange: (value: number) => {},
-			// dispatch(effectEditorActions.updatePlayerOptions({ key: 'refreshRate', value })),
+			onChange: (value: number) =>
+				dispatch(effectEditorActions.updatePlayerSelects({ key: 'refreshRate', value })),
 		},
 		{
 			disabled: true,

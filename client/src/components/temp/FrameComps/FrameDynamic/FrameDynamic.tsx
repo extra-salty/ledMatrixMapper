@@ -60,8 +60,6 @@ const FrameDynamic = ({
 					display: 'flex',
 					pointerEvents: isDisabled ? 'none' : 'auto',
 					filter: blur ? `blur(${blur}px)` : 'none',
-					// borderTop: `1px solid ${theme.palette.divider}`,
-					// borderBottom: `1px solid ${theme.palette.divider}`,
 				}}
 			>
 				{frameData.map((frameColumn, x) => (

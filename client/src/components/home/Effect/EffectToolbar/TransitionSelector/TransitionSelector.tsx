@@ -6,6 +6,7 @@ import {
 	FormControl,
 	ListItemIcon,
 	ListItemText,
+	ListSubheader,
 	MenuItem,
 	Select,
 	SelectChangeEvent,
@@ -16,9 +17,22 @@ import { useActiveTransition } from '@/libs/redux/features/effects/data/selector
 
 const TransitionSelector = () => {
 	const dispatch = useDispatch();
-	const activeTransition = useActiveTransition();
 
-	const transitions: { type: TransitionT; text: string }[] = [
+	const activeTransition = useActiveTransition();
+	const transitonString = `${activeTransition.direction}/${activeTransition.function}`;
+
+	const directions: { type: TransitionT['direction']; text: string }[] = [
+		{
+			type: 'appear',
+			text: 'Appear',
+		},
+		{
+			type: 'disappear',
+			text: 'Disappear',
+		},
+	];
+
+	const functions: { type: TransitionT['function']; text: string }[] = [
 		{
 			type: 'linear',
 			text: 'Linear',
@@ -37,23 +51,33 @@ const TransitionSelector = () => {
 		},
 	];
 
-	const handleChange = ({ target: { value } }: SelectChangeEvent) =>
-		dispatch(effectsDataActions.setActiveTransition(value as TransitionT));
+	const handleChange = ({ target: { value } }: SelectChangeEvent) => {
+		const transition = value.split('/') as [
+			TransitionT['direction'],
+			TransitionT['function'],
+		];
+
+		dispatch(
+			effectsDataActions.setActiveTransition({
+				direction: transition[0],
+				function: transition[1],
+			}),
+		);
+	};
 
 	return (
 		<Tooltip title='Transition' placement='top-start' arrow>
 			<FormControl>
 				<Select
-					variant='outlined'
+					variant='standard'
 					size='small'
 					disableUnderline
-					value={activeTransition}
+					value={transitonString}
 					onChange={handleChange}
 					SelectDisplayProps={{
 						style: {
 							display: 'flex',
 							alignItems: 'center',
-							// paddingBottom: '0',
 						},
 					}}
 					MenuProps={{
@@ -66,15 +90,48 @@ const TransitionSelector = () => {
 							horizontal: 'left',
 						},
 					}}
+					sx={(theme) => ({
+						width: 150,
+						border: `1px solid ${theme.palette.divider}`,
+						borderRadius: 1,
+						height: 40,
+					})}
 				>
-					{Object.values(transitions).map(({ type, text }) => (
-						<MenuItem key={type} value={type}>
-							<ListItemIcon sx={{ minWidth: '0', marginInline: 1 }}>
-								<Image src={`/${type}.svg`} alt={type} width={20} height={20} />
-							</ListItemIcon>
-							<ListItemText sx={{ my: 0 }}>{text}</ListItemText>
-						</MenuItem>
-					))}
+					<MenuItem value={undefined}>
+						<ListItemIcon sx={{ minWidth: 0, marginInline: 2 }}>
+							{/* <Image
+								src={`/${type}.svg`}
+								alt={type}
+								width={20}
+								height={20}
+								style={{
+									// transform: direction.type === 'disappear' ? 'scaleX(-1)' : 'none',
+								}}
+							/> */}
+						</ListItemIcon>
+						<ListItemText sx={{ my: 0 }}>{'None'}</ListItemText>
+					</MenuItem>
+					{directions.map((direction) => [
+						<ListSubheader key={direction.type}>{direction.text}</ListSubheader>,
+						[
+							functions.map(({ type, text }) => (
+								<MenuItem key={type} value={`${direction.type}/${type}`}>
+									<ListItemIcon sx={{ minWidth: 0, marginInline: 2 }}>
+										<Image
+											src={`/${type}.svg`}
+											alt={type}
+											width={20}
+											height={20}
+											style={{
+												transform: direction.type === 'disappear' ? 'scaleX(-1)' : 'none',
+											}}
+										/>
+									</ListItemIcon>
+									<ListItemText sx={{ my: 0 }}>{text}</ListItemText>
+								</MenuItem>
+							)),
+						],
+					])}
 				</Select>
 			</FormControl>
 		</Tooltip>

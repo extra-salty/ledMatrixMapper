@@ -42,6 +42,7 @@ const FrameActions = ({ disabled }: { disabled: boolean }) => {
 					alignItems: 'center',
 					border: `1px solid ${theme.palette.divider}`,
 					borderRadius: '4px',
+					height: 40,
 				})}
 			>
 				<GenericActions actions={actions} disableAll={disabled} />

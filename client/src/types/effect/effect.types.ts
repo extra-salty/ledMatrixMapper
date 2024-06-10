@@ -23,7 +23,7 @@ export type FrameBaseT = {
 	id: string;
 	data: FrameDataT;
 	duration: number;
-	transition: TransitionT;
+	transition: TransitionT | undefined;
 	disabled?: boolean;
 };
 export type FrameDataT = FrameCellT[][];
@@ -34,7 +34,10 @@ export type FrameCellT =
 
 export type FrameStateT = FrameBaseT & { history?: FrameCellHistoryT };
 
-export type TransitionT = 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+export type TransitionT = {
+	direction: 'appear' | 'disappear';
+	function: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+};
 
 export type FrameCellHistoryT = {
 	undo?: FrameCellHistoryItemT[];

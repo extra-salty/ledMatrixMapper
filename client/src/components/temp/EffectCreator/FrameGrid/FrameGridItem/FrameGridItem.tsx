@@ -73,8 +73,8 @@ const FrameGridItem = ({
 			<FrameDynamic frameId={id} frameData={data} isDisabled={isDisabled} />
 			<Box sx={{ display: 'flex' }}>
 				<FrameDuration frameId={id} duration={duration} />
-				<Divider orientation='vertical' flexItem />
-				<FrameTransition frameId={id} transition={frame.transition} />
+				{/* <Divider orientation='vertical' flexItem /> */}
+				{/* <FrameTransition frameId={id} transition={frame.transition} /> */}
 			</Box>
 		</Paper>
 	);

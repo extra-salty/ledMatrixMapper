@@ -40,7 +40,6 @@ const GridOptionsToggles = () => {
 		{
 			key: 'transitionEnabled',
 			selected: transitionEnabled,
-			disabled: true,
 			title: { hide: 'Hide transition', show: 'Show transition' },
 			icon: { hide: <AutoGraph />, show: <ShowChart /> },
 		},

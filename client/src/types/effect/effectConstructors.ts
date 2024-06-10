@@ -14,7 +14,7 @@ export const createFrame = (matrixSize: MatrixSizeT): FrameStateT => ({
 	id: nanoid(12),
 	data: createFrameData({ matrixSize, cell: undefined }),
 	duration: 1000,
-	transition: 'linear',
+	transition: undefined,
 	history: {
 		redo: [],
 		undo: [],
