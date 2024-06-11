@@ -3,6 +3,10 @@ import { FrameStateT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
 import { ColorT } from '@/types/color/color.types';
 import FrameStatic from '@/components/temp/FrameComps/FrameStatic/FrameStatic';
+import {
+	useEffectPlayerSelect,
+	useEffectPlayerToggle,
+} from '@/libs/redux/features/effectEditor/selectors';
 
 const easeInQuad = (t: number) => t * t;
 const easeOutQuad = (t: number) => t * (2 - t);
@@ -15,6 +19,9 @@ const EffectPlayerFrame = ({
 	elapsedFrameTime: number;
 	frame: FrameStateT;
 }) => {
+	const borderEnabled = useEffectPlayerToggle('borderEnabled');
+	const blur = useEffectPlayerSelect('blur');
+
 	const ratio = elapsedFrameTime / frame.duration;
 
 	const convertedData: (ColorT | undefined)[][] = frame.data.map((column) =>
@@ -22,7 +29,7 @@ const EffectPlayerFrame = ({
 			if (cell && cell.color) {
 				let brightness: number;
 
-				switch (cell.transition?.function) {
+				switch (cell.transition?.timing) {
 					case 'linear': {
 						brightness = ratio * 100;
 						break;
@@ -47,7 +54,8 @@ const EffectPlayerFrame = ({
 				return {
 					...cell.color,
 					brightness:
-						cell.transition?.direction === 'appear' ? brightness : 100 - brightness,
+						// cell.transition?.direction === 'appear' ? brightness : 100 - brightness,
+						brightness,
 				};
 			}
 		}),
@@ -61,7 +69,11 @@ const EffectPlayerFrame = ({
 				borderRadius: '4px 4px 0px 0px ',
 			})}
 		>
-			<FrameStatic frameData={convertedData} />
+			<FrameStatic
+				blurIntensity={blur}
+				showGrid={borderEnabled}
+				frameData={convertedData}
+			/>
 		</Box>
 	);
 };

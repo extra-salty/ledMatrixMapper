@@ -1,15 +1,33 @@
-import useSWRMutation from 'swr/mutation';
 import pixelateImage from '../../helpers/useImagePixelate';
-import { Dispatch, SetStateAction, useState } from 'react';
+import useSWRMutation from 'swr/mutation';
+import { useActiveMatrixSize } from '@/libs/redux/features/effects/data/selector';
+import { CSSProperties, Dispatch, SetStateAction, useState } from 'react';
 import { getCroppedImg } from '../../helpers/useImageImport';
 import { LoadingButton } from '@mui/lab';
-import { Box, Skeleton } from '@mui/material';
+import { Box, Button, Skeleton } from '@mui/material';
 import { Deblur } from '@mui/icons-material';
 import { FrameDataT } from '@/types/effect/effect.types';
 import Cropper, { Area } from 'react-easy-crop';
 import ImageCropperOptions from '../ImageCropperOptions/ImageCropperOptions';
 import ImageCropperSliders from '../ImageCropperSliders/ImageCropperSliders';
 import styles from './ImageCropper.module.scss';
+
+const borderStyle = (
+	borderEnabled: boolean,
+	width: number,
+	height: number,
+): CSSProperties =>
+	borderEnabled
+		? {
+				position: 'absolute',
+				content: '""',
+				width: '100%',
+				height: '100%',
+				background: `linear-gradient(to right, gray 2px, transparent 2px),
+            linear-gradient(to bottom, gray 2px, transparent 2px)`,
+				backgroundSize: `calc(100% / ${width}) calc(100% / ${height})`,
+		  }
+		: {};
 
 const ImageCropper = ({
 	imageSrc,
@@ -19,6 +37,7 @@ const ImageCropper = ({
 	setFrameData: Dispatch<SetStateAction<FrameDataT | null>>;
 }) => {
 	const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+	const matrixSize = useActiveMatrixSize()!;
 
 	const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState<number>(1);
@@ -39,7 +58,7 @@ const ImageCropper = ({
 				rotation,
 			)) as string;
 
-			const framedata = await pixelateImage(croppedImage);
+			const framedata = await pixelateImage(matrixSize, croppedImage);
 
 			if (framedata) setFrameData(framedata);
 		}
@@ -66,6 +85,7 @@ const ImageCropper = ({
 				sx={{
 					height: '100%',
 					position: 'relative',
+					// '&::before': borderStyle(isGridOn, 12, 24),
 				}}
 			>
 				{imageSrc ? (
@@ -74,25 +94,32 @@ const ImageCropper = ({
 						crop={crop}
 						zoom={zoom}
 						rotation={rotation}
-						showGrid={false}
+						showGrid={isGridOn}
 						restrictPosition={false}
-						aspect={2 / 1} // width / height
+						aspect={matrixSize.width / matrixSize.height}
+						objectFit='contain'
 						onCropChange={setCrop}
 						onZoomChange={setZoom}
 						onRotationChange={setRotation}
 						onCropComplete={onCropComplete}
-						classes={{ cropAreaClassName: isGridOn ? styles.overlayGrid : '' }}
+						// classes={{ cropAreaClassName: isGridOn ? styles.overlayGrid : '' }}
+						// classes={{ cropAreaClassName: borderStyle(isGridOn, 12, 24) }}
+						style={{
+							cropAreaStyle: {
+								// '&::before': borderStyle(isGridOn, 12, 24),
+							},
+						}}
 					/>
 				) : (
 					<Skeleton
 						variant='rectangular'
 						height={'100%'}
 						animation={false}
-						sx={{ bgcolor: 'grey.800' }}
+						sx={(theme) => ({ bgcolor: `${theme.palette.grey}` })}
 					/>
 				)}
 			</Box>
-			<Box sx={{ display: 'flex', gap: '30px' }}>
+			<Box sx={{ display: 'flex', gap: 5 }}>
 				<ImageCropperSliders
 					disabled={disabled}
 					zoom={zoom}
@@ -109,9 +136,10 @@ const ImageCropper = ({
 					variant='outlined'
 					color='primary'
 					startIcon={<Deblur sx={{ rotate: '180deg' }} />}
-					disabled={disabled}
 					loading={isMutating}
+					disabled={disabled}
 					onClick={() => trigger()}
+					sx={{ minWidth: '100px' }}
 				>
 					Pixelate
 				</LoadingButton>

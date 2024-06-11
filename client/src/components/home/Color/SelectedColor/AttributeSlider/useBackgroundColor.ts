@@ -37,5 +37,5 @@ export const hsvToHsl = (hsv: ColorT) => {
 	return [h, isNaN(sl) ? 0 : sl * 100, l * 100];
 };
 
-export const hslToString = ([h, s, l]: number[]) =>
-	`hsl(${h} ${s}% ${l}% / ${(l / 100) * 2})`;
+export const hslToString = ([h, s, l]: number[]) => `hsl(${h} ${s}% ${l}%)`;
+// `hsl(${h} ${s}% ${l}% / ${(l / 100) * 2})`;

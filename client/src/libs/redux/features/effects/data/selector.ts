@@ -17,6 +17,7 @@ export const useActiveEffect = (): EffectStateT | undefined =>
 	useSelector((state: RootState) => {
 		if (state.effects.data.activeEffect) {
 			const { animationId, effectId } = state.effects.data.activeEffect;
+
 			return state.effects.data.animations[animationId][effectId];
 		}
 	});

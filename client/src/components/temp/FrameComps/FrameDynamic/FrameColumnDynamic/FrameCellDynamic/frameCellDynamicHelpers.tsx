@@ -88,5 +88,6 @@ export const useSelectionOverlay = (frameId: string): CSSProperties => {
 		width: `${width}px`,
 		height: `${height}px`,
 		animation: animation,
+		outline: '2px solid rgba(50, 50, 50, 0.5)',
 	};
 };

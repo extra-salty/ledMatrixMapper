@@ -1,7 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
 import {
+	AutoFixOff,
 	AutoGraph,
+	Clear,
 	ContentCopy,
 	ContentCut,
 	ContentPaste,
@@ -50,21 +52,30 @@ const FrameCellSelectionMenu = ({
 
 	const selectionItems: ActionButtonProps[] = [
 		{
-			icon: <FormatColorReset />,
+			icon: <Clear />,
 			text: 'Clear',
 			onClick: () =>
 				dispatch(effectsDataActions.updateFrameSelection(ColorActions.clear)),
 		},
 		{
+			icon: <FormatColorReset />,
+			text: 'Clear Color',
+			onClick: () => dispatch(effectsDataActions.updateFrameSelection('clearColor')),
+		},
+		{
+			icon: <AutoFixOff />,
+			text: 'Clear Transition',
+			onClick: () => dispatch(effectsDataActions.updateFrameSelection('clearTransition')),
+		},
+		{
 			icon: <FormatColorFill />,
-			text: 'Fill',
-			onClick: () => dispatch(effectsDataActions.updateFrameSelection(ColorActions.fill)),
+			text: 'Fill Color',
+			onClick: () => dispatch(effectsDataActions.updateFrameSelection('fillColor')),
 		},
 		{
 			icon: <AutoGraph />,
-			text: 'Set Transition',
-			onClick: () =>
-				dispatch(effectsDataActions.updateFrameSelection(ColorActions.transition)),
+			text: 'Fill Transition',
+			onClick: () => dispatch(effectsDataActions.updateFrameSelection('fillTransition')),
 		},
 		{
 			icon: <ContentCopy />,

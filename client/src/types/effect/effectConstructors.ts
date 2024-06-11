@@ -1,5 +1,11 @@
 import { nanoid } from 'nanoid';
-import { EffectStateT, FrameStateT, FrameListStateT, FrameCellT } from './effect.types';
+import {
+	EffectStateT,
+	FrameStateT,
+	FrameListStateT,
+	FrameCellT,
+	FrameDataT,
+} from './effect.types';
 import { MatrixSizeT } from '../animation/animation.types';
 
 export const createFrameData = ({
@@ -10,16 +16,23 @@ export const createFrameData = ({
 	cell: FrameCellT;
 }): FrameCellT[][] => Array(width).fill(Array(height).fill(cell));
 
-export const createFrame = (matrixSize: MatrixSizeT): FrameStateT => ({
-	id: nanoid(12),
-	data: createFrameData({ matrixSize, cell: undefined }),
-	duration: 1000,
-	transition: undefined,
-	history: {
-		redo: [],
-		undo: [],
-	},
-});
+export const createFrame = (
+	matrixSize: MatrixSizeT,
+	frameData?: FrameDataT,
+): FrameStateT => {
+	const data = frameData || createFrameData({ matrixSize, cell: undefined });
+
+	return {
+		id: nanoid(12),
+		data,
+		duration: 1000,
+		transition: undefined,
+		history: {
+			redo: [],
+			undo: [],
+		},
+	};
+};
 
 export const createEffect = ({
 	matrixSize,
@@ -44,4 +57,11 @@ export const createEffect = ({
 		order: Object.keys(frames).map((id) => frames[id].id),
 		frames,
 	};
+};
+
+export const mockFrame: FrameStateT = {
+	data: createFrameData({ matrixSize: { height: 12, width: 24 }, cell: undefined }),
+	duration: 0,
+	id: 'mockFrame',
+	transition: undefined,
 };

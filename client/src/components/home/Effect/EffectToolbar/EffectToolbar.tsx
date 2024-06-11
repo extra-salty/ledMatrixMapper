@@ -8,6 +8,19 @@ import GridOptionsToggles from './GridOptionsToggles/GridOptionsToggles';
 import GridOptionsSelects from './GridOptionsSelects/GridOptionsSelects';
 
 const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefined }) => {
+	const parts = [
+		[<FrameActions key='frameActions' disabled={!activeEffect} />],
+		[
+			<ColorSelector key='colorSelector' />,
+			<ColorActionsGroup key='colorActionsGroup' />,
+			<TransitionSelector key='transitionSelector' />,
+		],
+		[
+			<GridOptionsToggles key='gridOptionsToggles' />,
+			<GridOptionsSelects key='gridOptionsSelects' />,
+		],
+	];
+
 	return (
 		<Box
 			sx={(theme) => ({
@@ -19,36 +32,18 @@ const EffectToolbar = ({ activeEffect }: { activeEffect: EffectStateT | undefine
 				borderBottom: `1px solid ${theme.palette.divider}`,
 			})}
 		>
-			<Box
-				sx={{
-					display: 'flex',
-					alignItems: 'center',
-					gap: 1,
-				}}
-			>
-				<FrameActions disabled={!activeEffect} />
-			</Box>
-			<Box
-				sx={{
-					display: 'flex',
-					alignItems: 'center',
-					gap: 1,
-				}}
-			>
-				<ColorSelector />
-				<ColorActionsGroup />
-				<TransitionSelector />
-			</Box>
-			<Box
-				sx={{
-					display: 'flex',
-					alignItems: 'center',
-					gap: 1,
-				}}
-			>
-				<GridOptionsToggles />
-				<GridOptionsSelects />
-			</Box>
+			{parts.map((elements, i) => (
+				<Box
+					key={i}
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						gap: 1,
+					}}
+				>
+					{elements.map((element) => element)}
+				</Box>
+			))}
 		</Box>
 	);
 };

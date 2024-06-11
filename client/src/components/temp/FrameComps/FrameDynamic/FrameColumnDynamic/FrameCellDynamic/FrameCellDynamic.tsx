@@ -131,7 +131,7 @@ const FrameCellDynamic = ({
 					width: '100%',
 					height: 'auto',
 					aspectRatio: '1 / 1',
-					border: `2px solid ${backgroundColor}`,
+					border: `2px solid transparent`,
 					backgroundColor,
 				}}
 				onContextMenu={(e) => {
@@ -143,10 +143,10 @@ const FrameCellDynamic = ({
 			>
 				{transitionEnabled && cell?.transition ? (
 					<Image
-						src={`/${cell.transition.function}.svg`}
-						alt={cell.transition.function}
-						width={cellSize * 0.8}
-						height={cellSize * 0.8}
+						src={`/${cell.transition.timing}.svg`}
+						alt={cell.transition.timing}
+						width={cellSize * 0.5}
+						height={cellSize * 0.5}
 						style={{
 							pointerEvents: 'none',
 							transform:
@@ -155,10 +155,10 @@ const FrameCellDynamic = ({
 					/>
 				) : (
 					<div
-						style={{
-							width: `${cellSize * 0.8}px`,
-							height: `${cellSize * 0.8}px`,
-						}}
+					// style={{
+					// 	width: `${cellSize * 0.8}px`,
+					// 	height: `${cellSize * 0.8}px`,
+					// }}
 					></div>
 				)}
 			</button>

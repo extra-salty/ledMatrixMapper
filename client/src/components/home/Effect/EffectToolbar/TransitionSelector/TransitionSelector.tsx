@@ -1,3 +1,7 @@
+import {
+	useActiveColorAction,
+	useActiveTransition,
+} from '@/libs/redux/features/effects/data/selector';
 import { useDispatch } from 'react-redux';
 import { memo } from 'react';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
@@ -13,13 +17,14 @@ import {
 	Tooltip,
 } from '@mui/material';
 import Image from 'next/image';
-import { useActiveTransition } from '@/libs/redux/features/effects/data/selector';
+import { ColorActions } from '@/types/effect/effectPayload.types';
 
 const TransitionSelector = () => {
 	const dispatch = useDispatch();
 
+	const isTransitionActive = useActiveColorAction() === ColorActions.transition;
 	const activeTransition = useActiveTransition();
-	const transitonString = `${activeTransition.direction}/${activeTransition.function}`;
+	const transitonString = `${activeTransition.direction}/${activeTransition.timing}`;
 
 	const directions: { type: TransitionT['direction']; text: string }[] = [
 		{
@@ -32,7 +37,7 @@ const TransitionSelector = () => {
 		},
 	];
 
-	const functions: { type: TransitionT['function']; text: string }[] = [
+	const functions: { type: TransitionT['timing']; text: string }[] = [
 		{
 			type: 'linear',
 			text: 'Linear',
@@ -54,13 +59,13 @@ const TransitionSelector = () => {
 	const handleChange = ({ target: { value } }: SelectChangeEvent) => {
 		const transition = value.split('/') as [
 			TransitionT['direction'],
-			TransitionT['function'],
+			TransitionT['timing'],
 		];
 
 		dispatch(
 			effectsDataActions.setActiveTransition({
 				direction: transition[0],
-				function: transition[1],
+				timing: transition[1],
 			}),
 		);
 	};
@@ -74,12 +79,6 @@ const TransitionSelector = () => {
 					disableUnderline
 					value={transitonString}
 					onChange={handleChange}
-					SelectDisplayProps={{
-						style: {
-							display: 'flex',
-							alignItems: 'center',
-						},
-					}}
 					MenuProps={{
 						anchorOrigin: {
 							vertical: 'bottom',
@@ -90,33 +89,53 @@ const TransitionSelector = () => {
 							horizontal: 'left',
 						},
 					}}
+					SelectDisplayProps={{
+						style: {
+							display: 'flex',
+							alignItems: 'center',
+							paddingBottom: '0px',
+						},
+					}}
 					sx={(theme) => ({
-						width: 150,
-						border: `1px solid ${theme.palette.divider}`,
-						borderRadius: 1,
 						height: 40,
+						borderRadius: 1,
+						border: `1px solid ${theme.palette.divider}`,
+						paddingLeft: 2,
+						backgroundColor: isTransitionActive ? 'rgba(255, 255, 255, 0.16)' : 'inherit',
 					})}
-				>
-					<MenuItem value={undefined}>
-						<ListItemIcon sx={{ minWidth: 0, marginInline: 2 }}>
-							{/* <Image
-								src={`/${type}.svg`}
-								alt={type}
+					renderValue={(value) => {
+						const transition = value.split('/') as [
+							TransitionT['direction'],
+							TransitionT['timing'],
+						];
+						const direction = transition[0];
+						const timing = transition[1];
+
+						return (
+							<Image
+								src={`/${timing}.svg`}
+								alt={timing}
 								width={20}
 								height={20}
 								style={{
-									// transform: direction.type === 'disappear' ? 'scaleX(-1)' : 'none',
+									transform: direction === 'disappear' ? 'scaleX(-1)' : 'none',
 								}}
-							/> */}
-						</ListItemIcon>
-						<ListItemText sx={{ my: 0 }}>{'None'}</ListItemText>
-					</MenuItem>
+							/>
+						);
+					}}
+				>
 					{directions.map((direction) => [
-						<ListSubheader key={direction.type}>{direction.text}</ListSubheader>,
+						<ListSubheader key={direction.type} sx={{ lineHeight: '36px' }}>
+							{direction.text}
+						</ListSubheader>,
 						[
 							functions.map(({ type, text }) => (
-								<MenuItem key={type} value={`${direction.type}/${type}`}>
-									<ListItemIcon sx={{ minWidth: 0, marginInline: 2 }}>
+								<MenuItem
+									key={type}
+									value={`${direction.type}/${type}`}
+									sx={{ padding: 1 }}
+								>
+									<ListItemIcon sx={{ minWidth: '20px !important', marginInline: 2 }}>
 										<Image
 											src={`/${type}.svg`}
 											alt={type}
@@ -127,7 +146,7 @@ const TransitionSelector = () => {
 											}}
 										/>
 									</ListItemIcon>
-									<ListItemText sx={{ my: 0 }}>{text}</ListItemText>
+									<ListItemText>{text}</ListItemText>
 								</MenuItem>
 							)),
 						],
@@ -139,3 +158,22 @@ const TransitionSelector = () => {
 };
 
 export default memo(TransitionSelector);
+
+{
+	/* <MenuItem value={undefined}>
+	<ListItemIcon sx={{ minWidth: 0, marginInline: 2 }}>
+		<Image
+			src={`/${type}.svg`}
+			alt={type}
+			width={20}
+			height={20}
+			style={
+				{
+					// transform: direction.type === 'disappear' ? 'scaleX(-1)' : 'none',
+				}
+			}
+		/>
+	</ListItemIcon>
+	<ListItemText sx={{ my: 0 }}>{'None'}</ListItemText>
+</MenuItem>; */
+}

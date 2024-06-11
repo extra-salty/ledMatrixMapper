@@ -2,11 +2,10 @@ import useSWRMutation from 'swr/mutation';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { readFile } from '@/components/home/Effect/Actions/ImageImport/helpers/useImageImport';
 import { FrameDataT } from '@/types/effect/effect.types';
-import { FileOpen, RestartAlt } from '@mui/icons-material';
-import { Box, Button, TextField } from '@mui/material';
-import FrameDynamic from '@/components/temp/FrameComps/FrameDynamic/FrameDynamic';
+import { FileOpen } from '@mui/icons-material';
+import { Box, CircularProgress, TextField } from '@mui/material';
 import ImageCropper from '@/components/home/Effect/Actions/ImageImport/components/ImageCropper/ImageCropper';
-import FrameStatic from '@/components/temp/FrameComps/FrameStatic/FrameStatic';
+import FrameReviewer from './FrameReviewer/FrameReviewer';
 
 const PixelateDialogContent = ({
 	frameData,
@@ -15,8 +14,6 @@ const PixelateDialogContent = ({
 	frameData: FrameDataT | null;
 	setFrameData: Dispatch<SetStateAction<FrameDataT | null>>;
 }) => {
-	const handleReset = () => setFrameData(null);
-
 	const handleBrowse = async (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files.length > 0) {
 			const file = e.target.files[0];
@@ -33,24 +30,10 @@ const PixelateDialogContent = ({
 	const {
 		data: imageSrc,
 		isMutating,
-		error,
 		trigger,
-		reset,
 	} = useSWRMutation('/animation/create', handleImageChange, {
 		throwOnError: false,
 	});
-
-	const newData = frameData?.map((column, x) =>
-		column.map((cell, y) => {
-			if (cell && cell?.color) {
-				const brightness = cell.color.brightness;
-
-				return { ...cell.color, brightness: 100 };
-			} else {
-				return undefined;
-			}
-		}),
-	);
 
 	return (
 		<Box
@@ -63,7 +46,7 @@ const PixelateDialogContent = ({
 			}}
 		>
 			<Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-				<FileOpen />
+				{isMutating ? <CircularProgress size={24} /> : <FileOpen />}
 				<TextField
 					fullWidth
 					type='file'
@@ -73,12 +56,7 @@ const PixelateDialogContent = ({
 				/>
 			</Box>
 			{frameData ? (
-				<Box>
-					{/* <FrameStatic frameData={newData} /> */}
-					<Button variant='outlined' onClick={handleReset} startIcon={<RestartAlt />}>
-						Reset
-					</Button>
-				</Box>
+				<FrameReviewer frameData={frameData} setFrameData={setFrameData} />
 			) : (
 				<ImageCropper imageSrc={imageSrc} setFrameData={setFrameData} />
 			)}

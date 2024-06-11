@@ -1,6 +1,10 @@
+import { MatrixSizeT } from '@/types/animation/animation.types';
 import { FrameCellT, FrameDataT } from '@/types/effect/effect.types';
 
-const pixelateImage = async (imageSrc: string): Promise<FrameDataT | undefined> => {
+const pixelateImage = async (
+	matrixSize: MatrixSizeT,
+	imageSrc: string,
+): Promise<FrameDataT | undefined> => {
 	return new Promise((resolve) => {
 		const image = new Image();
 		image.src = imageSrc;
@@ -18,12 +22,12 @@ const pixelateImage = async (imageSrc: string): Promise<FrameDataT | undefined> 
 
 			const matrix: FrameDataT = [];
 			const { width, height } = canvas;
-			const cellSize = Math.min(width / 24, height / 12);
+			const cellSize = Math.min(width / matrixSize.width, height / matrixSize.height);
 
-			for (let x = 0; x < 24; x++) {
+			for (let x = 0; x < matrixSize.width; x++) {
 				const column: FrameCellT[] = [];
 
-				for (let y = 0; y < 12; y++) {
+				for (let y = 0; y < matrixSize.height; y++) {
 					const data = ctx.getImageData(
 						x * cellSize,
 						y * cellSize,
@@ -45,41 +49,36 @@ const pixelateImage = async (imageSrc: string): Promise<FrameDataT | undefined> 
 					r = Math.floor(r / pixelCount);
 					g = Math.floor(g / pixelCount);
 					b = Math.floor(b / pixelCount);
-
-					// Convert RGB to HSL
 					(r /= 255), (g /= 255), (b /= 255);
 
-					const max = Math.max(r, g, b),
-						min = Math.min(r, g, b);
+					const max = Math.max(r, g, b);
+					const min = Math.min(r, g, b);
+					let h = 0;
+					let s;
+					let v = max;
 
-					let h = 0,
-						s,
-						l = (max + min) / 2;
+					const diff = max - min;
+					s = max === 0 ? 0 : diff / max; // If max is 0, then s is undefined
 
-					if (max === min) {
-						h = s = 0; // achromatic
-					} else {
-						const d = max - min;
-						s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-						switch (max) {
-							case r:
-								h = (g - b) / d + (g < b ? 6 : 0);
-								break;
-							case g:
-								h = (b - r) / d + 2;
-								break;
-							case b:
-								h = (r - g) / d + 4;
-								break;
-						}
-						h /= 6;
+					switch (max) {
+						case r:
+							h = (g - b) / diff + (g < b ? 6 : 0);
+							break;
+						case g:
+							h = (b - r) / diff + 2;
+							break;
+						case b:
+							h = (r - g) / diff + 4;
+							break;
 					}
 
-					column.push({
+					h /= 6;
+
+					column.unshift({
 						color: {
 							hue: h * 360,
 							saturation: s * 100,
-							brightness: l * 100,
+							brightness: v * 100,
 						},
 						transition: undefined,
 					});

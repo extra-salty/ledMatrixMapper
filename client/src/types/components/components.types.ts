@@ -18,6 +18,7 @@ export type SliderPropsT = {
 	max: number;
 	step: number;
 	icon: ReactElement<SvgIconProps>;
+	unit?: string;
 	onChange: (
 		event: Event | SyntheticEvent<Element, Event>,
 		value: number | number[],

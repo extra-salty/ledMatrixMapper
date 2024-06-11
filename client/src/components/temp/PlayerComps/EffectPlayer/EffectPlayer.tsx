@@ -1,11 +1,10 @@
-import { useActiveMatrixSize } from '@/libs/redux/features/effects/data/selector';
 import {
 	useEffectPlayerSelect,
 	useEffectPlayerToggle,
 } from '@/libs/redux/features/effectEditor/selectors';
 import { useTimer } from 'react-use-precision-timer';
 import { memo, useMemo, useState } from 'react';
-import { createFrame } from '@/types/effect/effectConstructors';
+import { mockFrame } from '@/types/effect/effectConstructors';
 import { FrameStateT } from '@/types/effect/effect.types';
 import { Box } from '@mui/material';
 import EffectProgress from './EffectProgress/EffectProgress';
@@ -18,10 +17,7 @@ const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 	const repeatEnabled = useEffectPlayerToggle('repeatEnabled');
 	const refreshRate = useEffectPlayerSelect('refreshRate');
 
-	const matrixSize = useActiveMatrixSize() || { width: 0, height: 0 };
 	const [elapsedEffectTime, setElapsedEffectTime] = useState<number>(0);
-
-	const mockFrame = createFrame(matrixSize);
 
 	const timestamps = useMemo(
 		() =>
@@ -35,7 +31,7 @@ const EffectPlayer = ({ frames }: { frames: FrameStateT[] }) => {
 	);
 	const activeFrame = useMemo(
 		() => (frames[activeFrameIndex] === undefined ? mockFrame : frames[activeFrameIndex]),
-		[frames, activeFrameIndex, mockFrame],
+		[frames, activeFrameIndex],
 	);
 
 	const elapsedFrameTime =

@@ -29,7 +29,6 @@ import {
 import { MatrixSizeT } from '@/types/animation/animation.types';
 import { isEqual } from 'lodash';
 import { getSelectionCoordinates } from './helpers';
-import { X } from '@mui/icons-material';
 
 export const initialState: EffectsSliceT = {
 	activeEffect: undefined,
@@ -37,7 +36,7 @@ export const initialState: EffectsSliceT = {
 	options: {
 		activeMatrixSize: undefined,
 		activeColorAction: ColorActions.brush,
-		activeTransition: { direction: 'appear', function: 'linear' },
+		activeTransition: { direction: 'appear', timing: 'linear' },
 		brushSize: 0,
 	},
 	selection: {
@@ -290,7 +289,9 @@ export const effectsDataSlice = createSlice({
 		},
 		updateFrameSelection: (
 			state,
-			action: PayloadAction<'fill' | 'clear' | 'transition'>,
+			action: PayloadAction<
+				'clear' | 'clearColor' | 'clearTransition' | 'fillColor' | 'fillTransition'
+			>,
 		) => {
 			const { animationId, effectId } = state.activeEffect!;
 			const frameId = state.selection.frameCellSelection!.frameId;
@@ -307,29 +308,48 @@ export const effectsDataSlice = createSlice({
 					const frameCell = frameData[x][y];
 
 					switch (actionType) {
-						case ColorActions.fill: {
+						case 'clear': {
+							frameData[x][y] = undefined;
+							break;
+						}
+						case 'clearColor': {
+							frameData[x][y] = {
+								color: undefined,
+								transition: frameCell?.transition,
+							};
+							break;
+						}
+						case 'clearTransition': {
+							frameData[x][y] = {
+								color: frameCell?.color,
+								transition: undefined,
+							};
+							break;
+						}
+						case 'fillColor': {
 							frameData[x][y] = {
 								color,
 								transition: frameCell?.transition,
 							};
 							break;
 						}
-						case ColorActions.transition: {
+						case 'fillTransition': {
 							frameData[x][y] = {
 								color: frameCell?.color,
 								transition,
 							};
 							break;
 						}
-						case ColorActions.clear: {
-							frameData[x][y] = undefined;
-							break;
-						}
 					}
 				}
 			}
 
-			effectsDataSlice.caseReducers.addToColorHistory(state);
+			switch (actionType) {
+				case 'fillColor': {
+					effectsDataSlice.caseReducers.addToColorHistory(state);
+					break;
+				}
+			}
 		},
 		pasteFrameCellSelection: (state, action: PayloadAction<ColorActionCoordinateT>) => {
 			const selectionFrameId = state.selection.frameCellSelection!.frameId;
@@ -522,11 +542,13 @@ export const effectsDataSlice = createSlice({
 		},
 		importFrame: (state, action: PayloadAction<FrameStateT['data']>) => {
 			const { animationId, effectId } = state.activeEffect!;
+			const effect = state.animations[animationId][effectId];
+			const matrixSize = state.options.activeMatrixSize!;
 			const data = action.payload;
-			// const newFrame = createFrame();
-			// const modifiedNewFrame = { ...newFrame, data };
+			const newFrame = createFrame(matrixSize, data);
 
-			// state.animations[animationId][effectId].frames.push(modifiedNewFrame);
+			effect.frames[newFrame.id] = newFrame;
+			effect.order.push(newFrame.id);
 		},
 	},
 });

@@ -21,8 +21,8 @@ const borderStyle = (borderEnabled: boolean, width: number, height: number) =>
 				content: '""',
 				width: '100%',
 				height: '100%',
-				background: `linear-gradient(to right, gray 1px, transparent 1px),
-            linear-gradient(to bottom, gray 1px, transparent 1px)`,
+				background: `linear-gradient(to right, gray 2px, transparent 2px),
+            linear-gradient(to bottom, gray 2px, transparent 2px)`,
 				backgroundSize: `calc(100% / ${width}) calc(100% / ${height})`,
 				pointerEvents: 'none',
 		  }
@@ -55,12 +55,14 @@ const FrameDynamic = ({
 			}}
 		>
 			<Box
-				sx={{
+				sx={(theme) => ({
 					cursor,
 					display: 'flex',
 					pointerEvents: isDisabled ? 'none' : 'auto',
 					filter: blur ? `blur(${blur}px)` : 'none',
-				}}
+					borderTop: `1px solid ${theme.palette.divider}`,
+					borderBottom: `1px solid ${theme.palette.divider}`,
+				})}
 			>
 				{frameData.map((frameColumn, x) => (
 					<FrameColumnDynamic

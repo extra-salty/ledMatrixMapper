@@ -2,7 +2,12 @@ import { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/libs/redux/store';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import { AddPhotoAlternate, Delete, FileOpen } from '@mui/icons-material';
+import {
+	AddPhotoAlternate,
+	Download,
+	FileUpload,
+	ImageSearch,
+} from '@mui/icons-material';
 import { ActionButtonProps } from '@/types/components/components.types';
 import { Box } from '@mui/material';
 import PixelateDialog from '@/components/home/pixelate/PixelateDialog/PixelateDialog';
@@ -15,21 +20,27 @@ const FrameActions = ({ disabled }: { disabled: boolean }) => {
 
 	const actions: ActionButtonProps[] = [
 		{
-			text: 'Import Image',
-			icon: <FileOpen />,
+			text: 'Pixelate Image',
+			icon: <ImageSearch />,
 			tooltip: 'Import Image',
 			onClick: () => setIsImportDialogOpen(true),
+		},
+		{
+			icon: <Download />,
+			text: 'Download Raw Data',
+			disabled: true,
+			onClick: () => {},
+		},
+		{
+			icon: <FileUpload />,
+			text: 'Import Raw Data',
+			disabled: true,
+			onClick: () => {},
 		},
 		{
 			icon: <AddPhotoAlternate />,
 			text: 'Create Frame',
 			onClick: () => dispatch(effectsDataActions.addFrame()),
-		},
-		{
-			icon: <Delete />,
-			text: 'Delete Frames',
-			disabled: true,
-			onClick: () => {},
 		},
 	];
 

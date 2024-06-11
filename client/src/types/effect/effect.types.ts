@@ -36,7 +36,7 @@ export type FrameStateT = FrameBaseT & { history?: FrameCellHistoryT };
 
 export type TransitionT = {
 	direction: 'appear' | 'disappear';
-	function: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+	timing: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
 };
 
 export type FrameCellHistoryT = {

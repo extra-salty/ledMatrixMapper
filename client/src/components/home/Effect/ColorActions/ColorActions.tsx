@@ -16,6 +16,7 @@ import {
 } from '@mui/icons-material';
 import { ColorActions } from '@/types/effect/effectPayload.types';
 import { ReactElement } from 'react';
+import { effectEditorActions } from '@/libs/redux/features/effectEditor/slice';
 
 const ColorActionsGroup = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -24,6 +25,10 @@ const ColorActionsGroup = () => {
 
 	const handleChange = (event: React.MouseEvent<HTMLElement>, value: ColorActions) => {
 		if (value !== null) dispatch(effectsDataActions.setActiveColorAction(value));
+		if (value === ColorActions.transition)
+			dispatch(
+				effectEditorActions.updateGridToggles({ key: 'transitionEnabled', value: true }),
+			);
 	};
 
 	const colorActions: {

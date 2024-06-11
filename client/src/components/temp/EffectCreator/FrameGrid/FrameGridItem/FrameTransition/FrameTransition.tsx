@@ -22,7 +22,7 @@ const FrameTransition = ({
 }) => {
 	const dispatch = useDispatch();
 
-	const transitions: { type: TransitionT['function']; text: string }[] = [
+	const transitions: { type: TransitionT['timing']; text: string }[] = [
 		{
 			type: 'linear',
 			text: 'Linear',
@@ -54,19 +54,21 @@ const FrameTransition = ({
 		<Tooltip title='Transition' placement='top-start' arrow>
 			<FormControl>
 				<Select
+					native={false}
 					variant='standard'
 					size='small'
 					disableUnderline
 					// value={transition}
 					onChange={handleChange}
-					SelectDisplayProps={{
-						style: {
-							display: 'flex',
-							alignItems: 'center',
-							width: '25px',
-							paddingBottom: '0',
-						},
-					}}
+					renderValue={(value) => <div>{value}</div>}
+					// SelectDisplayProps={{
+					// 	style: {
+					// 		display: 'flex',
+					// 		alignItems: 'center',
+					// 		width: '25px',
+					// 		paddingBottom: '0',
+					// 	},
+					// }}
 					MenuProps={{
 						anchorOrigin: {
 							vertical: 'bottom',
@@ -77,6 +79,7 @@ const FrameTransition = ({
 							horizontal: 'left',
 						},
 					}}
+					sx={{ minWidth: '100px' }}
 				>
 					{Object.values(transitions).map(({ type, text }) => (
 						<MenuItem key={type} value={type}>
