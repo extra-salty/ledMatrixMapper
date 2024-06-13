@@ -17,12 +17,12 @@ import {
 	Tooltip,
 } from '@mui/material';
 import Image from 'next/image';
-import { ColorActions } from '@/types/effect/effectPayload.types';
 
 const TransitionSelector = () => {
 	const dispatch = useDispatch();
 
-	const isTransitionActive = useActiveColorAction() === ColorActions.transition;
+	const isTransitionActive =
+		useActiveColorAction() === 'setTransition' || 'setColorAndTransition';
 	const activeTransition = useActiveTransition();
 	const transitonString = `${activeTransition.direction}/${activeTransition.timing}`;
 

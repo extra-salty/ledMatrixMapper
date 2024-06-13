@@ -12,12 +12,9 @@ import {
 	hsvToHsl,
 } from '@/components/home/Color/SelectedColor/AttributeSlider/useBackgroundColor';
 import { CoordinateT } from '@/types/misc/misc.types';
-import {
-	ColorActions,
-	FrameColorActionPayloadT,
-} from '@/types/effect/effectPayload.types';
+import { FrameColorActionPayloadT } from '@/types/effect/effectPayload.types';
 import { FrameCellT } from '@/types/effect/effect.types';
-import FrameCellSelectionMenu from '../../../FrameCellSelectionMenu/FrameCellSelectionMenu';
+import FrameCellMenu from '../../../FrameCellMenu/FrameCellMenu';
 import Image from 'next/image';
 import styles from './FrameCellDynamic.module.scss';
 
@@ -58,25 +55,28 @@ const FrameCellDynamic = ({
 		(e: MouseEvent<HTMLButtonElement>) => {
 			if (e.buttons === 1) {
 				switch (colorAction) {
-					case ColorActions.fill: {
+					case 'fill': {
 						dispatch(effectsDataActions.fillFrame(frameId));
 						break;
 					}
-					case ColorActions.pipette: {
+					case 'pipette': {
 						dispatch(effectsDataActions.updateSelectedColor(payload));
 						break;
 					}
-					case ColorActions.brush:
-					case ColorActions.transition:
-					case ColorActions.clear: {
+					case 'clearColorAndTransition':
+					case 'clearColor':
+					case 'clearTransition':
+					case 'setColorAndTransition':
+					case 'setColor':
+					case 'setTransition': {
 						dispatch(effectsDataActions.updateFrameCell(payload));
 						break;
 					}
-					case ColorActions.brushAll: {
-						dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
-						break;
-					}
-					case ColorActions.select: {
+					// case ColorActions.brushAll: {
+					// 	dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
+					// 	break;
+					// }
+					case 'select': {
 						dispatch(effectsDataActions.setFrameCellSelectionStart(payload));
 						break;
 					}
@@ -85,28 +85,27 @@ const FrameCellDynamic = ({
 				}
 			}
 		},
-		[colorAction, coordinate, dispatch, frameId, payload],
+		[colorAction, dispatch, frameId, payload],
 	);
 
 	const handleMouseOver = useCallback(
 		(e: MouseEvent<HTMLButtonElement>) => {
 			if (e.buttons === 1) {
 				switch (colorAction) {
-					case ColorActions.pipette:
-					case ColorActions.fill: {
-						break;
-					}
-					case ColorActions.clear:
-					case ColorActions.transition:
-					case ColorActions.brush: {
+					case 'clearColorAndTransition':
+					case 'clearColor':
+					case 'clearTransition':
+					case 'setColorAndTransition':
+					case 'setColor':
+					case 'setTransition': {
 						dispatch(effectsDataActions.updateFrameCell(payload));
 						break;
 					}
-					case ColorActions.brushAll: {
-						dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
-						break;
-					}
-					case ColorActions.select: {
+					// case ColorActions.brushAll: {
+					// 	dispatch(effectsDataActions.updateEveryFrameCell(coordinate));
+					// 	break;
+					// }
+					case 'select': {
 						dispatch(effectsDataActions.setFrameCellSelectionEnd(coordinate));
 						break;
 					}
@@ -163,7 +162,7 @@ const FrameCellDynamic = ({
 				)}
 			</button>
 			{isOpen && (
-				<FrameCellSelectionMenu
+				<FrameCellMenu
 					frameId={frameId}
 					coordinate={coordinate}
 					anchorEl={ref.current}

@@ -41,22 +41,24 @@ export type ActiveEffectT = {
 	effectId: string;
 };
 
-export enum ColorActions {
-	brush = 'brush',
-	brushAll = 'brushAll',
-	pipette = 'pipette',
-	fill = 'fill',
-	clear = 'clear',
-	select = 'select',
-	copy = 'copy',
-	cut = 'cut',
-	paste = 'paste',
-	transition = 'transition',
-}
+export type ColorActions =
+	| 'setColorAndTransition'
+	| 'setColor'
+	| 'setTransition'
+	| 'clearColorAndTransition'
+	| 'clearColor'
+	| 'clearTransition'
+	| 'pipette'
+	| 'fill'
+	| 'select'
+	| 'copy'
+	| 'cut'
+	| 'paste';
 
 export type FrameColorActionPayloadT = {
 	frameId: string;
 	coordinate: CoordinateT;
+	colorAction?: ColorActions;
 };
 
 export type UpdateFramePayloadT<K extends keyof FrameStateT> = {

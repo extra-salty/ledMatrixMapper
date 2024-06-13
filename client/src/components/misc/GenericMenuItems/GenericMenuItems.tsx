@@ -1,12 +1,23 @@
-import { ActionButtonProps } from '@/types/components/components.types';
-import { MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { MenuItem, ListItemIcon, ListItemText, SvgIconProps } from '@mui/material';
+import { ReactElement, MouseEvent } from 'react';
 
-const GenericMenuItems = ({ items }: { items: ActionButtonProps[] }) => {
+export type MenuItemProps = {
+	id?: string;
+	text?: string;
+	icon?: ReactElement<SvgIconProps>;
+	hidden?: boolean;
+	disabled?: boolean;
+	tooltip?: string;
+	divider?: boolean;
+	onClick: (e: MouseEvent<HTMLElement>) => void;
+};
+
+const GenericMenuItems = ({ items }: { items: MenuItemProps[] }) => {
 	return (
 		<>
-			{items.map(({ icon, text, disabled, hidden, onClick }, i) => {
+			{items.map(({ id, icon, text, divider, disabled, hidden, onClick }, i) => {
 				return hidden ? null : (
-					<MenuItem key={i} disabled={disabled} onClick={onClick}>
+					<MenuItem key={id || i} divider={divider} disabled={disabled} onClick={onClick}>
 						<ListItemIcon>{icon}</ListItemIcon>
 						<ListItemText>{text}</ListItemText>
 					</MenuItem>

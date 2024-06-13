@@ -55,11 +55,20 @@ const PixelateDialogContent = ({
 					onChange={handleBrowse}
 				/>
 			</Box>
-			{frameData ? (
-				<FrameReviewer frameData={frameData} setFrameData={setFrameData} />
-			) : (
-				<ImageCropper imageSrc={imageSrc} setFrameData={setFrameData} />
-			)}
+			<Box
+				sx={{
+					height: '100%',
+					display: 'flex',
+					flexDirection: 'column',
+					gap: 5,
+				}}
+			>
+				{frameData ? (
+					<FrameReviewer frameData={frameData} setFrameData={setFrameData} />
+				) : (
+					<ImageCropper imageSrc={imageSrc} setFrameData={setFrameData} />
+				)}
+			</Box>
 		</Box>
 	);
 };

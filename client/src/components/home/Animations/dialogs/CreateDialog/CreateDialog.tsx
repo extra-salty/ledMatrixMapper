@@ -7,6 +7,7 @@ import { Dispatch, FormEvent, SetStateAction } from 'react';
 import { Alert, Button, Dialog, DialogActions, DialogTitle, Fade } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import CreateDialogContent from './CreateDialogContent/CreateDialogContent';
+import GenericDialog from '@/components/misc/generics/GenericDialog/GenericDialog';
 
 const CreateDialog = ({
 	open,

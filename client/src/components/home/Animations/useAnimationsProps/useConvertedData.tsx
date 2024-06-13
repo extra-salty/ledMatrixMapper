@@ -38,7 +38,7 @@ const useConvertedData = (): AnimationTableRowT[] => {
 		return convertedChild;
 	};
 
-	return data.map((animation) => {
+	return data.map((animation): AnimationTableRowT => {
 		const animationId = animation._id;
 
 		const convertedChildren = animation.childrenIds?.map((childId, i) => {

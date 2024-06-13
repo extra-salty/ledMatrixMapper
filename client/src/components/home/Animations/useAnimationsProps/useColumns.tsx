@@ -98,12 +98,12 @@ const useColumns = (): AnimationsTableColumnsT[] => {
 		{
 			accessorKey: 'width',
 			header: 'Width',
-			size: 50,
+			size: 60,
 			grow: true,
 			enableResizing: false,
 			enableSorting: true,
-			filterVariant: 'multi-select',
-			enableColumnFilterModes: true,
+			// filterVariant: 'multi-select',
+			// enableColumnFilterModes: true,
 			Header: () => (
 				<Tooltip title='Columns'>
 					<ViewColumn fontSize='small' />
@@ -113,11 +113,11 @@ const useColumns = (): AnimationsTableColumnsT[] => {
 		{
 			accessorKey: 'height',
 			header: 'Height',
-			size: 50,
+			size: 60,
 			grow: true,
 			enableResizing: false,
 			enableSorting: true,
-			filterVariant: 'multi-select',
+			// filterVariant: 'multi-select',
 			Header: () => (
 				<Tooltip title='Rows'>
 					<TableRows fontSize='small' />

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useColorHistory } from '@/libs/redux/features/effects/data/selector';
 import { effectsDataActions } from '@/libs/redux/features/effects/data/slice';
-import { Clear, RemoveRoad, Square } from '@mui/icons-material';
+import { RemoveRoad, Square } from '@mui/icons-material';
 import { Box, IconButton, Tooltip } from '@mui/material';
 import {
 	hslToString,
@@ -18,12 +18,10 @@ const ColorHistory = () => {
 
 	const handleReset = () => dispatch(effectsDataActions.resetColorHistory());
 
-	// make delete transition
-
 	return (
 		<Box
 			sx={(theme) => ({
-				height: 'calc(100% - 60px)',
+				height: '100%',
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'space-between',
@@ -31,6 +29,21 @@ const ColorHistory = () => {
 				borderLeft: `1px solid ${theme.palette.divider}`,
 			})}
 		>
+			<Box
+				sx={(theme) => ({
+					width: '100%',
+					display: 'flex',
+					justifyContent: 'center',
+					padding: 2,
+					borderBottom: `1px solid ${theme.palette.divider}`,
+				})}
+			>
+				<IconButton onClick={handleReset}>
+					<Tooltip title='Clear Color History'>
+						<RemoveRoad />
+					</Tooltip>
+				</IconButton>
+			</Box>
 			<Box
 				sx={{
 					width: '55px',
@@ -70,21 +83,6 @@ const ColorHistory = () => {
 						</Tooltip>
 					);
 				})}
-			</Box>
-			<Box
-				sx={(theme) => ({
-					width: '100%',
-					display: 'flex',
-					justifyContent: 'center',
-					paddingBlock: 1,
-					borderTop: `1px dashed ${theme.palette.divider}`,
-				})}
-			>
-				<IconButton size='small' onClick={handleReset}>
-					<Tooltip title='Clear Color History'>
-						<RemoveRoad />
-					</Tooltip>
-				</IconButton>
 			</Box>
 		</Box>
 	);

@@ -49,7 +49,11 @@ const pixelateImage = async (
 					r = Math.floor(r / pixelCount);
 					g = Math.floor(g / pixelCount);
 					b = Math.floor(b / pixelCount);
+					console.log(r, g, b);
+
 					(r /= 255), (g /= 255), (b /= 255);
+
+					console.log(r, g, b);
 
 					const max = Math.max(r, g, b);
 					const min = Math.min(r, g, b);
@@ -74,11 +78,13 @@ const pixelateImage = async (
 
 					h /= 6;
 
+					console.log(h, s, v);
+
 					column.unshift({
 						color: {
-							hue: h * 360,
-							saturation: s * 100,
-							brightness: v * 100,
+							hue: Math.round(h * 360),
+							saturation: Math.round(s * 100),
+							brightness: Math.round(v * 100),
 						},
 						transition: undefined,
 					});

@@ -25,7 +25,7 @@ const ColorActionsGroup = () => {
 
 	const handleChange = (event: React.MouseEvent<HTMLElement>, value: ColorActions) => {
 		if (value !== null) dispatch(effectsDataActions.setActiveColorAction(value));
-		if (value === ColorActions.transition)
+		if (value === 'setTransition' || value === 'setColorAndTransition')
 			dispatch(
 				effectEditorActions.updateGridToggles({ key: 'transitionEnabled', value: true }),
 			);
@@ -36,15 +36,15 @@ const ColorActionsGroup = () => {
 		title: string;
 		icon: ReactElement<SvgIconProps>;
 	}[] = [
-		{ value: ColorActions.brush, title: 'Brush', icon: <Brush /> },
-		{ value: ColorActions.brushAll, title: 'Brush All', icon: <FormatPaint /> },
-		{ value: ColorActions.fill, title: 'Fill', icon: <FormatColorFill /> },
-		{ value: ColorActions.pipette, title: 'Pipette', icon: <Colorize /> },
-		{ value: ColorActions.clear, title: 'Clear', icon: <FormatColorReset /> },
-		{ value: ColorActions.select, title: 'Select', icon: <HighlightAlt /> },
-		{ value: ColorActions.copy, title: 'Copy', icon: <ContentCopy /> },
-		{ value: ColorActions.cut, title: 'Cut', icon: <ContentCut /> },
-		{ value: ColorActions.transition, title: 'Add Transition', icon: <AutoGraph /> },
+		{ value: 'setColor', title: 'Brush', icon: <Brush /> },
+		// { value: , title: 'Brush All', icon: <FormatPaint /> },
+		{ value: 'fill', title: 'Fill', icon: <FormatColorFill /> },
+		{ value: 'pipette', title: 'Pipette', icon: <Colorize /> },
+		{ value: 'clearColorAndTransition', title: 'Clear', icon: <FormatColorReset /> },
+		{ value: 'select', title: 'Select', icon: <HighlightAlt /> },
+		{ value: 'copy', title: 'Copy', icon: <ContentCopy /> },
+		{ value: 'cut', title: 'Cut', icon: <ContentCut /> },
+		{ value: 'setTransition', title: 'Add Transition', icon: <AutoGraph /> },
 	];
 
 	return (

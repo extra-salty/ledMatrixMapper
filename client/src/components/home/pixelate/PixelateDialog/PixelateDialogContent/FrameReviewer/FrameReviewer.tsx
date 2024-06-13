@@ -23,15 +23,18 @@ const FrameReviewer = ({
 	const handleReset = () => setFrameData(null);
 
 	return (
-		<Box
-			sx={{
-				height: '100%',
-				display: 'flex',
-				flexDirection: 'column',
-				justifyContent: 'space-between',
-			}}
-		>
-			<Box sx={(theme) => ({ border: `1px solid ${theme.palette.divider}` })}>
+		<>
+			<Box
+				sx={(theme) => ({
+					display: 'flex',
+					flexDirection: 'column',
+					// justifyContent: 'center',
+					height: '500px',
+					// width: '100%',
+					position: 'relative',
+					border: `1px solid ${theme.palette.divider}`,
+				})}
+			>
 				<FrameStatic
 					showGrid={showGrid}
 					blurIntensity={blurIntensity}
@@ -47,7 +50,7 @@ const FrameReviewer = ({
 					Reset
 				</Button>
 			</Box>
-		</Box>
+		</>
 	);
 };
 

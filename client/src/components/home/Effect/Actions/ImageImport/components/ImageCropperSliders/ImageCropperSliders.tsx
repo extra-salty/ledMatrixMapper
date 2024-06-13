@@ -45,10 +45,10 @@ const ImageCropperSliders = ({
 					key={i}
 					sx={(theme) => ({
 						width: '100%',
-						paddingInline: 2,
 						display: 'flex',
 						alignItems: 'center',
 						gap: 4,
+						paddingInline: 2,
 						border: `1px solid ${theme.palette.divider}`,
 						borderRadius: 1,
 					})}
@@ -62,8 +62,8 @@ const ImageCropperSliders = ({
 						value={value}
 						onChange={onChange}
 					/>
-					<Box sx={{ minWidth: 30 }}>
-						{value}
+					<Box sx={{ minWidth: 36, textAlign: 'right' }}>
+						{i === 1 ? value.toFixed(2) : value}
 						{unit}
 					</Box>
 				</Box>

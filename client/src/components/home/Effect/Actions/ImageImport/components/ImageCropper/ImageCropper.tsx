@@ -4,8 +4,8 @@ import { useActiveMatrixSize } from '@/libs/redux/features/effects/data/selector
 import { CSSProperties, Dispatch, SetStateAction, useState } from 'react';
 import { getCroppedImg } from '../../helpers/useImageImport';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Skeleton } from '@mui/material';
-import { Deblur } from '@mui/icons-material';
+import { Box, Button, IconButton, Skeleton, Tooltip } from '@mui/material';
+import { Deblur, RestartAlt } from '@mui/icons-material';
 import { FrameDataT } from '@/types/effect/effect.types';
 import Cropper, { Area } from 'react-easy-crop';
 import ImageCropperOptions from '../ImageCropperOptions/ImageCropperOptions';
@@ -72,15 +72,14 @@ const ImageCropper = ({
 		},
 	);
 
+	const handleReset = () => {
+		setCrop({ x: 0, y: 0 });
+		setZoom(1);
+		setRotation(0);
+	};
+
 	return (
-		<Box
-			sx={{
-				display: 'flex',
-				flexDirection: 'column',
-				gap: '15px',
-				height: '100%',
-			}}
-		>
+		<>
 			<Box
 				sx={{
 					height: '100%',
@@ -132,19 +131,30 @@ const ImageCropper = ({
 					options={options}
 					setOptions={setOptions}
 				/>
+				<Button
+					variant='outlined'
+					onClick={handleReset}
+					sx={{
+						minWidth: 'min-content',
+					}}
+				>
+					<Tooltip title='Reset'>
+						<RestartAlt />
+					</Tooltip>
+				</Button>
 				<LoadingButton
 					variant='outlined'
 					color='primary'
-					startIcon={<Deblur sx={{ rotate: '180deg' }} />}
 					loading={isMutating}
 					disabled={disabled}
 					onClick={() => trigger()}
 					sx={{ minWidth: '100px' }}
+					startIcon={<Deblur sx={{ rotate: '180deg' }} />}
 				>
 					Pixelate
 				</LoadingButton>
 			</Box>
-		</Box>
+		</>
 	);
 };
 

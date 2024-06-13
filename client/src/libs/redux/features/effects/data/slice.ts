@@ -35,7 +35,7 @@ export const initialState: EffectsSliceT = {
 	animations: {},
 	options: {
 		activeMatrixSize: undefined,
-		activeColorAction: ColorActions.brush,
+		activeColorAction: 'setColor',
 		activeTransition: { direction: 'appear', timing: 'linear' },
 		brushSize: 0,
 	},
@@ -104,14 +104,18 @@ export const effectsDataSlice = createSlice({
 		//
 		// Frame Color
 		updateFrameCell: (state, action: PayloadAction<FrameColorActionPayloadT>) => {
-			const { frameId, coordinate } = action.payload;
-			const { animationId, effectId } = state.activeEffect!;
-			const frameData = state.animations[animationId][effectId].frames[frameId].data;
+			const { frameId, coordinate, colorAction } = action.payload;
 
-			const colorAction = state.options.activeColorAction;
-			const { x: xOrig, y: yOrig } = coordinate;
-			const { width, height } = state.options.activeMatrixSize!;
+			const { animationId, effectId } = state.activeEffect!;
 			const brushSize = state.options.brushSize;
+			const color = state.color.selectedColor;
+			const transition = state.options.activeTransition;
+			const activeColorAction = state.options.activeColorAction;
+			const { width, height } = state.options.activeMatrixSize!;
+
+			const frameData = state.animations[animationId][effectId].frames[frameId].data;
+			const overwriteColorAction = colorAction || activeColorAction;
+			const { x: xOrig, y: yOrig } = coordinate;
 
 			const startX = Math.max(xOrig - brushSize, 0);
 			const endX = Math.min(xOrig + brushSize, width - 1);
@@ -122,22 +126,43 @@ export const effectsDataSlice = createSlice({
 				for (let y = startY; y <= endY; y++) {
 					const frameCell = frameData[x][y];
 
-					switch (colorAction) {
-						case ColorActions.brush: {
+					switch (overwriteColorAction) {
+						case 'clearColorAndTransition': {
+							frameData[x][y] = undefined;
+							break;
+						}
+						case 'clearColor': {
 							frameData[x][y] = {
-								color: state.color.selectedColor,
+								color: undefined,
 								transition: frameCell?.transition,
 							};
 							break;
 						}
-						case ColorActions.clear: {
-							frameData[x][y] = undefined;
-							break;
-						}
-						case ColorActions.transition: {
+						case 'clearTransition': {
 							frameData[x][y] = {
 								color: frameCell?.color,
-								transition: state.options.activeTransition,
+								transition: undefined,
+							};
+							break;
+						}
+						case 'setColorAndTransition': {
+							frameData[x][y] = {
+								color,
+								transition,
+							};
+							break;
+						}
+						case 'setColor': {
+							frameData[x][y] = {
+								color,
+								transition: frameCell?.transition,
+							};
+							break;
+						}
+						case 'setTransition': {
+							frameData[x][y] = {
+								color: frameCell?.color,
+								transition,
 							};
 							break;
 						}
@@ -145,8 +170,9 @@ export const effectsDataSlice = createSlice({
 				}
 			}
 
-			switch (colorAction) {
-				case ColorActions.brush: {
+			switch (overwriteColorAction) {
+				case 'setColor':
+				case 'clearColorAndTransition': {
 					effectsDataSlice.caseReducers.addToColorHistory(state);
 					break;
 				}
@@ -175,18 +201,18 @@ export const effectsDataSlice = createSlice({
 							const frameCell = data[x][y];
 
 							switch (colorAction) {
-								case ColorActions.brush: {
+								case 'setColor': {
 									data[x][y] = {
 										color: state.color.selectedColor,
 										transition: frameCell?.transition,
 									};
 									break;
 								}
-								case ColorActions.clear: {
+								case 'clearColorAndTransition': {
 									data[x][y] = undefined;
 									break;
 								}
-								case ColorActions.transition: {
+								case 'setTransition': {
 									data[x][y] = {
 										color: frameCell?.color,
 										transition: state.options.activeTransition,
@@ -290,7 +316,12 @@ export const effectsDataSlice = createSlice({
 		updateFrameSelection: (
 			state,
 			action: PayloadAction<
-				'clear' | 'clearColor' | 'clearTransition' | 'fillColor' | 'fillTransition'
+				| 'clear'
+				| 'clearColor'
+				| 'clearTransition'
+				| 'fill'
+				| 'fillColor'
+				| 'fillTransition'
 			>,
 		) => {
 			const { animationId, effectId } = state.activeEffect!;
@@ -323,6 +354,13 @@ export const effectsDataSlice = createSlice({
 							frameData[x][y] = {
 								color: frameCell?.color,
 								transition: undefined,
+							};
+							break;
+						}
+						case 'fill': {
+							frameData[x][y] = {
+								color,
+								transition,
 							};
 							break;
 						}

@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { FormEvent } from 'react';
 
 const GenericDialog = ({
 	open,
@@ -24,7 +25,10 @@ const GenericDialog = ({
 			PaperProps={{
 				component: 'form',
 				sx: { minWidth: '500px', maxWidth: 'none' },
-				onSubmit: onSubmit,
+				onSubmit: (event: FormEvent<HTMLFormElement>) => {
+					event.preventDefault();
+					onSubmit(event);
+				},
 			}}
 		>
 			<DialogTitle>{title}</DialogTitle>
